@@ -3,290 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comette Farm • Fresh From Farm</title>
+    <title>Comette Farm • Fresh From Our Fields to Your Table</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .logo-font { font-family: 'Playfair Display', serif; }
-        .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
-        .product-card { transition: all 0.3s; }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2); }
+        .hero-bg { background: linear-gradient(rgba(16, 185, 129, 0.75), rgba(16, 185, 129, 0.75)), url('https://picsum.photos/id/1016/2000/800') center/cover no-repeat; }
+        .product-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgb(16 185 129 / 0.25); }
+        .section-header { font-family: 'Playfair Display', serif; }
     </style>
 </head>
-<body class="bg-[#0a0a0a] text-white">
+<body class="bg-[#f8f4ed] text-[#1f2a1f]">
 
-<div class="flex h-screen">
-
-    <!-- SIDEBAR -->
-    <div class="w-72 bg-black border-r border-white/10 flex flex-col">
-        <div class="p-8 border-b border-white/10">
+    <!-- HEADER / NAV -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-emerald-600 rounded-3xl flex items-center justify-center text-4xl">🌱</div>
-                <h1 class="logo-font text-4xl font-bold">Comette Farm</h1>
+                <div class="w-12 h-12 bg-emerald-600 rounded-3xl flex items-center justify-center text-4xl shadow-inner">🌾</div>
+                <h1 class="logo-font text-4xl font-bold tracking-tight text-emerald-700">Comette Farm</h1>
             </div>
-            <p class="text-emerald-400 text-sm mt-1">Farm to Table • Since 2018</p>
+            
+            <div class="flex items-center gap-10 text-lg font-medium">
+                <a onclick="showSection('home')" class="cursor-pointer hover:text-emerald-600">Home</a>
+                <a onclick="showSection('shop')" class="cursor-pointer hover:text-emerald-600">Shop Fresh</a>
+                <a onclick="showSection('farm')" class="cursor-pointer hover:text-emerald-600">Our Farm</a>
+                <a onclick="showSection('orders')" class="cursor-pointer hover:text-emerald-600">How It Works</a>
+                <a onclick="showSection('cart')" class="cursor-pointer hover:text-emerald-600 flex items-center gap-2">
+                    🛒 Cart 
+                    <span id="cartCountHeader" class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-3xl font-semibold">0</span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="bg-emerald-100 text-emerald-700 px-5 py-2 rounded-3xl text-sm font-medium flex items-center gap-2">
+                    <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                    87 shoppers online right now
+                </div>
+                <button onclick="fakeLogin()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-3xl font-semibold">👋 Hi Alex</button>
+            </div>
         </div>
+    </nav>
 
-        <nav class="flex-1 p-6 space-y-2">
-            <a onclick="showSection('dashboard')" class="nav-item flex items-center gap-4 px-6 py-4 rounded-3xl hover:bg-white/10 active bg-emerald-900/30 cursor-pointer">
-                📊 Dashboard
-            </a>
-            <a onclick="showSection('shop')" class="nav-item flex items-center gap-4 px-6 py-4 rounded-3xl hover:bg-white/10 cursor-pointer">
-                🛒 Shop Products
-            </a>
-            <a onclick="showSection('orders')" class="nav-item flex items-center gap-4 px-6 py-4 rounded-3xl hover:bg-white/10 cursor-pointer">
-                📦 My Orders
-            </a>
-            <a onclick="showSection('analytics')" class="nav-item flex items-center gap-4 px-6 py-4 rounded-3xl hover:bg-white/10 cursor-pointer">
-                📈 Analytics
-            </a>
-        </nav>
-
-        <div class="p-6 border-t border-white/10">
-            <button onclick="fakeCheckout()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-4 rounded-3xl font-semibold text-lg">
-                🛒 Checkout (KSh 2,850)
-            </button>
+    <!-- HERO -->
+    <div id="homeSection" class="hero-bg text-white h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="max-w-2xl">
+                <p class="uppercase tracking-[3px] text-emerald-200 font-medium">Direct from Comette Farm • Kenya</p>
+                <h1 class="text-7xl font-bold logo-font leading-none mt-3">Fresh. Local.<br>From our fields<br>to your table.</h1>
+                <p class="mt-8 text-2xl text-white/90">Order today → picked tomorrow → delivered fresh.</p>
+                
+                <div class="mt-12 flex gap-5">
+                    <button onclick="showSection('shop')" 
+                            class="bg-white text-emerald-700 px-10 py-6 rounded-3xl text-2xl font-semibold hover:scale-105 flex items-center gap-4">
+                        Shop Now 🌱
+                    </button>
+                    <button onclick="showSection('farm')" 
+                            class="border-2 border-white px-10 py-6 rounded-3xl text-2xl font-medium hover:bg-white/10">
+                        Meet the Farm
+                    </button>
+                </div>
+                
+                <div class="mt-16 flex items-center gap-8 text-sm">
+                    <div>⭐️ 4.98 • 1,284 happy families</div>
+                    <div class="h-4 w-px bg-white/30"></div>
+                    <div>🚚 Same-day delivery in Nairobi &amp; surrounds</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="flex-1 flex flex-col">
+    <!-- MAIN CONTENT AREA -->
+    <div class="max-w-7xl mx-auto px-8 py-16">
 
-        <!-- TOP BAR -->
-        <div class="h-16 border-b border-white/10 bg-black/80 flex items-center px-8 justify-between">
-            <input id="searchInput" 
-                   onkeyup="if(event.key==='Enter') filterProducts()"
-                   type="text" 
-                   placeholder="Search fresh produce, dairy, meat..." 
-                   class="bg-white/10 border border-white/20 rounded-3xl px-6 py-3 w-96 focus:outline-none focus:border-emerald-500">
+        <!-- SHOP SECTION -->
+        <div id="shopSection" class="hidden">
+            <h2 class="section-header text-5xl font-bold text-center mb-4">Fresh Harvest • Straight from Comette Farm</h2>
+            <p class="text-center text-xl text-emerald-700 mb-10">Every item below is grown or made right here on our farm</p>
+            
+            <!-- Category filters -->
+            <div class="flex flex-wrap gap-3 justify-center mb-10">
+                <button onclick="filterByCategory('all')" class="category-btn active px-6 py-3 bg-emerald-600 text-white rounded-3xl text-sm font-medium">All Products</button>
+                <button onclick="filterByCategory('Dairy')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Dairy &amp; Milk</button>
+                <button onclick="filterByCategory('Cheese')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Brown's Cheese</button>
+                <button onclick="filterByCategory('Fruit')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Fruit &amp; Berries</button>
+                <button onclick="filterByCategory('Vegetable')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Vegetables</button>
+                <button onclick="filterByCategory('Meat')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Meat &amp; Poultry</button>
+                <button onclick="filterByCategory('Eggs')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Eggs &amp; Honey</button>
+            </div>
 
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                    <span class="text-sm">142 people shopping now</span>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="productGrid"></div>
+        </div>
+
+        <!-- FARM STORY SECTION -->
+        <div id="farmSection" class="hidden">
+            <h2 class="section-header text-5xl font-bold text-center mb-12">From Our Soil to Your Plate</h2>
+            <div class="grid grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://picsum.photos/id/1016/800/600" alt="Comette Farm fields" class="rounded-3xl shadow-2xl">
                 </div>
-                <button onclick="toggleCart()" class="relative text-3xl">🛒
-                    <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                <div class="space-y-8">
+                    <div class="flex gap-6">
+                        <div class="text-6xl">🌱</div>
+                        <div>
+                            <h4 class="font-semibold text-2xl">Grown with love since 2018</h4>
+                            <p class="text-lg text-gray-600">Our 120-acre farm in Limuru grows over 80 varieties of fruits, vegetables, herbs and dairy — all chemical-free.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-6xl">🐄</div>
+                        <div>
+                            <h4 class="font-semibold text-2xl">Jersey &amp; Friesian cows</h4>
+                            <p class="text-lg text-gray-600">Our happy cows produce the freshest milk and cheese you’ll ever taste.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-6xl">🚜</div>
+                        <div>
+                            <h4 class="font-semibold text-2xl">Picked the same day</h4>
+                            <p class="text-lg text-gray-600">Orders placed before 10am are harvested fresh and delivered the same afternoon.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOW IT WORKS / ORDERS FLOW -->
+        <div id="ordersSection" class="hidden">
+            <h2 class="section-header text-5xl font-bold text-center mb-12">How Comette Farm Works</h2>
+            <div class="grid grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-7xl mb-6">🌾</div>
+                    <h4 class="font-semibold">1. You order online</h4>
+                    <p class="text-gray-600 mt-3">Browse our daily harvest and add to cart</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-7xl mb-6">✂️</div>
+                    <h4 class="font-semibold">2. We harvest fresh</h4>
+                    <p class="text-gray-600 mt-3">Picked within hours of your order</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-7xl mb-6">🚚</div>
+                    <h4 class="font-semibold">3. Same-day delivery</h4>
+                    <p class="text-gray-600 mt-3">Direct to your door in Nairobi &amp; surrounds</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-7xl mb-6">🍽️</div>
+                    <h4 class="font-semibold">4. Enjoy farm-fresh meals</h4>
+                    <p class="text-gray-600 mt-3">Taste the difference of real food</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CART MODAL -->
+        <div id="cartModal" onclick="if(event.target===this)toggleCart()" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+            <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-lg w-full mx-4 p-8 shadow-2xl">
+                <h3 class="text-3xl font-semibold mb-6">Your Cart • Comette Farm</h3>
+                <div id="cartItemsList" class="max-h-96 overflow-auto"></div>
+                
+                <div class="border-t pt-6 mt-6 flex justify-between text-2xl font-semibold">
+                    <span>Total</span>
+                    <span id="cartTotalPrice">KSh 0</span>
+                </div>
+                
+                <button onclick="placeOrder()" 
+                        class="w-full mt-8 bg-emerald-600 hover:bg-emerald-700 text-white py-6 rounded-3xl text-xl font-semibold">
+                    Place Order • Pay on Delivery
                 </button>
-                <div class="flex items-center gap-3">
-                    <div>
-                        <p class="font-medium">Welcome back, Alex</p>
-                        <p class="text-xs text-emerald-400">Farm Owner</p>
-                    </div>
-                    <img src="https://i.pravatar.cc/150?img=68" class="w-9 h-9 rounded-2xl object-cover">
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE CONTENT -->
-        <div class="flex-1 overflow-auto p-8" id="mainContent">
-
-            <!-- DASHBOARD -->
-            <div id="dashboardSection">
-                <h1 class="text-5xl font-bold logo-font">Good morning, Alex 🌾</h1>
-                <p class="text-emerald-400 mt-2">Here's how Comette Farm is doing today</p>
-
-                <div class="grid grid-cols-4 gap-6 mt-10">
-                    <div class="glass border border-white/10 rounded-3xl p-6">
-                        <p class="text-white/60">Today's Revenue</p>
-                        <p class="text-5xl font-bold mt-3">KSh 18,420</p>
-                        <p class="text-emerald-400">↑ 42% from yesterday</p>
-                    </div>
-                    <div class="glass border border-white/10 rounded-3xl p-6">
-                        <p class="text-white/60">Orders Today</p>
-                        <p class="text-5xl font-bold mt-3">47</p>
-                        <p class="text-emerald-400">12 ready for delivery</p>
-                    </div>
-                    <div class="glass border border-white/10 rounded-3xl p-6">
-                        <p class="text-white/60">Products Sold</p>
-                        <p class="text-5xl font-bold mt-3">289</p>
-                        <p class="text-emerald-400">kg this week</p>
-                    </div>
-                    <div class="glass border border-white/10 rounded-3xl p-6">
-                        <p class="text-white/60">Active Customers</p>
-                        <p class="text-5xl font-bold mt-3">142</p>
-                        <p class="text-emerald-400">online right now</p>
-                    </div>
-                </div>
-
-                <div class="mt-10 grid grid-cols-2 gap-6">
-                    <div class="glass border border-white/10 rounded-3xl p-6">
-                        <h3 class="font-semibold mb-4">Weekly Sales Trend</h3>
-                        <canvas id="salesChart" height="140"></canvas>
-                    </div>
-                    <div class="glass border border-white/10 rounded-3xl p-6">
-                        <h3 class="font-semibold mb-4">Top Selling Items</h3>
-                        <div id="topItems" class="space-y-4"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SHOP SECTION -->
-            <div id="shopSection" class="hidden">
-                <h2 class="text-4xl font-bold mb-8">Our Fresh Harvest</h2>
-                <div class="grid grid-cols-4 gap-6" id="productGrid"></div>
-            </div>
-
-            <!-- Other sections (Orders & Analytics) -->
-            <div id="ordersSection" class="hidden">
-                <h2 class="text-4xl font-bold mb-8">Recent Orders</h2>
-                <p class="text-white/60">Order flow simulation ready — demo orders shown below.</p>
-                <!-- You can expand this later -->
-            </div>
-
-            <div id="analyticsSection" class="hidden">
-                <h2 class="text-4xl font-bold mb-8">Farm Analytics</h2>
-                <p class="text-white/60">Real-time charts would go here.</p>
+                <button onclick="toggleCart()" class="text-gray-500 mt-4 w-full">Keep shopping</button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- CART MODAL -->
-<div id="cartModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center">
-    <div class="glass border border-white/20 rounded-3xl w-full max-w-md p-8">
-        <h3 class="text-2xl font-bold mb-6">Your Cart</h3>
-        <div id="cartItems" class="space-y-4"></div>
-        <div class="mt-8 pt-6 border-t border-white/20">
-            <p class="flex justify-between text-lg"><span>Total</span> <span id="cartTotal">KSh 2,850</span></p>
+    <!-- FOOTER -->
+    <footer class="bg-emerald-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-8 text-center">
+            <p class="text-2xl logo-font">Comette Farm • Limuru, Kenya</p>
+            <p class="mt-3 opacity-75">Fresh food you can trust. Grown with care.</p>
+            <p class="text-sm mt-12 opacity-50">© 2026 Comette Farm • Demo website built for you</p>
         </div>
-        <button onclick="fakeCheckout()" class="w-full mt-6 bg-emerald-600 py-4 rounded-3xl font-semibold">Proceed to Checkout →</button>
-        <button onclick="toggleCart()" class="w-full mt-3 text-white/60">Close</button>
-    </div>
-</div>
+    </footer>
 
 <script>
-// Sample products from your data (I added relevant images)
+// Real products pulled directly from your Excel sheet
 const products = [
-    { name: "Heirloom Tomatoes", category: "Vegetable", price: 180, unit: "Kg", img: "https://picsum.photos/id/201/300/300" },
-    { name: "Fresh Spinach Bunch", category: "Vegetable", price: 40, unit: "Bunch", img: "https://picsum.photos/id/292/300/300" },
-    { name: "Free Range Eggs (Dozen)", category: "Others", price: 300, unit: "Dozen", img: "https://picsum.photos/id/312/300/300" },
-    { name: "Jersey Milk", category: "Dairy", price: 150, unit: "Litre", img: "https://picsum.photos/id/431/300/300" },
-    { name: "Strawberries (Fresh)", category: "Fruit Berries", price: 200, unit: "Punnet", img: "https://picsum.photos/id/1080/300/300" },
-    { name: "Feta Cheese 200g", category: "Brown's Cheese", price: 600, unit: "Unit", img: "https://picsum.photos/id/63/300/300" },
-    { name: "Avocado", category: "Vegetable", price: 60, unit: "Piece", img: "https://picsum.photos/id/669/300/300" },
-    { name: "Mangoes (Apple)", category: "Fruit", price: 105, unit: "Piece", img: "https://picsum.photos/id/106/300/300" },
+    { id:1, name:"Jersey Milk", category:"Dairy", price:150, unit:"Litres", img:"https://picsum.photos/id/133/600/600" },
+    { id:2, name:"Feta 200g", category:"Cheese", price:600, unit:"Unit", img:"https://picsum.photos/id/63/600/600" },
+    { id:3, name:"Strawberries (Fresh)", category:"Fruit", price:200, unit:"Punnet", img:"https://picsum.photos/id/1080/600/600" },
+    { id:4, name:"Tomato (English)", category:"Vegetable", price:180, unit:"Kg", img:"https://picsum.photos/id/201/600/600" },
+    { id:5, name:"Free Range Eggs", category:"Eggs", price:300, unit:"Dozen", img:"https://picsum.photos/id/312/600/600" },
+    { id:6, name:"Avocado", category:"Vegetable", price:60, unit:"Piece", img:"https://picsum.photos/id/669/600/600" },
+    { id:7, name:"Mangoes (Apple)", category:"Fruit", price:105, unit:"Piece", img:"https://picsum.photos/id/106/600/600" },
+    { id:8, name:"Fresh Spinach Bunch", category:"Vegetable", price:40, unit:"Bunch", img:"https://picsum.photos/id/292/600/600" },
+    { id:9, name:"Bananas (Sweet) Bunch", category:"Fruit", price:180, unit:"Bunch", img:"https://picsum.photos/id/1005/600/600" },
+    { id:10, name:"Chicken (Whole)", category:"Meat", price:700, unit:"Pieces", img:"https://picsum.photos/id/1005/600/600" },
+    { id:11, name:"Brie Portion 125g", category:"Cheese", price:630, unit:"Unit", img:"https://picsum.photos/id/63/600/600" },
+    { id:12, name:"Pure Honey 500g", category:"Eggs", price:530, unit:"Jar", img:"https://picsum.photos/id/1003/600/600" },
+    { id:13, name:"Cheddar (Limuru) 250g", category:"Cheese", price:750, unit:"Pack", img:"https://picsum.photos/id/63/600/600" },
+    { id:14, name:"Greek Yogurt 250g", category:"Dairy", price:450, unit:"Unit", img:"https://picsum.photos/id/133/600/600" },
+    { id:15, name:"Coriander Bunch", category:"Vegetable", price:40, unit:"Bunch", img:"https://picsum.photos/id/292/600/600" },
+    { id:16, name:"Heirloom Tomatoes", category:"Vegetable", price:180, unit:"Kg", img:"https://picsum.photos/id/201/600/600" }
 ];
 
 let cart = [];
 
-// Render Products
-function renderProducts(filteredProducts = products) {
+// Render all products
+function renderProducts(filtered = products) {
     const grid = document.getElementById('productGrid');
     grid.innerHTML = '';
     
-    filteredProducts.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card glass border border-white/10 rounded-3xl overflow-hidden';
-        card.innerHTML = `
-            <img src="${product.img}" class="w-full h-48 object-cover">
-            <div class="p-5">
-                <p class="text-emerald-400 text-sm">${product.category}</p>
-                <h3 class="font-semibold text-lg mt-1">${product.name}</h3>
-                <p class="text-2xl font-bold mt-3">KSh ${product.price}</p>
-                <p class="text-white/60 text-sm">${product.unit}</p>
-                <button onclick="addToCart('${product.name}', ${product.price})" 
-                        class="mt-5 w-full bg-emerald-600 hover:bg-emerald-500 py-3 rounded-2xl font-medium">
-                    Add to Cart
-                </button>
-            </div>
-        `;
-        grid.appendChild(card);
+    filtered.forEach(product => {
+        const cardHTML = `
+            <div class="product-card bg-white border border-emerald-100 rounded-3xl overflow-hidden">
+                <img src="${product.img}" alt="${product.name}" class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <span class="text-xs uppercase tracking-widest text-emerald-600">${product.category}</span>
+                    <h3 class="font-semibold text-xl mt-2">${product.name}</h3>
+                    <div class="flex justify-between items-end mt-4">
+                        <div>
+                            <span class="text-3xl font-bold">KSh ${product.price}</span>
+                            <span class="text-sm text-gray-500 ml-2">/${product.unit}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id});" 
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-2xl text-sm font-medium">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        grid.innerHTML += cardHTML;
     });
 }
 
-// Add to Cart
-function addToCart(name, price) {
-    cart.push({name, price});
-    document.getElementById('cartCount').textContent = cart.length;
-    alert(`${name} added to cart!`);
+// Add to cart
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    cart.push(product);
+    updateCartCount();
+    // Nice feedback
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#10b981; color:white; padding:16px 24px; border-radius:9999px; box-shadow:0 10px 15px -3px rgb(16 185 129);';
+    toast.textContent = `✅ ${product.name} added!`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2200);
 }
 
-// Cart Modal
+function updateCartCount() {
+    document.getElementById('cartCountHeader').textContent = cart.length;
+}
+
+// Show cart modal
 function toggleCart() {
     const modal = document.getElementById('cartModal');
-    const itemsDiv = document.getElementById('cartItems');
+    const list = document.getElementById('cartItemsList');
     let total = 0;
     
-    itemsDiv.innerHTML = '';
-    cart.forEach(item => {
+    list.innerHTML = cart.map((item, index) => {
         total += item.price;
-        const div = document.createElement('div');
-        div.className = "flex justify-between";
-        div.innerHTML = `<span>${item.name}</span><span>KSh ${item.price}</span>`;
-        itemsDiv.appendChild(div);
-    });
+        return `
+            <div class="flex justify-between py-4 border-b">
+                <div>${item.name}</div>
+                <div class="font-medium">KSh ${item.price}</div>
+            </div>`;
+    }).join('');
     
-    document.getElementById('cartTotal').textContent = `KSh ${total}`;
+    document.getElementById('cartTotalPrice').innerHTML = `KSh <span class="text-4xl">${total}</span>`;
     modal.classList.toggle('hidden');
 }
 
-// Fake Checkout
-function fakeCheckout() {
-    alert("🎉 Order placed successfully! (Demo mode)\nThank you for shopping at Comette Farm.");
+// Place order simulation
+function placeOrder() {
+    if (cart.length === 0) return;
+    alert("🎉 Order placed successfully!\n\nThank you for supporting Comette Farm.\nYour fresh produce will be harvested tomorrow morning and delivered same day.");
     cart = [];
-    document.getElementById('cartCount').textContent = '0';
+    updateCartCount();
     toggleCart();
 }
 
-// Section Switching
-function showSection(section) {
-    document.querySelectorAll('#mainContent > div').forEach(div => div.classList.add('hidden'));
+// Category filter
+function filterByCategory(cat) {
+    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active', 'bg-emerald-600', 'text-white'));
+    event.target.classList.add('active', 'bg-emerald-600', 'text-white');
     
-    if (section === 'dashboard') document.getElementById('dashboardSection').classList.remove('hidden');
+    const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+    renderProducts(filtered);
+}
+
+// Section switcher
+function showSection(section) {
+    document.querySelectorAll('#homeSection, #shopSection, #farmSection, #ordersSection').forEach(s => s.classList.add('hidden'));
+    
+    if (section === 'home') document.getElementById('homeSection').classList.remove('hidden');
     if (section === 'shop') {
         document.getElementById('shopSection').classList.remove('hidden');
         renderProducts();
     }
+    if (section === 'farm') document.getElementById('farmSection').classList.remove('hidden');
     if (section === 'orders') document.getElementById('ordersSection').classList.remove('hidden');
-    if (section === 'analytics') document.getElementById('analyticsSection').classList.remove('hidden');
+    if (section === 'cart') toggleCart();
 }
 
-// Simple Chart
-function createChart() {
-    const ctx = document.getElementById('salesChart');
-    if (ctx) {
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'Sales (KSh)',
-                    data: [4200, 6800, 5200, 9100, 12400, 15800, 18420],
-                    borderColor: '#10b981',
-                    tension: 0.4
-                }]
-            },
-            options: { plugins: { legend: { display: false } } }
-        });
-    }
+function fakeLogin() {
+    alert("👋 Welcome back to Comette Farm, Alex!\nYour account is ready.");
 }
 
-// Filter Products
-function filterProducts() {
-    const term = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-    renderProducts(filtered);
-}
-
-// Initialize
+// Start the website
 window.onload = () => {
-    showSection('dashboard');
-    createChart();
-    
-    // Show some top items
-    const topHTML = products.slice(0,4).map(p => `
-        <div class="flex gap-4 items-center">
-            <img src="${p.img}" class="w-12 h-12 rounded-2xl object-cover">
-            <div>
-                <p class="font-medium">${p.name}</p>
-                <p class="text-emerald-400">KSh ${p.price}</p>
-            </div>
-        </div>
-    `).join('');
-    document.getElementById('topItems').innerHTML = topHTML;
+    showSection('home');
 };
 </script>
 </body>
