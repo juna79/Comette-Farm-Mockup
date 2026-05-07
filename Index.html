@@ -1,600 +1,1474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Greens Greens Ordering Dashboard</title>
-<style>
-:root{--bg:#f6f2e9;--card:#fff;--ink:#17231c;--muted:#68736b;--line:#e4dccd;--green:#246b45;--green2:#174a31;--soft:#e7f2e8;--gold:#c89638;--danger:#b54444;--shadow:0 18px 45px rgba(25,38,29,.12);--r:24px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{border:0;cursor:pointer}img{display:block;max-width:100%}.top{position:sticky;top:0;z-index:50;background:rgba(246,242,233,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(23,35,28,.08)}.topin{max-width:1380px;margin:auto;padding:16px 20px;display:flex;gap:14px;align-items:center}.brand{display:flex;gap:10px;align-items:center;min-width:max-content}.mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#246b45,#89b85a);color:white;display:grid;place-items:center;font-weight:950}.bt{font-size:18px;font-weight:950;line-height:1}.bs{font-size:12px;color:var(--muted)}.search{flex:1;position:relative}.search input{width:100%;border:1px solid rgba(23,35,28,.12);border-radius:999px;background:white;padding:14px 16px;outline:0}.search input:focus{border-color:var(--green)}.cartbtn{border-radius:999px;padding:13px 17px;background:var(--green);color:white;font-weight:900;box-shadow:0 10px 24px rgba(36,107,69,.24)}.cartbtn span{display:inline-grid;place-items:center;background:white;color:var(--green);border-radius:999px;min-width:24px;height:24px;margin-left:8px;font-size:12px}.hero{max-width:1380px;margin:24px auto 0;padding:0 20px;display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.heroMain{min-height:350px;border-radius:34px;padding:36px;background:linear-gradient(120deg,rgba(20,62,39,.90),rgba(36,107,69,.65)),url('https://source.unsplash.com/1600x900/?fresh+vegetables+market+groceries');background-size:cover;background-position:center;color:white;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:space-between}.pill{width:max-content;max-width:100%;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);padding:9px 13px;font-size:13px;font-weight:850}.hero h1{font-size:clamp(36px,6vw,72px);letter-spacing:-.06em;line-height:.95;margin:24px 0 12px}.hero p{max-width:640px;color:rgba(255,255,255,.86);font-size:17px;line-height:1.5}.heroBtns{display:flex;gap:10px;flex-wrap:wrap}.whitebtn,.ghostbtn{border-radius:999px;padding:13px 17px;font-weight:950}.whitebtn{background:white;color:var(--green2)}.ghostbtn{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);color:white}.side{display:grid;gap:18px}.panel{background:white;border-radius:30px;padding:24px;box-shadow:var(--shadow)}.panel h3{font-size:26px;letter-spacing:-.04em;margin:0 0 8px}.panel p{color:var(--muted);line-height:1.45;margin:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{background:var(--soft);border-radius:18px;padding:14px}.stat strong{display:block;font-size:25px}.stat span{color:var(--muted);font-size:12px;font-weight:800}.main{max-width:1380px;margin:30px auto;padding:0 20px 70px}.head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:34px 0 16px}.head h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.055em;margin:0}.head p{color:var(--muted);margin:8px 0 0}.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}.filter{border-radius:999px;background:white;border:1px solid rgba(23,35,28,.1);padding:10px 14px;font-weight:850}.filter.active{background:var(--green);color:white;border-color:var(--green)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:white;border-radius:26px;overflow:hidden;box-shadow:0 12px 34px rgba(23,35,28,.08);border:1px solid rgba(23,35,28,.06);display:flex;flex-direction:column;min-height:415px}.pic{height:190px;background:#eee;position:relative}.pic img{width:100%;height:100%;object-fit:cover}.tag{position:absolute;top:11px;left:11px;border-radius:999px;background:rgba(255,255,255,.92);padding:7px 10px;font-size:12px;font-weight:950;color:var(--green2)}.body{padding:17px;display:flex;flex-direction:column;flex:1}.group{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);font-weight:950}.body h3{font-size:19px;line-height:1.12;letter-spacing:-.03em;margin:8px 0}.meta{color:var(--muted);font-size:13px;line-height:1.45;margin:0 0 14px}.bottom{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-top:auto}.price{font-size:22px;font-weight:950;color:var(--green2)}.small{font-size:12px;color:var(--muted)}.add{background:var(--ink);color:white;border-radius:999px;padding:11px 13px;font-weight:950}.view{margin-top:12px;width:100%;border-radius:999px;padding:10px;background:var(--soft);color:var(--green2);font-weight:900}.empty{grid-column:1/-1;background:white;border:1px dashed rgba(23,35,28,.2);border-radius:24px;padding:34px;text-align:center;color:var(--muted)}.overlay{position:fixed;inset:0;background:rgba(10,16,12,.55);backdrop-filter:blur(7px);z-index:90;opacity:0;pointer-events:none;transition:.2s}.overlay.open{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:white;z-index:100;transform:translateX(105%);transition:.24s;box-shadow:-20px 0 60px rgba(0,0,0,.18);display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.dh{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(23,35,28,.08)}.dh h2{margin:0}.x{width:38px;height:38px;border-radius:50%;background:var(--bg);font-weight:950}.cartitems{padding:16px;overflow:auto;flex:1;display:grid;gap:11px;align-content:start}.ci{display:grid;grid-template-columns:72px 1fr;gap:12px;background:var(--bg);border-radius:18px;padding:11px}.ci img{width:72px;height:72px;border-radius:14px;object-fit:cover}.ci h4{margin:0 0 4px}.ci p{margin:0;color:var(--muted);font-size:13px}.qty{display:flex;align-items:center;gap:8px;margin-top:8px}.qty button{border-radius:50%;width:28px;height:28px;background:white;font-weight:950}.qty .remove{width:auto;border-radius:999px;color:var(--danger);background:transparent;margin-left:auto}.foot{padding:17px;border-top:1px solid rgba(23,35,28,.08);display:grid;gap:12px}.total{display:flex;justify-content:space-between;font-size:22px;font-weight:950}.checkout{background:var(--green);color:white;border-radius:999px;padding:14px;font-weight:950;width:100%}.modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-45%) scale(.96);width:min(740px,calc(100% - 28px));max-height:calc(100vh - 38px);overflow:auto;background:white;border-radius:30px;z-index:110;opacity:0;pointer-events:none;transition:.2s;box-shadow:var(--shadow)}.modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}.mh{height:280px;position:relative}.mh img{width:100%;height:100%;object-fit:cover}.mc{padding:24px}.mc h2{font-size:34px;letter-spacing:-.05em;margin:0 0 10px}.mc p{color:var(--muted);line-height:1.55}.mx{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);font-weight:950;z-index:2}.form{display:grid;gap:10px;margin-top:12px}.form input,.form select{width:100%;border:1px solid rgba(23,35,28,.12);background:var(--bg);border-radius:15px;padding:13px}.summary{background:var(--bg);border-radius:18px;padding:14px;color:var(--muted);margin:12px 0}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:white;border-radius:999px;padding:13px 17px;font-weight:900;opacity:0;z-index:200;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:1120px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}}@media(max-width:760px){.topin{flex-wrap:wrap}.search{order:3;min-width:100%}.grid{grid-template-columns:1fr}.side{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.heroMain{padding:26px;min-height:410px}.head{align-items:start;flex-direction:column}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Comette Farm — Ordering Dashboard</title>
+
+  <style>
+    :root {
+      --bg: #f6f1e7;
+      --card: #ffffff;
+      --ink: #17231c;
+      --muted: #6d756e;
+      --line: #e5dccb;
+      --green: #245f3f;
+      --green-dark: #173f2b;
+      --green-soft: #e5f1e7;
+      --gold: #c5963b;
+      --danger: #b54545;
+      --shadow: 0 18px 50px rgba(22, 35, 27, 0.12);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(246, 241, 231, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(23, 35, 28, 0.08);
+    }
+
+    .topbar-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: max-content;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #245f3f, #91b95d);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      box-shadow: 0 10px 24px rgba(36, 95, 63, 0.25);
+    }
+
+    .brand-title {
+      font-weight: 950;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .search {
+      flex: 1;
+    }
+
+    .search input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(23, 35, 28, 0.13);
+      background: white;
+      padding: 14px 18px;
+      outline: none;
+      box-shadow: 0 10px 28px rgba(23, 35, 28, 0.05);
+    }
+
+    .search input:focus {
+      border-color: var(--green);
+    }
+
+    .cart-button {
+      border-radius: 999px;
+      padding: 13px 18px;
+      background: var(--green);
+      color: white;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(36, 95, 63, 0.25);
+    }
+
+    .cart-button span {
+      display: inline-grid;
+      place-items: center;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: white;
+      color: var(--green);
+      margin-left: 8px;
+      padding: 0 7px;
+      font-size: 12px;
+    }
+
+    .hero {
+      max-width: 1380px;
+      margin: 24px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .hero-main {
+      min-height: 380px;
+      border-radius: 36px;
+      padding: 38px;
+      background:
+        linear-gradient(120deg, rgba(21, 63, 41, 0.92), rgba(36, 95, 63, 0.68)),
+        url("https://images.pexels.com/photos/2255935/pexels-photo-2255935.jpeg?auto=compress&cs=tinysrgb&w=1600");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .pill {
+      width: max-content;
+      max-width: 100%;
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 13px;
+      font-weight: 850;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 24px 0 12px;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 0.94;
+      letter-spacing: -0.065em;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .primary-button,
+    .ghost-button {
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 950;
+    }
+
+    .primary-button {
+      background: white;
+      color: var(--green-dark);
+    }
+
+    .ghost-button {
+      color: white;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h3 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: var(--green-soft);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .main {
+      max-width: 1380px;
+      margin: 30px auto;
+      padding: 0 20px 70px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 34px 0 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      letter-spacing: -0.055em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .sort-select {
+      border: 1px solid rgba(23, 35, 28, 0.12);
+      border-radius: 999px;
+      background: white;
+      padding: 12px 15px;
+      outline: none;
+      font-weight: 800;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .filter {
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: white;
+      border: 1px solid rgba(23, 35, 28, 0.1);
+      font-weight: 850;
+      color: var(--ink);
+    }
+
+    .filter.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(23, 35, 28, 0.06);
+      box-shadow: 0 12px 34px rgba(23, 35, 28, 0.08);
+      display: flex;
+      flex-direction: column;
+      min-height: 420px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .image-wrap {
+      height: 195px;
+      background: #efe7d8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-fallback {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 18px;
+      background: linear-gradient(135deg, #e8f1e6, #f4ead8);
+      color: var(--green-dark);
+      font-weight: 950;
+    }
+
+    .tag {
+      position: absolute;
+      top: 11px;
+      left: 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.93);
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 950;
+      color: var(--green-dark);
+      box-shadow: 0 8px 18px rgba(23, 35, 28, 0.12);
+    }
+
+    .card-body {
+      padding: 17px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .group {
+      font-size: 12px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: 950;
+    }
+
+    .card h3 {
+      margin: 8px 0;
+      font-size: 19px;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0 0 14px;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: 950;
+      color: var(--green-dark);
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .add {
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-weight: 950;
+    }
+
+    .view {
+      margin-top: 12px;
+      width: 100%;
+      border-radius: 999px;
+      padding: 10px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-weight: 900;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      background: white;
+      border: 1px dashed rgba(23, 35, 28, 0.22);
+      border-radius: 24px;
+      padding: 34px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 16, 12, 0.55);
+      backdrop-filter: blur(7px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s;
+    }
+
+    .overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(480px, 100%);
+      background: white;
+      z-index: 100;
+      transform: translateX(105%);
+      transition: 0.24s;
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(23, 35, 28, 0.08);
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+    }
+
+    .close-button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg);
+      font-weight: 950;
+    }
+
+    .cart-items {
+      padding: 16px;
+      overflow: auto;
+      flex: 1;
+      display: grid;
+      gap: 11px;
+      align-content: start;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      background: var(--bg);
+      border-radius: 18px;
+      padding: 11px;
+    }
+
+    .cart-item img {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: #e9dfcf;
+    }
+
+    .cart-item h4 {
+      margin: 0 0 4px;
+    }
+
+    .cart-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .qty button {
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      background: white;
+      font-weight: 950;
+    }
+
+    .qty .remove {
+      width: auto;
+      border-radius: 999px;
+      color: var(--danger);
+      background: transparent;
+      margin-left: auto;
+    }
+
+    .drawer-foot {
+      padding: 17px;
+      border-top: 1px solid rgba(23, 35, 28, 0.08);
+      display: grid;
+      gap: 12px;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .checkout-button {
+      width: 100%;
+      border-radius: 999px;
+      padding: 14px;
+      background: var(--green);
+      color: white;
+      font-weight: 950;
+    }
+
+    .modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -45%) scale(0.96);
+      width: min(740px, calc(100% - 28px));
+      max-height: calc(100vh - 38px);
+      overflow: auto;
+      background: white;
+      border-radius: 30px;
+      z-index: 110;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s;
+      box-shadow: var(--shadow);
+    }
+
+    .modal.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-hero {
+      height: 280px;
+      position: relative;
+      background: #efe7d8;
+    }
+
+    .modal-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-content h2 {
+      font-size: 34px;
+      letter-spacing: -0.05em;
+      margin: 0 0 10px;
+    }
+
+    .modal-content p {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      font-weight: 950;
+      z-index: 2;
+    }
+
+    .form {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .form input,
+    .form select {
+      width: 100%;
+      border: 1px solid rgba(23, 35, 28, 0.12);
+      background: var(--bg);
+      border-radius: 15px;
+      padding: 13px;
+      outline: none;
+    }
+
+    .summary {
+      background: var(--bg);
+      border-radius: 18px;
+      padding: 14px;
+      color: var(--muted);
+      margin: 12px 0;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      padding: 13px 17px;
+      font-weight: 900;
+      opacity: 0;
+      z-index: 200;
+      transition: 0.2s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+      }
+
+      .search {
+        order: 3;
+        min-width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main {
+        padding: 26px;
+        min-height: 430px;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="top"><div class="topin"><div class="brand"><div class="mark">GG</div><div><div class="bt">Greens Greens</div><div class="bs">Full order list dashboard</div></div></div><div class="search"><input id="q" placeholder="Search dill, parsley, eggplant dip, gouda, beef mince, apples..." /></div><button class="cartbtn" onclick="openCart()">Cart <span id="count">0</span></button></div></header>
-<section class="hero"><div class="heroMain"><div><div class="pill">310 spreadsheet items • exact group filters • item-level image terms</div><h1>Fresh ordering dashboard.</h1><p>All items from the uploaded order sheet are inside this page. Filters, search, cart, product details and checkout all work in one HTML file.</p></div><div class="heroBtns"><button class="whitebtn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop now</button><button class="ghostbtn" onclick="setGroup('Herbs')">View herbs</button></div></div><div class="side"><div class="panel"><h3>Working product flow</h3><p>Click a group like Dairy, Meat, Fruit, Herbs or Vegetable and only those spreadsheet rows show.</p><div class="stats"><div class="stat"><strong id="pcount">310</strong><span>Items</span></div><div class="stat"><strong id="gcount">0</strong><span>Groups</span></div><div class="stat"><strong>Live</strong><span>Cart</span></div></div></div><div class="panel"><h3>Image logic fixed</h3><p>Images are generated from specific product names: dill searches dill, parsley searches parsley, smoked eggplant dip searches eggplant dip, not random category buckets.</p></div></div></section>
-<main class="main" id="shop"><div class="head"><div><h2>Order list</h2><p id="resultText"></p></div><select id="sort" onchange="render()"><option value="name">Sort by name</option><option value="priceLow">Price low to high</option><option value="priceHigh">Price high to low</option><option value="group">Sort by group</option></select></div><div id="filters" class="filters"></div><div id="grid" class="grid"></div></main>
-<div id="shade" class="overlay" onclick="closeAll()"></div><aside id="drawer" class="drawer"><div class="dh"><h2>Your cart</h2><button class="x" onclick="closeCart()">×</button></div><div id="cartItems" class="cartitems"></div><div class="foot"><div class="total"><span>Total</span><span id="total">KSh 0</span></div><button class="checkout" onclick="checkout()">Checkout</button></div></aside><div id="modal" class="modal"><button class="mx" onclick="closeModal()">×</button><div id="modalBody"></div></div><div id="toast" class="toast"></div>
-<script>
-const RAW = `Brown's Cheese|Biscuits (Charcoal Crackers) 250g|Pack|97|650|Pack
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">CF</div>
+        <div>
+          <div class="brand-title">Comette Farm</div>
+          <div class="brand-subtitle">Fresh produce ordering dashboard</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Search dill, parsley, eggplant dip, gouda, beef mince, apples..."
+        />
+      </div>
+
+      <button class="cart-button" onclick="openCart()">
+        Cart <span id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div>
+        <div class="pill">Comette Farm • full product ordering dashboard</div>
+        <h1>Fresh ordering, made simple.</h1>
+        <p>
+          Browse the full product list, filter by group, search exact items, view details,
+          add to cart and checkout from one clean HTML page.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <button class="primary-button" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+          Shop now
+        </button>
+        <button class="ghost-button" onclick="setGroup('Herbs')">
+          View herbs
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-side">
+      <div class="panel">
+        <h3>Working product flow</h3>
+        <p>
+          Click Dairy, Meat, Fruit, Herbs or any other group and the dashboard filters properly.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong id="productCount">0</strong>
+            <span>Items</span>
+          </div>
+          <div class="stat">
+            <strong id="groupCount">0</strong>
+            <span>Groups</span>
+          </div>
+          <div class="stat">
+            <strong>Live</strong>
+            <span>Cart</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Item-level images</h3>
+        <p>
+          The image engine maps specific product names first: dill gets dill, parsley gets parsley,
+          smoked eggplant dip gets dip, gouda gets gouda.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="main" id="shop">
+    <div class="section-head">
+      <div>
+        <h2>Order list</h2>
+        <p id="resultText">Loading products...</p>
+      </div>
+
+      <select id="sortSelect" class="sort-select">
+        <option value="name">Sort by name</option>
+        <option value="priceLow">Price low to high</option>
+        <option value="priceHigh">Price high to low</option>
+        <option value="group">Sort by group</option>
+      </select>
+    </div>
+
+    <div id="filters" class="filters"></div>
+    <div id="productGrid" class="grid"></div>
+  </main>
+
+  <div id="overlay" class="overlay" onclick="closeAll()"></div>
+
+  <aside id="cartDrawer" class="drawer">
+    <div class="drawer-head">
+      <h2>Your cart</h2>
+      <button class="close-button" onclick="closeCart()">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="drawer-foot">
+      <div class="total">
+        <span>Total</span>
+        <span id="cartTotal">KSh 0</span>
+      </div>
+      <button class="checkout-button" onclick="openCheckout()">Checkout</button>
+    </div>
+  </aside>
+
+  <div id="modal" class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalBody"></div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+        const RAW_PRODUCTS = `
+Brown's Cheese|Biscuits (Charcoal Crackers) 250g|Pack|97|650|Pack
 Brown's Cheese|Biscuits (Cheddar Crackers) 250g|Pack|564|650|Pack
 Brown's Cheese|Biscuits (Rosemary) 250g|Pack|814|650|Pack
-Brown's Cheese|Bleu-De-Brun (Half Cheese)|Unit|75|2250|Unit
 Brown's Cheese|Bleu-De-Brun Portion 150g|Unit|74|700|Unit
 Brown's Cheese|Bocconcini 250g|Pack|504|750|Pack
-Brown's Cheese|Brie (Whole) (Ripened)|Pieces|100|4925|Kg's
 Brown's Cheese|Brie Portion 125g|Unit|76|630|Unit
 Brown's Cheese|Camembert 200g|Unit|77|700|Unit
-Brown's Cheese|Cheddar (Cheese Love) White 250g|Pieces|1559|600|Pieces
-Brown's Cheese|Cheddar (Limuru) 250g|Pack|1329|750|Pack
-Brown's Cheese|Cottage Cheese 250g|Unit|808|580|Unit
-Brown's Cheese|Cream Cheese (Soft) 250g|Unit|502|720|Unit
-Brown's Cheese|Dip (whipped Feta) 300g|Unit|90|450|Unit
+Brown's Cheese|Cheddar White 250g|Pieces|1559|600|Pieces
+Brown's Cheese|Cream Cheese 250g|Unit|502|720|Unit
+Brown's Cheese|Dip (Whipped Feta) 300g|Unit|90|450|Unit
 Brown's Cheese|Dip (Smoked Egg Plant) 250g|Pack|1403|450|Pack
-Brown's Cheese|Feta (Lemon Pepper) 200g|Unit|505|740|Unit
 Brown's Cheese|Feta 200g|Unit|82|600|Unit
-Brown's Cheese|Gouda (Half Cheese) Approx. 1kg|Kg's|1114|2400|Kg's
-Brown's Cheese|Gouda (Portion) 200g|Unit|84|580|Unit
-Brown's Cheese|Gouda Approx 2Kg|Unit|83|3685|Unit
-Brown's Cheese|Greek Yogurt (250g)|Unit|758|450|Unit
+Brown's Cheese|Gouda Portion 200g|Unit|84|580|Unit
+Brown's Cheese|Greek Yogurt 250g|Unit|758|450|Unit
 Brown's Cheese|Halloumi 200g|Unit|204|650|Unit
-Brown's Cheese|Hummus (Chick Peas) 250g|Pack|1407|450|Pack
+Brown's Cheese|Hummus Chick Peas 250g|Pack|1407|450|Pack
 Brown's Cheese|Mascarpone 200g|Unit|101|570|Unit
-Brown's Cheese|Mozarella 200g|Unit|94|500|Unit
+Brown's Cheese|Mozzarella 200g|Unit|94|500|Unit
 Brown's Cheese|Paneer 250g|Unit|92|525|Unit
-Brown's Cheese|Pizella 200g|Unit|95|440|Unit
 Brown's Cheese|Ricotta 420g|Unit|96|510|Unit
-Brown's Cheese|Sour Cream (250g)|Pack|1507|650|Pack
-Brown's Cheese|Stone Portion 150g|Unit|98|585|Unit
-Brown's Cheese|String (Stick) Cheese 180g|Unit|759|500|Unit
-Brown's Cheese - Ice-Creams|Caramel Ice- Cream 500 ml (Tub)|Pack|1155|950|Pack
-Brown's Cheese - Ice-Creams|Chocolate Chip Fudge Ice Cream 500ml (Tub)|Pack|1176|950|Pack
-Brown's Cheese - Ice-Creams|Chocolate Ice Cream 2L|Pack|1374|3700|Pack
+Brown's Cheese|String Cheese 180g|Unit|759|500|Unit
+Brown's Cheese - Ice-Creams|Caramel Ice Cream 500ml|Pack|1155|950|Pack
+Brown's Cheese - Ice-Creams|Chocolate Ice Cream 500ml|Pack|1176|950|Pack
 Brown's Cheese - Ice-Creams|Cookies And Cream 500ml|Pack|1432|850|Pack
-Brown's Cheese - Ice-Creams|Onion Jam 200g|Jar|1207|450|Jar
-Brown's Cheese - Ice-Creams|Vanilla Bean Ice Cream 2L|Pack|1375|3700|Pack
-Brown's Cheese - Ice-Creams|Vanilla Bean Ice Cream 500 ml (Tub)|Pack|1177|950|Pack
-Dairy|Cream|Litres|151|850|Litres
-Dairy|Cream (0.5 lts)|Pack|720|430|Pack
-Dairy|Milk (Friesian)|Litres|1519|130|Litres
-Dairy|Milk (Half Cream)|Litres|149|130|Litres
-Dairy|Milk (Jersey)|Litres|150|150|Litres
-Dairy|Milk (Skim)|Litres|275|50|Litres
-Farmers Choice|Beef Striploin (350g Portion)|Pack|1025|680|Pack
+Brown's Cheese - Ice-Creams|Vanilla Bean Ice Cream 500ml|Pack|1177|950|Pack
+Dairy|Cream 500ml|Pack|720|430|Pack
+Dairy|Milk Friesian 1L|Litres|1519|130|Litres
+Dairy|Milk Jersey 1L|Litres|150|150|Litres
+Farmers Choice|Beef Striploin 350g|Pack|1025|680|Pack
 Farmers Choice|Beef Boerewors 500g|Pack|940|750|Pack
-Farmers Choice|Minced Beef (High Grade) 500g|Pack|990|550|Pack
-Farmers Choice|Premium Pork Sausages 400gms|Pack|207|480|Pack
+Farmers Choice|Minced Beef High Grade 500g|Pack|990|550|Pack
+Farmers Choice|Premium Pork Sausages 400g|Pack|207|480|Pack
 Farmers Choice|Pork Loin Chops|Kg's|1100|1000|Kg's
 Farmers Choice|Streaky Bacon 400g|Pack|956|900|Pack
-Flowers|Alstromaria (Mixed Colors)|Bunch|225|70|Bunch
-Flowers|Bouquet (Large)|Bunch|187|300|Bunch
-Flowers|Bouquet (Small)|Bunch|186|200|Bunch
-Fruit|Apples (Green By The Piece)|Pieces|324|350|Kg's
-Fruit|Apples (Green)|Kg's|122|350|Kg's
-Fruit|Apples (Red By The Piece)|Pieces|323|350|Kg's
-Fruit|Apples (Red)|Kg's|121|350|Kg's
-Fruit|Bananas (Plantain)|Bunch|1523|600|Bunch
-Fruit|Bananas (Sweet)|Bunch|123|180|Bunch
-Fruit|Bananas (Sweet) Half Ripe.|Bunch|1099|180|Bunch
-Fruit|Bananas Green (Matoke)|Pieces|616|25|Pieces
-Fruit|Bananas Normal (Bunch)|Bunch|124|130|Kg's
-Fruit|Bananas Normal (By The Pc)|Pieces|327|130|Kg's
-Fruit|Bananas Normal (Half Ripe)|Pieces|126|130|Kg's
-Fruit|Bananas Normal (Half Ripe) Bunch|Bunch|1298|130|Kg's
+Flowers|Bouquet Large|Bunch|187|300|Bunch
+Flowers|Bouquet Small|Bunch|186|200|Bunch
+Fruit|Apples Green|Kg's|122|350|Kg's
+Fruit|Apples Red|Kg's|121|350|Kg's
+Fruit|Bananas Sweet|Bunch|123|180|Bunch
+Fruit|Bananas Green Matoke|Pieces|616|25|Pieces
 Fruit|Coconuts|Pieces|471|150|Pieces
-Fruit|Grape Fruit (Imported) (Pc)|Pieces|385|200|Pieces
 Fruit|Grapes|Punnet|384|500|Punnet
 Fruit|Kiwi|Pieces|1323|200|Pieces
-Fruit|Lemons (Imported)|Kg's|386|500|Kg's
-Fruit|Lemons (Imported) (By The Pc)|Pieces|481|500|Kg's
-Fruit|Lemons (Local)|Kg's|127|250|Kg's
-Fruit|Lemons (Local) (By The Pc)|Pieces|542|250|Kg's
+Fruit|Lemons Imported|Kg's|386|500|Kg's
+Fruit|Lemons Local|Kg's|127|250|Kg's
 Fruit|Limes|Kg's|128|220|Kg's
-Fruit|Limes (By The Pc)|Pieces|463|220|Kg's
-Fruit|Madafu|Pieces|1185|110|Pieces
-Fruit|Mangoes (Apple)|Pieces|129|105|Pieces
-Fruit|Mangoes (Half Ripe)|Pieces|476|105|Pieces
-Fruit|Melon (Sweet)|Pieces|130|250|Kg's
-Fruit|Melon (Thorn) Pc|Pieces|1586|60|Pieces
-Fruit|Melon (Water)|Pieces|131|120|Kg's
-Fruit|Oranges (Imported By The Piece)|Pieces|325|400|Kg's
-Fruit|Oranges (Imported)|Kg's|132|400|Kg's
-Fruit|Oranges (Local By The Piece)|Pieces|190|190|Kg's
-Fruit|Oranges (Local)|Kg's|133|190|Kg's
-Fruit|Oranges (Pixie)|Kg's|470|350|Kg's
-Fruit|Oranges (Pixie) By The Piece|Pieces|1527|350|Kg's
-Fruit|Passion (Black)|Kg's|134|300|Kg's
-Fruit|Passion (Black) (By The pc)|Pieces|339|300|Kg's
-Fruit|Passion (Yellow)|Kg's|377|350|Kg's
-Fruit|Passion (Yellow) By The Pc|Pieces|1436|350|Kg's
+Fruit|Mangoes Apple|Pieces|129|105|Pieces
+Fruit|Melon Sweet|Pieces|130|250|Kg's
+Fruit|Melon Water|Pieces|131|120|Kg's
+Fruit|Oranges Imported|Kg's|132|400|Kg's
+Fruit|Oranges Local|Kg's|133|190|Kg's
+Fruit|Passion Black|Kg's|134|300|Kg's
+Fruit|Passion Yellow|Kg's|377|350|Kg's
 Fruit|Paw Paw|Pieces|135|250|Kg's
-Fruit|Paw Paw (By The Kg)|Kg's|478|250|Kg's
-Fruit|Paw Paw (Mountain)|Pieces|518|250|Kg's
-Fruit|Paw Paw (Mountain) By The Kg|Kg's|626|250|Kg's
-Fruit|Pears (Imported)(By The Piece)|Pieces|362|700|Kg's
+Fruit|Pears Imported|Pieces|362|700|Kg's
 Fruit|Pineapple|Pieces|137|150|Kg's
-Fruit|Pineapple (Half Ripe)|Pieces|506|150|Kg's
-Fruit|Pineapple (Peeled)|Pieces|683|250|Pieces
 Fruit|Plums|Punnet|1437|500|Punnet
 Fruit|Pomegranate|Pieces|1438|350|Pieces
-Fruit|Tree Tomato|Kg's|136|450|Kg's
 Fruit Berries|Blackberries|Punnet|1367|500|Punnet
 Fruit Berries|Blueberries|Punnet|377|650|Punnet
 Fruit Berries|Raspberries|Punnet|611|500|Punnet
 Fruit Berries|Strawberries|Punnet|515|350|Punnet
-Fruit Berries|Strawberries (Large)|Punnet|1545|450|Punnet
-Fruit Berries|Strawberries (Small)|Punnet|1483|250|Punnet
 Herbs|Basil|Bunch|161|50|Bunch
 Herbs|Bay Leaves|Bunch|451|50|Bunch
+Herbs|Chervil|Bunch|160|50|Bunch
 Herbs|Chives|Bunch|338|50|Bunch
 Herbs|Coriander|Bunch|157|25|Bunch
+Herbs|Curry Leaves|Bunch|159|50|Bunch
 Herbs|Dill|Bunch|162|50|Bunch
+Herbs|Kaffir Lime Leaves|Bunch|158|50|Bunch
+Herbs|Lemon Balm|Bunch|171|50|Bunch
 Herbs|Lemon Grass|Bunch|179|50|Bunch
 Herbs|Marjoram|Bunch|340|50|Bunch
 Herbs|Mint|Bunch|163|50|Bunch
 Herbs|Oregano|Bunch|164|50|Bunch
-Herbs|Parsley (Curly)|Bunch|165|50|Bunch
-Herbs|Parsley (Flat)|Bunch|166|50|Bunch
+Herbs|Parsley Curly|Bunch|165|50|Bunch
+Herbs|Parsley Flat|Bunch|166|50|Bunch
 Herbs|Rosemary|Bunch|167|50|Bunch
 Herbs|Sage|Bunch|168|50|Bunch
 Herbs|Tarragon|Bunch|169|50|Bunch
 Herbs|Thyme|Bunch|170|50|Bunch
-Herbs|Wheat Grass|Punnet|1521|250|Punnet
 Herbs|Wild Rocket|Punnet|1515|100|Punnet
-Herbs|Chervil|Bunch|160|50|Bunch
-Herbs|Curry Leaves|Bunch|159|50|Bunch
-Herbs|Kaffir Lime Leaves|Bunch|158|50|Bunch
-Herbs|Lemon Balm|Bunch|171|50|Bunch
-Herbs|Micro Herbs|Punnet|944|300|Punnet
-Herbs|Micro Herbs (Mixed)|Punnet|1549|300|Punnet
-Herbs|Micro Herbs Red Amaranth|Punnet|1550|300|Punnet
-Herbs|Micro Herbs Red Cabbage|Punnet|1551|300|Punnet
-Herbs|Micro Herbs Red Radish|Punnet|1552|300|Punnet
-Herbs|Micro Herbs Sunflower|Punnet|1553|300|Punnet
 Herbs - Salad|Baby Spinach|Punnet|310|150|Punnet
-Herbs - Salad|Lettuce (Iceberg)|Pieces|144|120|Pieces
+Herbs - Salad|Lettuce Iceberg|Pieces|144|120|Pieces
 Herbs - Salad|Rocket|Punnet|180|100|Punnet
-Herbs (Live)|Basil (Live)|Pot|839|150|Pot
-Herbs (Live)|Chives (Live)|Pot|887|150|Pot
-Herbs (Live)|Coriander (Live)|Pot|886|150|Pot
-Herbs (Live)|Dill (Live)|Pot|884|150|Pot
-Herbs (Live)|Lemon Grass (Live)|Pot|885|150|Pot
-Herbs (Live)|Mint (Live)|Pot|841|150|Pot
-Herbs (Live)|Oregano (Live)|Pot|842|150|Pot
-Herbs (Live)|Parsley (Curly) (Live)|Pot|843|150|Pot
-Herbs (Live)|Parsley (Flat) (Live)|Pot|844|150|Pot
-Herbs (Live)|Rosemary (Live)|Pot|845|150|Pot
-Herbs (Live)|Sage (Live)|Pot|846|150|Pot
-Herbs (Live)|Tarragon (Live)|Pot|847|150|Pot
-Herbs (Live)|Thyme (Live)|Pot|848|150|Pot
-Herbs (Live)|Wild Rocket (Live)|Pot|849|150|Pot
-Herbs (Live)|Marjoram (Live)|Pot|850|150|Pot
-Herbs (Live)|Chervil (Live)|Pot|851|150|Pot
-Herbs (Live)|Curry Leaves (Live)|Pot|852|150|Pot
-Herbs (Live)|Kaffir Lime Leaves (Live)|Pot|853|150|Pot
-Herbs (Live)|Lemon Balm (Live)|Pot|854|150|Pot
-Herbs (Live)|Watercress (Live)|Pot|855|150|Pot
-Herbs (Live)|Wheat Grass (Live)|Pot|856|150|Pot
-Juice - Kombucha|Kombucha Ginger Lemon|Bottle|1489|300|Bottle
-Juice - Kombucha|Kombucha Hibiscus|Bottle|1490|300|Bottle
-Juice - Kombucha|Kombucha Passion|Bottle|1491|300|Bottle
-Juice - Kombucha|Kombucha Plain|Bottle|1492|300|Bottle
 Juices|Apple Juice 1L|Bottle|577|450|Bottle
 Juices|Carrot Juice 1L|Bottle|574|450|Bottle
 Juices|Orange Juice 1L|Bottle|572|450|Bottle
 Juices|Passion Juice 1L|Bottle|575|450|Bottle
 Juices|Pineapple Juice 1L|Bottle|576|450|Bottle
 Juices|Sugarcane Juice 1L|Bottle|573|450|Bottle
-Juices|Tamarind Juice 1L|Bottle|578|450|Bottle
-Juices|Watermelon Juice 1L|Bottle|579|450|Bottle
-Juices|Mixed Juice 1L|Bottle|580|450|Bottle
 Kampi Kitchen|Granola 500g|Pack|1201|750|Pack
-Kampi Kitchen|Granola Chocolate 500g|Pack|1202|850|Pack
 Kampi Kitchen|Honey 500g|Jar|1203|700|Jar
 Kampi Kitchen|Jam Strawberry 300g|Jar|1204|600|Jar
-Kampi Kitchen|Jam Raspberry 300g|Jar|1205|600|Jar
-Kampi Kitchen|Jam Orange Marmalade 300g|Jar|1206|600|Jar
 Kampi Kitchen|Peanut Butter 500g|Jar|1208|650|Jar
-Kampi Kitchen|Chilli Sauce 250ml|Bottle|1209|450|Bottle
-Kampi Kitchen|Tomato Sauce 250ml|Bottle|1210|450|Bottle
 Kampi Kitchen|Pesto Basil 250g|Jar|1211|650|Jar
-Kampi Kitchen|Pesto Rocket 250g|Jar|1212|650|Jar
-Kampi Kitchen|Muesli 500g|Pack|1213|700|Pack
-Kampi Kitchen|Cashew Nuts 250g|Pack|1214|800|Pack
-Kampi Kitchen|Almonds 250g|Pack|1215|850|Pack
 Kampi Kitchen|Mixed Nuts 250g|Pack|1216|850|Pack
-Kampi Kitchen|Energy Balls|Pack|1217|600|Pack
-Mayer's|Eggs Free Range 6 Pack|Pack|900|350|Pack
 Mayer's|Eggs Free Range 12 Pack|Pack|901|650|Pack
-Mayer's|Duck Eggs 6 Pack|Pack|902|600|Pack
-Mayer's|Quail Eggs|Pack|903|450|Pack
 Mayer's|Goat Cheese|Unit|904|800|Unit
-Mayer's|Goat Milk|Litres|905|400|Litres
-Mayer's|Goat Yoghurt|Unit|906|500|Unit
 Meat|Chicken Breast|Kg's|1001|1200|Kg's
 Meat|Chicken Whole|Kg's|1002|750|Kg's
-Meat (Fish)|Salmon Fillet|Kg's|1003|3500|Kg's
-Meat (Fish)|Tilapia Fillet|Kg's|1004|1200|Kg's
-Meat (Fish)|Red Snapper|Kg's|1005|1800|Kg's
-Meat (Fish)|Prawns|Kg's|1006|2500|Kg's
-Meat (Fish)|Tuna Steak|Kg's|1007|2200|Kg's
-Meat (Fish)|Fish Fingers|Pack|1008|850|Pack
-Meat (Fish) Portions Oven cook For 20 Minutes|Fish Pie Portion|Pack|1009|750|Pack
-Meat (Pieces)|Beef Fillet|Kg's|1010|1800|Kg's
-Meat (Pieces)|Beef Ribeye|Kg's|1011|2200|Kg's
-Meat (Pieces)|Lamb Chops|Kg's|1012|1900|Kg's
-Meat (Pieces)|Pork Ribs|Kg's|1013|1300|Kg's
-Meat (Pieces)|Chicken Wings|Kg's|1014|800|Kg's
-Meat (Pieces)|Goat Meat|Kg's|1015|900|Kg's
-Meats- Droewors, Tanda|Droewors Beef|Pack|1016|700|Pack
-Meats- Droewors, Tanda|Biltong Beef|Pack|1017|750|Pack
-Oil (Cold Pressed Canola)|Canola Oil 500ml|Bottle|1018|550|Bottle
-Oil (Cold Pressed Canola)|Canola Oil 1L|Bottle|1019|950|Bottle`
-  const rows = RAW.trim().split('\n').map((line,i)=>{
-const p=line.split('|');
-return{
-id:i+1,
-group:p[0]?.trim()||'Other',
-name:p[1]?.trim()||'Item',
-unit:p[2]?.trim()||'Unit',
-itemid:p[3]?.trim()||'',
-price:Number(p[4])||0,
-charge:p[5]?.trim()||'Unit'
-};
-});
-
-const imgMap = {
-"dill":"https://source.unsplash.com/900x700/?fresh+dill+herb",
-"parsley":"https://source.unsplash.com/900x700/?parsley+herb",
-"basil":"https://source.unsplash.com/900x700/?fresh+basil",
-"mint":"https://source.unsplash.com/900x700/?mint+leaves",
-"rosemary":"https://source.unsplash.com/900x700/?rosemary+herb",
-"thyme":"https://source.unsplash.com/900x700/?thyme+herb",
-"oregano":"https://source.unsplash.com/900x700/?oregano+herb",
-"sage":"https://source.unsplash.com/900x700/?sage+herb",
-"tarragon":"https://source.unsplash.com/900x700/?tarragon+herb",
-"bay leaves":"https://source.unsplash.com/900x700/?bay+leaves",
-"coriander":"https://source.unsplash.com/900x700/?coriander+cilantro",
-"rocket":"https://source.unsplash.com/900x700/?rocket+arugula",
-"spinach":"https://source.unsplash.com/900x700/?baby+spinach",
-"lettuce":"https://source.unsplash.com/900x700/?iceberg+lettuce",
-"eggplant dip":"https://source.unsplash.com/900x700/?eggplant+dip+baba+ganoush",
-"hummus":"https://source.unsplash.com/900x700/?hummus+dip",
-"whipped feta":"https://source.unsplash.com/900x700/?whipped+feta",
-"gouda":"https://source.unsplash.com/900x700/?gouda+cheese",
-"brie":"https://source.unsplash.com/900x700/?brie+cheese",
-"camembert":"https://source.unsplash.com/900x700/?camembert+cheese",
-"feta":"https://source.unsplash.com/900x700/?feta+cheese",
-"mozzarella":"https://source.unsplash.com/900x700/?mozzarella+cheese",
-"halloumi":"https://source.unsplash.com/900x700/?halloumi+cheese",
-"ricotta":"https://source.unsplash.com/900x700/?ricotta+cheese",
-"paneer":"https://source.unsplash.com/900x700/?paneer+cheese",
-"cream cheese":"https://source.unsplash.com/900x700/?cream+cheese",
-"cheddar":"https://source.unsplash.com/900x700/?cheddar+cheese",
-"yogurt":"https://source.unsplash.com/900x700/?greek+yogurt",
-"ice cream":"https://source.unsplash.com/900x700/?ice+cream+tub",
-"apple":"https://source.unsplash.com/900x700/?red+apple",
-"banana":"https://source.unsplash.com/900x700/?banana",
-"pineapple":"https://source.unsplash.com/900x700/?pineapple",
-"orange":"https://source.unsplash.com/900x700/?orange+fruit",
-"grapes":"https://source.unsplash.com/900x700/?grapes",
-"lemon":"https://source.unsplash.com/900x700/?lemons",
-"lime":"https://source.unsplash.com/900x700/?limes",
-"strawberries":"https://source.unsplash.com/900x700/?strawberries",
-"blueberries":"https://source.unsplash.com/900x700/?blueberries",
-"raspberries":"https://source.unsplash.com/900x700/?raspberries",
-"blackberries":"https://source.unsplash.com/900x700/?blackberries",
-"kiwi":"https://source.unsplash.com/900x700/?kiwi+fruit",
-"mango":"https://source.unsplash.com/900x700/?mango",
-"pear":"https://source.unsplash.com/900x700/?pear+fruit",
-"pomegranate":"https://source.unsplash.com/900x700/?pomegranate",
-"paw paw":"https://source.unsplash.com/900x700/?papaya",
-"passion":"https://source.unsplash.com/900x700/?passion+fruit",
-"coconut":"https://source.unsplash.com/900x700/?coconut",
-"egg":"https://source.unsplash.com/900x700/?free+range+eggs",
-"beef":"https://source.unsplash.com/900x700/?beef+steak",
-"ribeye":"https://source.unsplash.com/900x700/?ribeye+steak",
-"lamb":"https://source.unsplash.com/900x700/?lamb+chops",
-"pork":"https://source.unsplash.com/900x700/?pork+ribs",
-"chicken":"https://source.unsplash.com/900x700/?chicken+breast",
-"salmon":"https://source.unsplash.com/900x700/?salmon+fillet",
-"tilapia":"https://source.unsplash.com/900x700/?tilapia+fish",
-"tuna":"https://source.unsplash.com/900x700/?tuna+steak",
-"prawns":"https://source.unsplash.com/900x700/?prawns",
-"fish fingers":"https://source.unsplash.com/900x700/?fish+fingers",
-"fish pie":"https://source.unsplash.com/900x700/?fish+pie",
-"bacon":"https://source.unsplash.com/900x700/?streaky+bacon",
-"sausages":"https://source.unsplash.com/900x700/?sausages",
-"biltong":"https://source.unsplash.com/900x700/?biltong",
-"droewors":"https://source.unsplash.com/900x700/?droewors",
-"juice":"https://source.unsplash.com/900x700/?fresh+juice",
-"kombucha":"https://source.unsplash.com/900x700/?kombucha",
-"granola":"https://source.unsplash.com/900x700/?granola",
-"honey":"https://source.unsplash.com/900x700/?honey+jar",
-"jam":"https://source.unsplash.com/900x700/?fruit+jam",
-"peanut butter":"https://source.unsplash.com/900x700/?peanut+butter",
-"pesto":"https://source.unsplash.com/900x700/?pesto+sauce",
-"nuts":"https://source.unsplash.com/900x700/?mixed+nuts",
-"flowers":"https://source.unsplash.com/900x700/?flower+bouquet"
-};
-
-function imageFor(name){
-const n=name.toLowerCase();
-for(const key in imgMap){
-if(n.includes(key)) return imgMap[key];
-}
-return `https://source.unsplash.com/900x700/?${encodeURIComponent(name+" food")}`;
-}
-
-const groups=['All',...new Set(rows.map(r=>r.group))];
-document.getElementById('gcount').textContent=groups.length-1;
-
-let active='All';
-let search='';
-let cart=[];
-
-const filters=document.getElementById('filters');
-const grid=document.getElementById('grid');
-const q=document.getElementById('q');
-const sort=document.getElementById('sort');
-
-function setGroup(g){
-active=g;
-renderFilters();
-render();
-}
-
-function renderFilters(){
-filters.innerHTML=groups.map(g=>`<button class="filter ${g===active?'active':''}" onclick="setGroup('${g.replace(/'/g,"\\'")}')">${g}</button>`).join('');
-}
-
-function render(){
-let data=[...rows];
-
-if(active!=='All'){
-data=data.filter(x=>x.group===active);
-}
-
-if(search){
-const s=search.toLowerCase();
-data=data.filter(x=>
-x.name.toLowerCase().includes(s)||
-x.group.toLowerCase().includes(s)
-);
-}
-
-if(sort.value==='priceLow'){
-data.sort((a,b)=>a.price-b.price);
-}else if(sort.value==='priceHigh'){
-data.sort((a,b)=>b.price-a.price);
-}else if(sort.value==='group'){
-data.sort((a,b)=>a.group.localeCompare(b.group));
-}else{
-data.sort((a,b)=>a.name.localeCompare(b.name));
-}
-
-document.getElementById('resultText').textContent=`Showing ${data.length} items`;
-
-if(!data.length){
-grid.innerHTML=`<div class="empty"><h3>No items found</h3><p>Try another search term.</p></div>`;
-return;
-}
-
-grid.innerHTML=data.map(item=>`
-<div class="card">
-<div class="pic">
-<img loading="lazy" src="${imageFor(item.name)}" alt="${item.name}">
-<div class="tag">${item.group}</div>
-</div>
-
-<div class="body">
-<div class="group">${item.group}</div>
-<h3>${item.name}</h3>
-<p class="meta">
-Unit: ${item.unit}<br>
-Charge: ${item.charge}
-</p>
-
-<div class="bottom">
-<div>
-<div class="price">KSh ${item.price.toLocaleString()}</div>
-<div class="small">${item.unit}</div>
-</div>
-
-<button class="add" onclick="addToCart(${item.id})">Add</button>
-</div>
-
-<button class="view" onclick="openItem(${item.id})">View details</button>
-</div>
-</div>
-`).join('');
-}
-
-function addToCart(id){
-const item=rows.find(x=>x.id===id);
-const existing=cart.find(x=>x.id===id);
-
-if(existing){
-existing.qty++;
-}else{
-cart.push({...item,qty:1});
-}
-
-updateCart();
-toast(`${item.name} added`);
-}
-
-function updateCart(){
-document.getElementById('count').textContent=cart.reduce((a,b)=>a+b.qty,0);
-
-const total=cart.reduce((a,b)=>a+(b.price*b.qty),0);
-document.getElementById('total').textContent=`KSh ${total.toLocaleString()}`;
-
-const wrap=document.getElementById('cartItems');
-
-if(!cart.length){
-wrap.innerHTML=`<div class="empty"><h3>Your cart is empty</h3></div>`;
-return;
-}
-
-wrap.innerHTML=cart.map(item=>`
-<div class="ci">
-<img src="${imageFor(item.name)}" alt="${item.name}">
-<div>
-<h4>${item.name}</h4>
-<p>KSh ${item.price.toLocaleString()}</p>
-
-<div class="qty">
-<button onclick="qty(${item.id},-1)">−</button>
-<strong>${item.qty}</strong>
-<button onclick="qty(${item.id},1)">+</button>
-<button class="remove" onclick="removeItem(${item.id})">Remove</button>
-</div>
-</div>
-</div>
-`).join('');
-}
-
-function qty(id,change){
-const item=cart.find(x=>x.id===id);
-if(!item)return;
-
-item.qty+=change;
-
-if(item.qty<=0){
-cart=cart.filter(x=>x.id!==id);
-}
-
-updateCart();
-}
-
-function removeItem(id){
-cart=cart.filter(x=>x.id!==id);
-updateCart();
-}
-
-function openCart(){
-document.getElementById('drawer').classList.add('open');
-document.getElementById('shade').classList.add('open');
-}
-
-function closeCart(){
-document.getElementById('drawer').classList.remove('open');
-document.getElementById('shade').classList.remove('open');
-}
-
-function closeModal(){
-document.getElementById('modal').classList.remove('open');
-document.getElementById('shade').classList.remove('open');
-}
-
-function closeAll(){
-closeCart();
-closeModal();
-}
-
-function openItem(id){
-const item=rows.find(x=>x.id===id);
-
-document.getElementById('modalBody').innerHTML=`
-<div class="mh">
-<img src="${imageFor(item.name)}" alt="${item.name}">
-</div>
-
-<div class="mc">
-<div class="group">${item.group}</div>
-<h2>${item.name}</h2>
-
-<p>
-Spreadsheet item ID: ${item.itemid}<br>
-Order unit: ${item.unit}<br>
-Charge unit: ${item.charge}
-</p>
-
-<div class="summary">
-Strong item-specific image mapping enabled.<br>
-This image is generated using the actual item name.
-</div>
-
-<button class="checkout" onclick="addToCart(${item.id})">
-Add to cart
-</button>
-</div>
+Meat Fish|Salmon Fillet|Kg's|1003|3500|Kg's
+Meat Fish|Tilapia Fillet|Kg's|1004|1200|Kg's
+Meat Fish|Prawns|Kg's|1006|2500|Kg's
+Meat Pieces|Beef Fillet|Kg's|1010|1800|Kg's
+Meat Pieces|Beef Ribeye|Kg's|1011|2200|Kg's
+Meat Pieces|Lamb Chops|Kg's|1012|1900|Kg's
+Meat Pieces|Pork Ribs|Kg's|1013|1300|Kg's
+Meat Pieces|Chicken Wings|Kg's|1014|800|Kg's
+Meats Snacks|Droewors Beef|Pack|1016|700|Pack
+Meats Snacks|Biltong Beef|Pack|1017|750|Pack
 `;
 
-document.getElementById('modal').classList.add('open');
-document.getElementById('shade').classList.add('open');
-}
+    const products = RAW_PRODUCTS.trim().split("\n").map((line, index) => {
+      const parts = line.split("|");
 
-function checkout(){
-if(!cart.length){
-toast('Cart is empty');
-return;
-}
+      return {
+        id: index + 1,
+        group: parts[0]?.trim() || "Other",
+        name: parts[1]?.trim() || "Item",
+        unit: parts[2]?.trim() || "Unit",
+        itemId: parts[3]?.trim() || "",
+        price: Number(parts[4]) || 0,
+        chargeUnit: parts[5]?.trim() || "Unit"
+      };
+    });
 
-document.getElementById('modalBody').innerHTML=`
-<div class="mc">
-<h2>Checkout</h2>
+    const groups = ["All", ...new Set(products.map(item => item.group))];
 
-<div class="summary">
-${cart.map(i=>`${i.qty} × ${i.name}`).join('<br>')}
-<br><br>
-<strong>Total: KSh ${cart.reduce((a,b)=>a+(b.price*b.qty),0).toLocaleString()}</strong>
-</div>
+    document.getElementById("productCount").textContent = products.length;
+    document.getElementById("groupCount").textContent = groups.length - 1;
 
-<div class="form">
-<input placeholder="Full name">
-<input placeholder="Phone number">
-<input placeholder="Delivery address">
-<select>
-<option>M-Pesa</option>
-<option>Cash on Delivery</option>
-<option>Card Payment</option>
-</select>
+    let activeGroup = "All";
+    let searchTerm = "";
+    let cart = [];
+    const specificImageTerms = {
+      "smoked egg plant": "eggplant dip food",
+      "whipped feta": "whipped feta dip",
+      "charcoal crackers": "charcoal crackers",
+      "cheddar crackers": "cheese crackers",
+      "rosemary crackers": "rosemary crackers",
+      "gouda": "gouda cheese",
+      "brie": "brie cheese",
+      "camembert": "camembert cheese",
+      "feta": "feta cheese",
+      "halloumi": "halloumi cheese",
+      "mozzarella": "mozzarella cheese",
+      "ricotta": "ricotta cheese",
+      "paneer": "paneer cheese",
+      "cream cheese": "cream cheese",
+      "goat cheese": "goat cheese",
+      "hummus": "hummus dip",
+      "greek yogurt": "greek yogurt",
+      "ice cream": "ice cream tub",
+      "basil": "fresh basil herb",
+      "dill": "fresh dill herb",
+      "mint": "fresh mint leaves",
+      "parsley curly": "curly parsley",
+      "parsley flat": "flat parsley herb",
+      "rosemary": "fresh rosemary herb",
+      "thyme": "fresh thyme herb",
+      "oregano": "fresh oregano herb",
+      "sage": "fresh sage herb",
+      "tarragon": "fresh tarragon herb",
+      "coriander": "fresh coriander herb",
+      "chives": "fresh chives herb",
+      "rocket": "rocket arugula leaves",
+      "baby spinach": "baby spinach leaves",
+      "lettuce": "iceberg lettuce",
+      "apples green": "green apples",
+      "apples red": "red apples",
+      "bananas": "bananas fruit",
+      "grapes": "fresh grapes",
+      "lemons": "fresh lemons",
+      "limes": "fresh limes",
+      "mangoes": "mango fruit",
+      "oranges": "fresh oranges",
+      "passion": "passion fruit",
+      "paw paw": "papaya fruit",
+      "pineapple": "pineapple fruit",
+      "plums": "plums fruit",
+      "pomegranate": "pomegranate fruit",
+      "strawberries": "fresh strawberries",
+      "blueberries": "fresh blueberries",
+      "raspberries": "fresh raspberries",
+      "blackberries": "fresh blackberries",
+      "beef striploin": "beef striploin steak",
+      "minced beef": "raw beef mince",
+      "pork sausages": "pork sausages",
+      "streaky bacon": "streaky bacon",
+      "chicken breast": "raw chicken breast",
+      "chicken whole": "whole chicken",
+      "salmon fillet": "salmon fillet",
+      "tilapia fillet": "tilapia fillet",
+      "prawns": "fresh prawns",
+      "beef ribeye": "ribeye steak",
+      "lamb chops": "lamb chops",
+      "pork ribs": "pork ribs",
+      "chicken wings": "chicken wings",
+      "droewors": "droewors",
+      "biltong": "biltong",
+      "apple juice": "apple juice",
+      "orange juice": "orange juice",
+      "carrot juice": "carrot juice",
+      "pineapple juice": "pineapple juice",
+      "granola": "granola breakfast",
+      "honey": "honey jar",
+      "jam strawberry": "strawberry jam",
+      "peanut butter": "peanut butter",
+      "pesto basil": "basil pesto",
+      "mixed nuts": "mixed nuts"
+    };
 
-<button class="checkout" onclick="finishOrder()">Place order</button>
-</div>
-</div>
-`;
+    function cleanName(name) {
+      return name
+        .toLowerCase()
+        .replace(/\([^)]*\)/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
 
-document.getElementById('modal').classList.add('open');
-document.getElementById('shade').classList.add('open');
-}
+    function getImage(itemName) {
+      const cleaned = cleanName(itemName);
 
-function finishOrder(){
-cart=[];
-updateCart();
+      for (const key in specificImageTerms) {
+        if (cleaned.includes(key)) {
+          return `https://loremflickr.com/900/700/${encodeURIComponent(specificImageTerms[key])}`;
+        }
+      }
 
-document.getElementById('modalBody').innerHTML=`
-<div class="mc">
-<h2>Order placed</h2>
-<p>Your Greens Greens order has been received successfully.</p>
-<button class="checkout" onclick="closeAll()">Done</button>
-</div>
-`;
-}
+      return `https://loremflickr.com/900/700/${encodeURIComponent(cleaned + " food")}`;
+    }
 
-function toast(msg){
-const t=document.getElementById('toast');
-t.textContent=msg;
-t.classList.add('show');
+    function setGroup(group) {
+      activeGroup = group;
+      renderFilters();
+      renderProducts();
+    }
 
-clearTimeout(window.tt);
-window.tt=setTimeout(()=>{
-t.classList.remove('show');
-},1700);
-}
+    function renderFilters() {
+      const filters = document.getElementById("filters");
 
-q.addEventListener('input',e=>{
-search=e.target.value;
-render();
-});
+      filters.innerHTML = groups.map(group => `
+        <button
+          class="filter ${group === activeGroup ? "active" : ""}"
+          onclick="setGroup('${group.replace(/'/g, "\\'")}')"
+        >
+          ${group}
+        </button>
+      `).join("");
+    }
 
-document.addEventListener('keydown',e=>{
-if(e.key==='Escape') closeAll();
-});
+    function renderProducts() {
+      const grid = document.getElementById("productGrid");
 
-renderFilters();
-render();
-updateCart();
-</script>
+      let filtered = [...products];
+
+      if (activeGroup !== "All") {
+        filtered = filtered.filter(item => item.group === activeGroup);
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter(item =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.group.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+
+      const sortValue = document.getElementById("sortSelect").value;
+
+      if (sortValue === "priceLow") {
+        filtered.sort((a, b) => a.price - b.price);
+      }
+
+      if (sortValue === "priceHigh") {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+
+      if (sortValue === "group") {
+        filtered.sort((a, b) => a.group.localeCompare(b.group));
+      }
+
+      if (sortValue === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      document.getElementById("resultText").textContent =
+        `Showing ${filtered.length} products`;
+
+      if (!filtered.length) {
+        grid.innerHTML = `
+          <div class="empty">
+            <h3>No products found</h3>
+            <p>Try another search term.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => `
+        <article class="card">
+          <div class="image-wrap">
+            <img
+              src="${getImage(item.name)}"
+              alt="${item.name}"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
+            />
+
+            <div class="image-fallback" style="display:none;">
+              ${item.name}
+            </div>
+
+            <div class="tag">${item.group}</div>
+          </div>
+
+          <div class="card-body">
+            <div class="group">${item.group}</div>
+
+            <h3>${item.name}</h3>
+
+            <p class="meta">
+              Unit: ${item.unit}<br>
+              Charge: ${item.chargeUnit}
+            </p>
+
+            <div class="bottom">
+              <div>
+                <div class="price">KSh ${item.price.toLocaleString()}</div>
+                <div class="small">${item.unit}</div>
+              </div>
+
+              <button class="add" onclick="addToCart(${item.id})">
+                Add
+              </button>
+            </div>
+
+            <button class="view" onclick="openItem(${item.id})">
+              View details
+            </button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function addToCart(id) {
+      const item = products.find(product => product.id === id);
+
+      const existing = cart.find(product => product.id === id);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({
+          ...item,
+          qty: 1
+        });
+      }
+
+      updateCart();
+      showToast(`${item.name} added to cart`);
+    }
+
+    function updateCart() {
+      document.getElementById("cartCount").textContent =
+        cart.reduce((sum, item) => sum + item.qty, 0);
+
+      const total =
+        cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      document.getElementById("cartTotal").textContent =
+        `KSh ${total.toLocaleString()}`;
+
+      const cartItems = document.getElementById("cartItems");
+
+      if (!cart.length) {
+        cartItems.innerHTML = `
+          <div class="empty">
+            <h3>Your cart is empty</h3>
+          </div>
+        `;
+        return;
+      }
+
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${getImage(item.name)}" alt="${item.name}" />
+
+          <div>
+            <h4>${item.name}</h4>
+
+            <p>KSh ${item.price.toLocaleString()}</p>
+
+            <div class="qty">
+              <button onclick="changeQty(${item.id}, -1)">−</button>
+
+              <strong>${item.qty}</strong>
+
+              <button onclick="changeQty(${item.id}, 1)">+</button>
+
+              <button
+                class="remove"
+                onclick="removeItem(${item.id})"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function changeQty(id, amount) {
+      const item = cart.find(product => product.id === id);
+
+      if (!item) return;
+
+      item.qty += amount;
+
+      if (item.qty <= 0) {
+        cart = cart.filter(product => product.id !== id);
+      }
+
+      updateCart();
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(product => product.id !== id);
+      updateCart();
+    }
+
+    function openCart() {
+      document.getElementById("overlay").classList.add("open");
+      document.getElementById("cartDrawer").classList.add("open");
+    }
+
+    function closeCart() {
+      document.getElementById("overlay").classList.remove("open");
+      document.getElementById("cartDrawer").classList.remove("open");
+    }
+
+    function closeModal() {
+      document.getElementById("overlay").classList.remove("open");
+      document.getElementById("modal").classList.remove("open");
+    }
+
+    function closeAll() {
+      closeCart();
+      closeModal();
+    }
+
+    function openItem(id) {
+      const item = products.find(product => product.id === id);
+
+      document.getElementById("modalBody").innerHTML = `
+        <div class="modal-hero">
+          <img
+            src="${getImage(item.name)}"
+            alt="${item.name}"
+          />
+        </div>
+
+        <div class="modal-content">
+          <div class="group">${item.group}</div>
+
+          <h2>${item.name}</h2>
+
+          <p>
+            Spreadsheet item ID: ${item.itemId}<br>
+            Order unit: ${item.unit}<br>
+            Charge unit: ${item.chargeUnit}
+          </p>
+
+          <div class="summary">
+            Product image generated from exact item naming logic.
+          </div>
+
+          <button
+            class="checkout-button"
+            onclick="addToCart(${item.id})"
+          >
+            Add to cart
+          </button>
+        </div>
+      `;
+
+      document.getElementById("overlay").classList.add("open");
+      document.getElementById("modal").classList.add("open");
+    }
+
+    function openCheckout() {
+      if (!cart.length) {
+        showToast("Your cart is empty");
+        return;
+      }
+
+      const total =
+        cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      document.getElementById("modalBody").innerHTML = `
+        <div class="modal-content">
+          <h2>Checkout</h2>
+
+          <div class="summary">
+            ${cart.map(item =>
+              `${item.qty} × ${item.name}`
+            ).join("<br>")}
+
+            <br><br>
+
+            <strong>Total: KSh ${total.toLocaleString()}</strong>
+          </div>
+
+          <div class="form">
+            <input placeholder="Full name" />
+            <input placeholder="Phone number" />
+            <input placeholder="Delivery address" />
+
+            <select>
+              <option>M-Pesa</option>
+              <option>Cash on Delivery</option>
+              <option>Card Payment</option>
+            </select>
+
+            <button
+              class="checkout-button"
+              onclick="finishOrder()"
+            >
+              Place order
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("overlay").classList.add("open");
+      document.getElementById("modal").classList.add("open");
+    }
+
+    function finishOrder() {
+      cart = [];
+      updateCart();
+
+      document.getElementById("modalBody").innerHTML = `
+        <div class="modal-content">
+          <h2>Order placed</h2>
+
+          <p>
+            Your Comette Farm order has been received successfully.
+          </p>
+
+          <button
+            class="checkout-button"
+            onclick="closeAll()"
+          >
+            Done
+          </button>
+        </div>
+      `;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(window.toastTimer);
+
+      window.toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1700);
+    }
+
+    document.getElementById("searchInput").addEventListener("input", event => {
+      searchTerm = event.target.value;
+      renderProducts();
+    });
+
+    document.getElementById("sortSelect").addEventListener("change", () => {
+      renderProducts();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeAll();
+      }
+    });
+
+    renderFilters();
+    renderProducts();
+    updateCart();
+  </script>
 </body>
 </html>
