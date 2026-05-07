@@ -1,318 +1,1789 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comette Farm • Fresh From Our Fields to Your Table</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .logo-font { font-family: 'Playfair Display', serif; }
-        .hero-bg { background: linear-gradient(rgba(16, 185, 129, 0.75), rgba(16, 185, 129, 0.75)), url('https://picsum.photos/id/1016/2000/800') center/cover no-repeat; }
-        .product-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .product-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgb(16 185 129 / 0.25); }
-        .section-header { font-family: 'Playfair Display', serif; }
-    </style>
-</head>
-<body class="bg-[#f8f4ed] text-[#1f2a1f]">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nairobi Pantry — Food Ordering Dashboard</title>
 
-    <!-- HEADER / NAV -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-emerald-600 rounded-3xl flex items-center justify-center text-4xl shadow-inner">🌾</div>
-                <h1 class="logo-font text-4xl font-bold tracking-tight text-emerald-700">Comette Farm</h1>
-            </div>
-            
-            <div class="flex items-center gap-10 text-lg font-medium">
-                <a onclick="showSection('home')" class="cursor-pointer hover:text-emerald-600">Home</a>
-                <a onclick="showSection('shop')" class="cursor-pointer hover:text-emerald-600">Shop Fresh</a>
-                <a onclick="showSection('farm')" class="cursor-pointer hover:text-emerald-600">Our Farm</a>
-                <a onclick="showSection('orders')" class="cursor-pointer hover:text-emerald-600">How It Works</a>
-                <a onclick="showSection('cart')" class="cursor-pointer hover:text-emerald-600 flex items-center gap-2">
-                    🛒 Cart 
-                    <span id="cartCountHeader" class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-3xl font-semibold">0</span>
-                </a>
-            </div>
-
-            <div class="flex items-center gap-4">
-                <div class="bg-emerald-100 text-emerald-700 px-5 py-2 rounded-3xl text-sm font-medium flex items-center gap-2">
-                    <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-                    87 shoppers online right now
-                </div>
-                <button onclick="fakeLogin()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-3xl font-semibold">👋 Hi Alex</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <div id="homeSection" class="hero-bg text-white h-screen flex items-center">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="max-w-2xl">
-                <p class="uppercase tracking-[3px] text-emerald-200 font-medium">Direct from Comette Farm • Kenya</p>
-                <h1 class="text-7xl font-bold logo-font leading-none mt-3">Fresh. Local.<br>From our fields<br>to your table.</h1>
-                <p class="mt-8 text-2xl text-white/90">Order today → picked tomorrow → delivered fresh.</p>
-                
-                <div class="mt-12 flex gap-5">
-                    <button onclick="showSection('shop')" 
-                            class="bg-white text-emerald-700 px-10 py-6 rounded-3xl text-2xl font-semibold hover:scale-105 flex items-center gap-4">
-                        Shop Now 🌱
-                    </button>
-                    <button onclick="showSection('farm')" 
-                            class="border-2 border-white px-10 py-6 rounded-3xl text-2xl font-medium hover:bg-white/10">
-                        Meet the Farm
-                    </button>
-                </div>
-                
-                <div class="mt-16 flex items-center gap-8 text-sm">
-                    <div>⭐️ 4.98 • 1,284 happy families</div>
-                    <div class="h-4 w-px bg-white/30"></div>
-                    <div>🚚 Same-day delivery in Nairobi &amp; surrounds</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT AREA -->
-    <div class="max-w-7xl mx-auto px-8 py-16">
-
-        <!-- SHOP SECTION -->
-        <div id="shopSection" class="hidden">
-            <h2 class="section-header text-5xl font-bold text-center mb-4">Fresh Harvest • Straight from Comette Farm</h2>
-            <p class="text-center text-xl text-emerald-700 mb-10">Every item below is grown or made right here on our farm</p>
-            
-            <!-- Category filters -->
-            <div class="flex flex-wrap gap-3 justify-center mb-10">
-                <button onclick="filterByCategory('all')" class="category-btn active px-6 py-3 bg-emerald-600 text-white rounded-3xl text-sm font-medium">All Products</button>
-                <button onclick="filterByCategory('Dairy')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Dairy &amp; Milk</button>
-                <button onclick="filterByCategory('Cheese')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Brown's Cheese</button>
-                <button onclick="filterByCategory('Fruit')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Fruit &amp; Berries</button>
-                <button onclick="filterByCategory('Vegetable')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Vegetables</button>
-                <button onclick="filterByCategory('Meat')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Meat &amp; Poultry</button>
-                <button onclick="filterByCategory('Eggs')" class="category-btn px-6 py-3 bg-white border border-emerald-200 hover:border-emerald-600 rounded-3xl text-sm font-medium">Eggs &amp; Honey</button>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="productGrid"></div>
-        </div>
-
-        <!-- FARM STORY SECTION -->
-        <div id="farmSection" class="hidden">
-            <h2 class="section-header text-5xl font-bold text-center mb-12">From Our Soil to Your Plate</h2>
-            <div class="grid grid-cols-2 gap-12 items-center">
-                <div>
-                    <img src="https://picsum.photos/id/1016/800/600" alt="Comette Farm fields" class="rounded-3xl shadow-2xl">
-                </div>
-                <div class="space-y-8">
-                    <div class="flex gap-6">
-                        <div class="text-6xl">🌱</div>
-                        <div>
-                            <h4 class="font-semibold text-2xl">Grown with love since 2018</h4>
-                            <p class="text-lg text-gray-600">Our 120-acre farm in Limuru grows over 80 varieties of fruits, vegetables, herbs and dairy — all chemical-free.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="text-6xl">🐄</div>
-                        <div>
-                            <h4 class="font-semibold text-2xl">Jersey &amp; Friesian cows</h4>
-                            <p class="text-lg text-gray-600">Our happy cows produce the freshest milk and cheese you’ll ever taste.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="text-6xl">🚜</div>
-                        <div>
-                            <h4 class="font-semibold text-2xl">Picked the same day</h4>
-                            <p class="text-lg text-gray-600">Orders placed before 10am are harvested fresh and delivered the same afternoon.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- HOW IT WORKS / ORDERS FLOW -->
-        <div id="ordersSection" class="hidden">
-            <h2 class="section-header text-5xl font-bold text-center mb-12">How Comette Farm Works</h2>
-            <div class="grid grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="text-7xl mb-6">🌾</div>
-                    <h4 class="font-semibold">1. You order online</h4>
-                    <p class="text-gray-600 mt-3">Browse our daily harvest and add to cart</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-7xl mb-6">✂️</div>
-                    <h4 class="font-semibold">2. We harvest fresh</h4>
-                    <p class="text-gray-600 mt-3">Picked within hours of your order</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-7xl mb-6">🚚</div>
-                    <h4 class="font-semibold">3. Same-day delivery</h4>
-                    <p class="text-gray-600 mt-3">Direct to your door in Nairobi &amp; surrounds</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-7xl mb-6">🍽️</div>
-                    <h4 class="font-semibold">4. Enjoy farm-fresh meals</h4>
-                    <p class="text-gray-600 mt-3">Taste the difference of real food</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- CART MODAL -->
-        <div id="cartModal" onclick="if(event.target===this)toggleCart()" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
-            <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-lg w-full mx-4 p-8 shadow-2xl">
-                <h3 class="text-3xl font-semibold mb-6">Your Cart • Comette Farm</h3>
-                <div id="cartItemsList" class="max-h-96 overflow-auto"></div>
-                
-                <div class="border-t pt-6 mt-6 flex justify-between text-2xl font-semibold">
-                    <span>Total</span>
-                    <span id="cartTotalPrice">KSh 0</span>
-                </div>
-                
-                <button onclick="placeOrder()" 
-                        class="w-full mt-8 bg-emerald-600 hover:bg-emerald-700 text-white py-6 rounded-3xl text-xl font-semibold">
-                    Place Order • Pay on Delivery
-                </button>
-                <button onclick="toggleCart()" class="text-gray-500 mt-4 w-full">Keep shopping</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="bg-emerald-900 text-white py-16">
-        <div class="max-w-7xl mx-auto px-8 text-center">
-            <p class="text-2xl logo-font">Comette Farm • Limuru, Kenya</p>
-            <p class="mt-3 opacity-75">Fresh food you can trust. Grown with care.</p>
-            <p class="text-sm mt-12 opacity-50">© 2026 Comette Farm • Demo website built for you</p>
-        </div>
-    </footer>
-
-<script>
-// Real products pulled directly from your Excel sheet
-const products = [
-    { id:1, name:"Jersey Milk", category:"Dairy", price:150, unit:"Litres", img:"https://picsum.photos/id/133/600/600" },
-    { id:2, name:"Feta 200g", category:"Cheese", price:600, unit:"Unit", img:"https://picsum.photos/id/63/600/600" },
-    { id:3, name:"Strawberries (Fresh)", category:"Fruit", price:200, unit:"Punnet", img:"https://picsum.photos/id/1080/600/600" },
-    { id:4, name:"Tomato (English)", category:"Vegetable", price:180, unit:"Kg", img:"https://picsum.photos/id/201/600/600" },
-    { id:5, name:"Free Range Eggs", category:"Eggs", price:300, unit:"Dozen", img:"https://picsum.photos/id/312/600/600" },
-    { id:6, name:"Avocado", category:"Vegetable", price:60, unit:"Piece", img:"https://picsum.photos/id/669/600/600" },
-    { id:7, name:"Mangoes (Apple)", category:"Fruit", price:105, unit:"Piece", img:"https://picsum.photos/id/106/600/600" },
-    { id:8, name:"Fresh Spinach Bunch", category:"Vegetable", price:40, unit:"Bunch", img:"https://picsum.photos/id/292/600/600" },
-    { id:9, name:"Bananas (Sweet) Bunch", category:"Fruit", price:180, unit:"Bunch", img:"https://picsum.photos/id/1005/600/600" },
-    { id:10, name:"Chicken (Whole)", category:"Meat", price:700, unit:"Pieces", img:"https://picsum.photos/id/1005/600/600" },
-    { id:11, name:"Brie Portion 125g", category:"Cheese", price:630, unit:"Unit", img:"https://picsum.photos/id/63/600/600" },
-    { id:12, name:"Pure Honey 500g", category:"Eggs", price:530, unit:"Jar", img:"https://picsum.photos/id/1003/600/600" },
-    { id:13, name:"Cheddar (Limuru) 250g", category:"Cheese", price:750, unit:"Pack", img:"https://picsum.photos/id/63/600/600" },
-    { id:14, name:"Greek Yogurt 250g", category:"Dairy", price:450, unit:"Unit", img:"https://picsum.photos/id/133/600/600" },
-    { id:15, name:"Coriander Bunch", category:"Vegetable", price:40, unit:"Bunch", img:"https://picsum.photos/id/292/600/600" },
-    { id:16, name:"Heirloom Tomatoes", category:"Vegetable", price:180, unit:"Kg", img:"https://picsum.photos/id/201/600/600" }
-];
-
-let cart = [];
-
-// Render all products
-function renderProducts(filtered = products) {
-    const grid = document.getElementById('productGrid');
-    grid.innerHTML = '';
-    
-    filtered.forEach(product => {
-        const cardHTML = `
-            <div class="product-card bg-white border border-emerald-100 rounded-3xl overflow-hidden">
-                <img src="${product.img}" alt="${product.name}" class="w-full h-56 object-cover">
-                <div class="p-6">
-                    <span class="text-xs uppercase tracking-widest text-emerald-600">${product.category}</span>
-                    <h3 class="font-semibold text-xl mt-2">${product.name}</h3>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <span class="text-3xl font-bold">KSh ${product.price}</span>
-                            <span class="text-sm text-gray-500 ml-2">/${product.unit}</span>
-                        </div>
-                        <button onclick="addToCart(${product.id});" 
-                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-2xl text-sm font-medium">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>`;
-        grid.innerHTML += cardHTML;
-    });
-}
-
-// Add to cart
-function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    updateCartCount();
-    // Nice feedback
-    const toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#10b981; color:white; padding:16px 24px; border-radius:9999px; box-shadow:0 10px 15px -3px rgb(16 185 129);';
-    toast.textContent = `✅ ${product.name} added!`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2200);
-}
-
-function updateCartCount() {
-    document.getElementById('cartCountHeader').textContent = cart.length;
-}
-
-// Show cart modal
-function toggleCart() {
-    const modal = document.getElementById('cartModal');
-    const list = document.getElementById('cartItemsList');
-    let total = 0;
-    
-    list.innerHTML = cart.map((item, index) => {
-        total += item.price;
-        return `
-            <div class="flex justify-between py-4 border-b">
-                <div>${item.name}</div>
-                <div class="font-medium">KSh ${item.price}</div>
-            </div>`;
-    }).join('');
-    
-    document.getElementById('cartTotalPrice').innerHTML = `KSh <span class="text-4xl">${total}</span>`;
-    modal.classList.toggle('hidden');
-}
-
-// Place order simulation
-function placeOrder() {
-    if (cart.length === 0) return;
-    alert("🎉 Order placed successfully!\n\nThank you for supporting Comette Farm.\nYour fresh produce will be harvested tomorrow morning and delivered same day.");
-    cart = [];
-    updateCartCount();
-    toggleCart();
-}
-
-// Category filter
-function filterByCategory(cat) {
-    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active', 'bg-emerald-600', 'text-white'));
-    event.target.classList.add('active', 'bg-emerald-600', 'text-white');
-    
-    const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
-    renderProducts(filtered);
-}
-
-// Section switcher
-function showSection(section) {
-    document.querySelectorAll('#homeSection, #shopSection, #farmSection, #ordersSection').forEach(s => s.classList.add('hidden'));
-    
-    if (section === 'home') document.getElementById('homeSection').classList.remove('hidden');
-    if (section === 'shop') {
-        document.getElementById('shopSection').classList.remove('hidden');
-        renderProducts();
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --card: #ffffff;
+      --ink: #1f2a24;
+      --muted: #6f766f;
+      --soft: #e9e1d3;
+      --brand: #2f6f4e;
+      --brand-dark: #1f4f38;
+      --brand-soft: #dff0e5;
+      --gold: #c99738;
+      --danger: #b84343;
+      --shadow: 0 18px 50px rgba(28, 41, 31, 0.12);
+      --radius: 22px;
     }
-    if (section === 'farm') document.getElementById('farmSection').classList.remove('hidden');
-    if (section === 'orders') document.getElementById('ordersSection').classList.remove('hidden');
-    if (section === 'cart') toggleCart();
-}
 
-function fakeLogin() {
-    alert("👋 Welcome back to Comette Farm, Alex!\nYour account is ready.");
-}
+    * {
+      box-sizing: border-box;
+    }
 
-// Start the website
-window.onload = () => {
-    showSection('home');
-};
-</script>
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(247, 244, 238, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(31, 42, 36, 0.08);
+    }
+
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: max-content;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--brand), #9fbe5b);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(47, 111, 78, 0.26);
+    }
+
+    .logo-title {
+      font-weight: 900;
+      line-height: 1;
+      font-size: 18px;
+    }
+
+    .logo-sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .search-wrap {
+      flex: 1;
+      max-width: 620px;
+      position: relative;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: 1px solid rgba(31, 42, 36, 0.12);
+      border-radius: 999px;
+      padding: 14px 46px 14px 18px;
+      outline: none;
+      background: white;
+      box-shadow: 0 10px 30px rgba(31, 42, 36, 0.06);
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--brand);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    .cart-btn {
+      background: var(--brand);
+      color: white;
+      border-radius: 999px;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(47, 111, 78, 0.25);
+    }
+
+    .cart-count {
+      background: white;
+      color: var(--brand);
+      min-width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      padding: 0 6px;
+    }
+
+    .hero {
+      max-width: 1320px;
+      margin: 28px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+    }
+
+    .hero-main {
+      min-height: 380px;
+      border-radius: 34px;
+      padding: 38px;
+      background:
+        linear-gradient(120deg, rgba(20, 55, 36, 0.88), rgba(47, 111, 78, 0.66)),
+        url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -55% -20%;
+      height: 230px;
+      background: radial-gradient(circle, rgba(255,255,255,0.28), transparent 62%);
+      pointer-events: none;
+    }
+
+    .hero-pill {
+      width: max-content;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-weight: 800;
+      font-size: 13px;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      margin: 22px 0 12px;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .hero p {
+      max-width: 600px;
+      font-size: 17px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.86);
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 900;
+    }
+
+    .primary-btn {
+      background: white;
+      color: var(--brand-dark);
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.14);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .side-card {
+      border-radius: 30px;
+      padding: 24px;
+      background: white;
+      box-shadow: var(--shadow);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .side-card.green {
+      background:
+        linear-gradient(145deg, rgba(31, 79, 56, 0.9), rgba(65, 131, 91, 0.75)),
+        url("https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    .side-card h3 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .side-card p {
+      color: inherit;
+      opacity: 0.78;
+      line-height: 1.5;
+      margin: 10px 0 0;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .metric {
+      background: var(--brand-soft);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 20px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .main {
+      max-width: 1320px;
+      margin: 30px auto;
+      padding: 0 20px 60px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin: 36px 0 18px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 3vw, 42px);
+      letter-spacing: -0.05em;
+      margin: 0;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .filter-btn {
+      border-radius: 999px;
+      background: white;
+      color: var(--ink);
+      padding: 11px 15px;
+      font-weight: 800;
+      border: 1px solid rgba(31, 42, 36, 0.1);
+      box-shadow: 0 8px 22px rgba(31, 42, 36, 0.05);
+    }
+
+    .filter-btn.active {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(31, 42, 36, 0.08);
+      border: 1px solid rgba(31, 42, 36, 0.06);
+      display: flex;
+      flex-direction: column;
+      min-height: 430px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-image {
+      height: 205px;
+      background: #eee;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .badge {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--brand-dark);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(31, 42, 36, 0.1);
+    }
+
+    .product-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .supplier {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .product-body h3 {
+      margin: 8px 0 8px;
+      font-size: 20px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .product-body p {
+      color: var(--muted);
+      margin: 0 0 14px;
+      line-height: 1.45;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .product-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .price {
+      font-size: 21px;
+      font-weight: 950;
+      color: var(--brand-dark);
+    }
+
+    .add-btn {
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      padding: 11px 13px;
+      font-weight: 900;
+    }
+
+    .details-btn {
+      margin-top: 12px;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      border-radius: 999px;
+      padding: 10px;
+      font-weight: 900;
+      width: 100%;
+    }
+
+    .recipes-grid,
+    .supplier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .recipe-card,
+    .supplier-card {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(31, 42, 36, 0.08);
+      border: 1px solid rgba(31, 42, 36, 0.06);
+    }
+
+    .recipe-card img,
+    .supplier-card img {
+      height: 210px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .recipe-card div,
+    .supplier-card div {
+      padding: 20px;
+    }
+
+    .recipe-card h3,
+    .supplier-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .recipe-card p,
+    .supplier-card p {
+      color: var(--muted);
+      line-height: 1.45;
+      margin: 0 0 16px;
+    }
+
+    .open-btn {
+      width: 100%;
+      border-radius: 999px;
+      padding: 12px;
+      font-weight: 900;
+      color: white;
+      background: var(--brand);
+    }
+
+    .empty-state {
+      background: white;
+      border-radius: 24px;
+      padding: 34px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed rgba(31, 42, 36, 0.18);
+      grid-column: 1 / -1;
+    }
+
+    .drawer-overlay,
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 18, 14, 0.54);
+      backdrop-filter: blur(8px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .drawer-overlay.open,
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: min(460px, 100%);
+      background: white;
+      z-index: 100;
+      transform: translateX(105%);
+      transition: transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.18);
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(31, 42, 36, 0.08);
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .close-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg);
+      font-weight: 900;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow: auto;
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      background: var(--bg);
+    }
+
+    .cart-item img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .cart-item h4 {
+      margin: 0 0 4px;
+    }
+
+    .cart-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .qty-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .qty-row button {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      font-weight: 900;
+    }
+
+    .remove {
+      margin-left: auto;
+      color: var(--danger);
+      background: transparent !important;
+      width: auto !important;
+      font-size: 13px;
+    }
+
+    .drawer-foot {
+      border-top: 1px solid rgba(31, 42, 36, 0.08);
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .checkout-btn {
+      background: var(--brand);
+      color: white;
+      border-radius: 999px;
+      padding: 15px;
+      font-weight: 950;
+      width: 100%;
+    }
+
+    .modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -45%) scale(0.96);
+      width: min(720px, calc(100% - 28px));
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      background: white;
+      border-radius: 30px;
+      z-index: 110;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .modal.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-hero {
+      height: 280px;
+      position: relative;
+    }
+
+    .modal-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-content h2 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.05em;
+    }
+
+    .modal-content p,
+    .modal-content li {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-weight: 950;
+      z-index: 2;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 850;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .checkout-steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .checkout-steps input,
+    .checkout-steps select {
+      width: 100%;
+      border-radius: 15px;
+      border: 1px solid rgba(31, 42, 36, 0.12);
+      padding: 13px;
+      outline: none;
+      background: var(--bg);
+    }
+
+    .checkout-summary {
+      background: var(--bg);
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1100px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+      }
+
+      .search-wrap {
+        order: 3;
+        max-width: none;
+        width: 100%;
+      }
+
+      .hero-main {
+        padding: 28px;
+        min-height: 420px;
+      }
+
+      .hero-side {
+        grid-template-columns: 1fr;
+      }
+
+      .product-grid,
+      .recipes-grid,
+      .supplier-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="logo">
+          <div class="logo-mark">NP</div>
+          <div>
+            <div class="logo-title">Nairobi Pantry</div>
+            <div class="logo-sub">Fresh local ordering dashboard</div>
+          </div>
+        </div>
+
+        <div class="search-wrap">
+          <input id="searchInput" type="search" placeholder="Search Browns cheese, Farmer's Choice, apples, beef mince..." />
+          <span class="search-icon">⌕</span>
+        </div>
+
+        <button class="cart-btn" onclick="openCart()">
+          Cart <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-main">
+        <div>
+          <div class="hero-pill">Same-day Nairobi delivery • Fresh produce • Premium suppliers</div>
+          <h1>Your weekly food shop, beautifully organised.</h1>
+          <p>
+            Browse groceries, dairy, meat, bakery, fresh produce, pantry items and recipe bundles.
+            Add to cart, open recipes, search suppliers, and complete a clean checkout flow.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <button class="primary-btn" onclick="scrollToProducts()">Shop products</button>
+          <button class="secondary-btn" onclick="scrollToRecipes()">Open recipes</button>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="side-card green">
+          <div>
+            <h3>Recipe bundles</h3>
+            <p>Click any recipe to open ingredients, cooking steps and add suggested items.</p>
+          </div>
+          <button class="primary-btn" onclick="scrollToRecipes()">View recipes</button>
+        </div>
+
+        <div class="side-card">
+          <div>
+            <h3>Dashboard snapshot</h3>
+            <p>Everything wired up: products, search, filters, suppliers, cart and checkout.</p>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric">
+              <strong id="metricProducts">0</strong>
+              <span>Products</span>
+            </div>
+            <div class="metric">
+              <strong>6</strong>
+              <span>Categories</span>
+            </div>
+            <div class="metric">
+              <strong>5</strong>
+              <span>Recipes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="main">
+      <section id="productsSection">
+        <div class="section-head">
+          <div>
+            <h2>Shop products</h2>
+            <p>Every product image is tied to the actual item type — apples show apples, gouda shows gouda, mince shows mince.</p>
+          </div>
+        </div>
+
+        <div id="filters" class="filters"></div>
+        <div id="productGrid" class="product-grid"></div>
+      </section>
+
+      <section id="recipesSection">
+        <div class="section-head">
+          <div>
+            <h2>Recipes</h2>
+            <p>Click any recipe card to open a proper recipe view with ingredients and steps.</p>
+          </div>
+        </div>
+
+        <div id="recipesGrid" class="recipes-grid"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <h2>Supplier shelf</h2>
+            <p>Supplier cards open and explain what each supplier contributes to the pantry.</p>
+          </div>
+        </div>
+
+        <div id="supplierGrid" class="supplier-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="drawerOverlay" class="drawer-overlay" onclick="closeCart()"></div>
+
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="drawer-head">
+      <h2>Your cart</h2>
+      <button class="close-btn" onclick="closeCart()">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="drawer-foot">
+      <div class="total-row">
+        <span>Total</span>
+        <span id="cartTotal">KSh 0</span>
+      </div>
+      <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
+    </div>
+  </aside>
+
+  <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
+
+  <div id="modal" class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalBody"></div>
+  </div>
+
+  <div id="toast" class="toast">Added to cart</div>
+
+  <script>
+    const categories = ["All", "Fresh Produce", "Dairy", "Meat", "Bakery", "Pantry", "Frozen"];
+
+    const products = [
+      {
+        id: 1,
+        name: "Red Apples",
+        supplier: "Fresh Kenyan Market",
+        category: "Fresh Produce",
+        price: 420,
+        unit: "1kg",
+        badge: "Fresh",
+        image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=900&q=80",
+        description: "Crisp red apples for snacking, baking, lunchboxes and smoothies."
+      },
+      {
+        id: 2,
+        name: "Bananas",
+        supplier: "Local Farm Produce",
+        category: "Fresh Produce",
+        price: 180,
+        unit: "1 bunch",
+        badge: "Local",
+        image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=900&q=80",
+        description: "Sweet ripe bananas for breakfast, smoothies and healthy snacks."
+      },
+      {
+        id: 3,
+        name: "Avocados",
+        supplier: "Murang'a Growers",
+        category: "Fresh Produce",
+        price: 260,
+        unit: "4 pieces",
+        badge: "Creamy",
+        image: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=900&q=80",
+        description: "Creamy Hass-style avocados for toast, salads, wraps and guacamole."
+      },
+      {
+        id: 4,
+        name: "Cherry Tomatoes",
+        supplier: "Rift Valley Farms",
+        category: "Fresh Produce",
+        price: 310,
+        unit: "500g",
+        badge: "Sweet",
+        image: "https://images.unsplash.com/photo-1561136594-7f68413baa99?auto=format&fit=crop&w=900&q=80",
+        description: "Bright cherry tomatoes for pasta, salads, roasting and bruschetta."
+      },
+      {
+        id: 5,
+        name: "Fresh Spinach",
+        supplier: "Karen Greens",
+        category: "Fresh Produce",
+        price: 160,
+        unit: "1 bunch",
+        badge: "Green",
+        image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=900&q=80",
+        description: "Leafy spinach for stews, omelettes, smoothies and quick sautés."
+      },
+      {
+        id: 6,
+        name: "Carrots",
+        supplier: "Naivasha Produce",
+        category: "Fresh Produce",
+        price: 190,
+        unit: "1kg",
+        badge: "Crunchy",
+        image: "https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=900&q=80",
+        description: "Fresh carrots for soups, salads, roasting and lunchbox snacks."
+      },
+      {
+        id: 7,
+        name: "Browns Gouda Cheese",
+        supplier: "Browns Cheese",
+        category: "Dairy",
+        price: 760,
+        unit: "200g",
+        badge: "Premium",
+        image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=900&q=80",
+        description: "Smooth gouda-style cheese for sandwiches, platters and melted dishes."
+      },
+      {
+        id: 8,
+        name: "Browns Feta Cheese",
+        supplier: "Browns Cheese",
+        category: "Dairy",
+        price: 690,
+        unit: "200g",
+        badge: "Tangy",
+        image: "https://images.unsplash.com/photo-1559561853-08451507cbe7?auto=format&fit=crop&w=900&q=80",
+        description: "Crumbly feta-style cheese for Greek salads, wraps and roasted vegetables."
+      },
+      {
+        id: 9,
+        name: "Browns Natural Yoghurt",
+        supplier: "Browns Cheese",
+        category: "Dairy",
+        price: 520,
+        unit: "500ml",
+        badge: "Natural",
+        image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80",
+        description: "Thick natural yoghurt for breakfast bowls, marinades and smoothies."
+      },
+      {
+        id: 10,
+        name: "Fresh Milk",
+        supplier: "Dairy Fresh",
+        category: "Dairy",
+        price: 130,
+        unit: "500ml",
+        badge: "Daily",
+        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=900&q=80",
+        description: "Fresh milk for tea, coffee, cereal and baking."
+      },
+      {
+        id: 11,
+        name: "Salted Butter",
+        supplier: "Highland Dairy",
+        category: "Dairy",
+        price: 480,
+        unit: "250g",
+        badge: "Rich",
+        image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=900&q=80",
+        description: "Creamy salted butter for toast, cooking, baking and sauces."
+      },
+      {
+        id: 12,
+        name: "Farmers Choice Beef Sausages",
+        supplier: "Farmers Choice",
+        category: "Meat",
+        price: 720,
+        unit: "500g",
+        badge: "Breakfast",
+        image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80",
+        description: "Beef sausages for breakfast plates, hot dogs and family meals."
+      },
+      {
+        id: 13,
+        name: "Beef Mince",
+        supplier: "Prime Butchery",
+        category: "Meat",
+        price: 620,
+        unit: "500g",
+        badge: "Lean",
+        image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=900&q=80",
+        description: "Fresh beef mince for bolognese, burgers, tacos and meatballs."
+      },
+      {
+        id: 14,
+        name: "Chicken Breast Fillets",
+        supplier: "Quality Poultry",
+        category: "Meat",
+        price: 780,
+        unit: "500g",
+        badge: "Lean",
+        image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=900&q=80",
+        description: "Boneless chicken breast fillets for grills, curries, salads and wraps."
+      },
+      {
+        id: 15,
+        name: "Lamb Chops",
+        supplier: "Highland Meats",
+        category: "Meat",
+        price: 1320,
+        unit: "500g",
+        badge: "Premium",
+        image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=80",
+        description: "Tender lamb chops for grilling, pan-searing and weekend dinners."
+      },
+      {
+        id: 16,
+        name: "Pork Bacon",
+        supplier: "Farmers Choice",
+        category: "Meat",
+        price: 690,
+        unit: "250g",
+        badge: "Smoky",
+        image: "https://images.unsplash.com/photo-1603048297172-c92544798d5a?auto=format&fit=crop&w=900&q=80",
+        description: "Smoky sliced bacon for breakfasts, burgers, sandwiches and salads."
+      },
+      {
+        id: 17,
+        name: "Sourdough Bread",
+        supplier: "Artisan Bakery",
+        category: "Bakery",
+        price: 460,
+        unit: "1 loaf",
+        badge: "Artisan",
+        image: "https://images.unsplash.com/photo-1585478259715-4d3f95546b6d?auto=format&fit=crop&w=900&q=80",
+        description: "Crusty sourdough bread for toast, sandwiches and soup sides."
+      },
+      {
+        id: 18,
+        name: "Croissants",
+        supplier: "French Corner Bakery",
+        category: "Bakery",
+        price: 540,
+        unit: "4 pieces",
+        badge: "Buttery",
+        image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80",
+        description: "Flaky buttery croissants for breakfast, brunch and coffee."
+      },
+      {
+        id: 19,
+        name: "Burger Buns",
+        supplier: "Baker's Basket",
+        category: "Bakery",
+        price: 280,
+        unit: "6 pieces",
+        badge: "Soft",
+        image: "https://images.unsplash.com/photo-1603418026886-4d3c56965caa?auto=format&fit=crop&w=900&q=80",
+        description: "Soft burger buns for homemade burgers, pulled meat and sandwiches."
+      },
+      {
+        id: 20,
+        name: "Chocolate Muffins",
+        supplier: "Sweet Oven",
+        category: "Bakery",
+        price: 420,
+        unit: "4 pieces",
+        badge: "Sweet",
+        image: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=900&q=80",
+        description: "Rich chocolate muffins for dessert, tea time and snack boxes."
+      },
+      {
+        id: 21,
+        name: "Basmati Rice",
+        supplier: "Pantry Staples",
+        category: "Pantry",
+        price: 520,
+        unit: "1kg",
+        badge: "Staple",
+        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=80",
+        description: "Long grain basmati rice for pilau, biryani, curries and weekly meals."
+      },
+      {
+        id: 22,
+        name: "Penne Pasta",
+        supplier: "Pantry Staples",
+        category: "Pantry",
+        price: 290,
+        unit: "500g",
+        badge: "Easy",
+        image: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=900&q=80",
+        description: "Penne pasta for quick dinners, creamy sauces and baked pasta dishes."
+      },
+      {
+        id: 23,
+        name: "Extra Virgin Olive Oil",
+        supplier: "Mediterranean Pantry",
+        category: "Pantry",
+        price: 1250,
+        unit: "500ml",
+        badge: "Premium",
+        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=900&q=80",
+        description: "Extra virgin olive oil for cooking, salads, dressings and marinades."
+      },
+      {
+        id: 24,
+        name: "Honey",
+        supplier: "Kenyan Highlands Honey",
+        category: "Pantry",
+        price: 580,
+        unit: "500g",
+        badge: "Pure",
+        image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?auto=format&fit=crop&w=900&q=80",
+        description: "Golden honey for tea, toast, yoghurt bowls and marinades."
+      },
+      {
+        id: 25,
+        name: "Charcoal Crackers",
+        supplier: "Browns Cheese",
+        category: "Pantry",
+        price: 450,
+        unit: "150g",
+        badge: "Pairing",
+        image: "https://images.unsplash.com/photo-1590080874088-eec64895b423?auto=format&fit=crop&w=900&q=80",
+        description: "Dark charcoal-style crackers ideal for cheese boards and dips."
+      },
+      {
+        id: 26,
+        name: "Coffee Beans",
+        supplier: "Kenyan Roastery",
+        category: "Pantry",
+        price: 980,
+        unit: "250g",
+        badge: "Roasted",
+        image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=80",
+        description: "Freshly roasted coffee beans for espresso, filter coffee and French press."
+      },
+      {
+        id: 27,
+        name: "Vanilla Ice Cream",
+        supplier: "Browns Dairy",
+        category: "Frozen",
+        price: 720,
+        unit: "500ml",
+        badge: "Frozen",
+        image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=900&q=80",
+        description: "Classic vanilla ice cream for desserts, milkshakes and family treats."
+      },
+      {
+        id: 28,
+        name: "Frozen Mixed Berries",
+        supplier: "Berry Basket",
+        category: "Frozen",
+        price: 890,
+        unit: "500g",
+        badge: "Smoothies",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?auto=format&fit=crop&w=900&q=80",
+        description: "Frozen mixed berries for smoothies, yoghurt bowls and desserts."
+      },
+      {
+        id: 29,
+        name: "Frozen Peas",
+        supplier: "Garden Freezer",
+        category: "Frozen",
+        price: 390,
+        unit: "500g",
+        badge: "Quick",
+        image: "https://images.unsplash.com/photo-1587486913049-53fc88980cfc?auto=format&fit=crop&w=900&q=80",
+        description: "Frozen green peas for fried rice, stews, curries and sides."
+      },
+      {
+        id: 30,
+        name: "Frozen French Fries",
+        supplier: "Crisp Kitchen",
+        category: "Frozen",
+        price: 530,
+        unit: "1kg",
+        badge: "Crispy",
+        image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=900&q=80",
+        description: "Frozen fries for quick sides, burgers and weekend meals."
+      }
+    ];
+
+    const recipes = [
+      {
+        id: "r1",
+        title: "Creamy Beef Bolognese",
+        image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80",
+        time: "35 minutes",
+        serves: "4 people",
+        description: "A family dinner using beef mince, penne pasta, tomatoes and olive oil.",
+        ingredients: ["Beef Mince", "Penne Pasta", "Cherry Tomatoes", "Olive Oil", "Salted Butter"],
+        steps: ["Brown the beef mince in olive oil.", "Add chopped tomatoes and simmer until rich.", "Boil penne until al dente.", "Toss pasta through the sauce and finish with butter."]
+      },
+      {
+        id: "r2",
+        title: "Browns Cheese Board",
+        image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=1200&q=80",
+        time: "10 minutes",
+        serves: "2–4 people",
+        description: "A premium cheese board with gouda, feta, charcoal crackers, honey and fruit.",
+        ingredients: ["Browns Gouda Cheese", "Browns Feta Cheese", "Charcoal Crackers", "Honey", "Red Apples"],
+        steps: ["Slice gouda and crumble feta.", "Arrange crackers and apple slices.", "Drizzle honey lightly.", "Serve chilled with coffee or wine."]
+      },
+      {
+        id: "r3",
+        title: "Chicken Avocado Wraps",
+        image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=1200&q=80",
+        time: "25 minutes",
+        serves: "3 people",
+        description: "Lean chicken, creamy avocado, spinach and tomatoes wrapped into a fresh lunch.",
+        ingredients: ["Chicken Breast Fillets", "Avocados", "Fresh Spinach", "Cherry Tomatoes"],
+        steps: ["Season and grill chicken breast.", "Slice avocado and tomatoes.", "Layer spinach, chicken and avocado.", "Wrap and serve warm."]
+      },
+      {
+        id: "r4",
+        title: "Weekend Breakfast Plate",
+        image: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=1200&q=80",
+        time: "20 minutes",
+        serves: "2 people",
+        description: "A proper breakfast with sausages, bacon, croissants, butter and fresh fruit.",
+        ingredients: ["Farmers Choice Beef Sausages", "Pork Bacon", "Croissants", "Salted Butter", "Bananas"],
+        steps: ["Pan-fry sausages and bacon.", "Warm croissants gently.", "Serve with butter and sliced bananas.", "Add coffee or fresh juice."]
+      },
+      {
+        id: "r5",
+        title: "Berry Yoghurt Bowl",
+        image: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=1200&q=80",
+        time: "5 minutes",
+        serves: "1 person",
+        description: "A quick breakfast bowl with natural yoghurt, berries, bananas and honey.",
+        ingredients: ["Browns Natural Yoghurt", "Frozen Mixed Berries", "Bananas", "Honey"],
+        steps: ["Spoon yoghurt into a bowl.", "Add frozen berries and sliced banana.", "Drizzle honey.", "Serve immediately."]
+      }
+    ];
+
+    const suppliers = [
+      {
+        title: "Browns Cheese",
+        image: "https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=1200&q=80",
+        description: "Premium dairy shelf: gouda, feta, yoghurt, crackers and ice cream-style products for home meals and entertaining."
+      },
+      {
+        title: "Farmers Choice",
+        image: "https://images.unsplash.com/photo-1603048297172-c92544798d5a?auto=format&fit=crop&w=1200&q=80",
+        description: "Meat and breakfast staples including sausages and bacon for everyday Kenyan family meals."
+      },
+      {
+        title: "Fresh Kenyan Market",
+        image: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1200&q=80",
+        description: "Fresh produce shelf with apples, bananas, avocado, spinach, carrots and tomatoes."
+      }
+    ];
+
+    let activeCategory = "All";
+    let searchTerm = "";
+    let cart = [];
+
+    const productGrid = document.getElementById("productGrid");
+    const filtersEl = document.getElementById("filters");
+    const searchInput = document.getElementById("searchInput");
+    const cartCount = document.getElementById("cartCount");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const drawerOverlay = document.getElementById("drawerOverlay");
+    const modal = document.getElementById("modal");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalBody = document.getElementById("modalBody");
+    const toast = document.getElementById("toast");
+
+    document.getElementById("metricProducts").textContent = products.length;
+
+    function formatMoney(amount) {
+      return "KSh " + amount.toLocaleString("en-KE");
+    }
+
+    function renderFilters() {
+      filtersEl.innerHTML = categories.map(category => `
+        <button class="filter-btn ${category === activeCategory ? "active" : ""}" onclick="setCategory('${category}')">
+          ${category}
+        </button>
+      `).join("");
+    }
+
+    function setCategory(category) {
+      activeCategory = category;
+      renderFilters();
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const term = searchTerm.trim().toLowerCase();
+
+      const filtered = products.filter(product => {
+        const matchesCategory = activeCategory === "All" || product.category === activeCategory;
+        const matchesSearch =
+          !term ||
+          product.name.toLowerCase().includes(term) ||
+          product.supplier.toLowerCase().includes(term) ||
+          product.category.toLowerCase().includes(term) ||
+          product.description.toLowerCase().includes(term);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (!filtered.length) {
+        productGrid.innerHTML = `
+          <div class="empty-state">
+            <h3>No products found</h3>
+            <p>Try searching for apples, gouda, Browns, beef mince, chicken, yoghurt, pasta or Farmers Choice.</p>
+          </div>
+        `;
+        return;
+      }
+
+      productGrid.innerHTML = filtered.map(product => `
+        <article class="product-card">
+          <div class="product-image">
+            <img src="${product.image}" alt="${product.name}" loading="lazy" />
+            <span class="badge">${product.badge}</span>
+          </div>
+
+          <div class="product-body">
+            <span class="supplier">${product.supplier}</span>
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+
+            <div class="product-bottom">
+              <div>
+                <div class="price">${formatMoney(product.price)}</div>
+                <small>${product.unit}</small>
+              </div>
+              <button class="add-btn" onclick="addToCart(${product.id})">Add</button>
+            </div>
+
+            <button class="details-btn" onclick="openProduct(${product.id})">View details</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderRecipes() {
+      document.getElementById("recipesGrid").innerHTML = recipes.map(recipe => `
+        <article class="recipe-card">
+          <img src="${recipe.image}" alt="${recipe.title}" loading="lazy" />
+          <div>
+            <h3>${recipe.title}</h3>
+            <p>${recipe.description}</p>
+            <button class="open-btn" onclick="openRecipe('${recipe.id}')">Open recipe</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderSuppliers() {
+      document.getElementById("supplierGrid").innerHTML = suppliers.map((supplier, index) => `
+        <article class="supplier-card">
+          <img src="${supplier.image}" alt="${supplier.title}" loading="lazy" />
+          <div>
+            <h3>${supplier.title}</h3>
+            <p>${supplier.description}</p>
+            <button class="open-btn" onclick="openSupplier(${index})">Open supplier</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function addToCart(productId) {
+      const product = products.find(item => item.id === productId);
+      const existing = cart.find(item => item.id === productId);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+
+      updateCart();
+      showToast(`${product.name} added to cart`);
+    }
+
+    function updateCart() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+      cartCount.textContent = count;
+      cartTotal.textContent = formatMoney(total);
+
+      if (!cart.length) {
+        cartItems.innerHTML = `
+          <div class="empty-state">
+            <h3>Your cart is empty</h3>
+            <p>Add products from the dashboard and they will appear here.</p>
+          </div>
+        `;
+        return;
+      }
+
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" />
+          <div>
+            <h4>${item.name}</h4>
+            <p>${formatMoney(item.price)} • ${item.unit}</p>
+            <div class="qty-row">
+              <button onclick="changeQty(${item.id}, -1)">−</button>
+              <strong>${item.qty}</strong>
+              <button onclick="changeQty(${item.id}, 1)">+</button>
+              <button class="remove" onclick="removeFromCart(${item.id})">Remove</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function changeQty(productId, delta) {
+      const item = cart.find(product => product.id === productId);
+      if (!item) return;
+
+      item.qty += delta;
+
+      if (item.qty <= 0) {
+        cart = cart.filter(product => product.id !== productId);
+      }
+
+      updateCart();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(product => product.id !== productId);
+      updateCart();
+    }
+
+    function openCart() {
+      cartDrawer.classList.add("open");
+      drawerOverlay.classList.add("open");
+    }
+
+    function closeCart() {
+      cartDrawer.classList.remove("open");
+      drawerOverlay.classList.remove("open");
+    }
+
+    function openModal(html) {
+      modalBody.innerHTML = html;
+      modal.classList.add("open");
+      modalOverlay.classList.add("open");
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      modalOverlay.classList.remove("open");
+    }
+
+    function openProduct(productId) {
+      const product = products.find(item => item.id === productId);
+
+      openModal(`
+        <div class="modal-hero">
+          <img src="${product.image}" alt="${product.name}" />
+        </div>
+
+        <div class="modal-content">
+          <span class="supplier">${product.supplier}</span>
+          <h2>${product.name}</h2>
+          <p>${product.description}</p>
+
+          <div class="checkout-summary">
+            <strong>Category:</strong> ${product.category}<br />
+            <strong>Unit:</strong> ${product.unit}<br />
+            <strong>Price:</strong> ${formatMoney(product.price)}
+          </div>
+
+          <button class="checkout-btn" style="margin-top:16px;" onclick="addToCart(${product.id})">
+            Add ${product.name} to cart
+          </button>
+        </div>
+      `);
+    }
+
+    function openRecipe(recipeId) {
+      const recipe = recipes.find(item => item.id === recipeId);
+      const matchedProducts = products.filter(product =>
+        recipe.ingredients.some(ingredient => product.name.toLowerCase().includes(ingredient.toLowerCase()))
+      );
+
+      openModal(`
+        <div class="modal-hero">
+          <img src="${recipe.image}" alt="${recipe.title}" />
+        </div>
+
+        <div class="modal-content">
+          <h2>${recipe.title}</h2>
+          <p>${recipe.description}</p>
+
+          <div class="checkout-summary">
+            <strong>Time:</strong> ${recipe.time}<br />
+            <strong>Serves:</strong> ${recipe.serves}
+          </div>
+
+          <h3>Ingredients</h3>
+          <ul>
+            ${recipe.ingredients.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+
+          <h3>Steps</h3>
+          <ol>
+            ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
+          </ol>
+
+          <button class="checkout-btn" onclick="addRecipeItems('${recipe.id}')">
+            Add recipe items to cart
+          </button>
+        </div>
+      `);
+    }
+
+    function addRecipeItems(recipeId) {
+      const recipe = recipes.find(item => item.id === recipeId);
+
+      recipe.ingredients.forEach(ingredient => {
+        const product = products.find(item =>
+          item.name.toLowerCase().includes(ingredient.toLowerCase())
+        );
+
+        if (product) {
+          const existing = cart.find(item => item.id === product.id);
+
+          if (existing) {
+            existing.qty += 1;
+          } else {
+            cart.push({ ...product, qty: 1 });
+          }
+        }
+      });
+
+      updateCart();
+      showToast(`${recipe.title} items added to cart`);
+      openCart();
+    }
+
+    function openSupplier(index) {
+      const supplier = suppliers[index];
+      const supplierProducts = products.filter(product =>
+        product.supplier.toLowerCase().includes(supplier.title.toLowerCase().split(" ")[0])
+      );
+
+      openModal(`
+        <div class="modal-hero">
+          <img src="${supplier.image}" alt="${supplier.title}" />
+        </div>
+
+        <div class="modal-content">
+          <h2>${supplier.title}</h2>
+          <p>${supplier.description}</p>
+
+          <h3>Available items</h3>
+          ${
+            supplierProducts.length
+              ? `<ul>${supplierProducts.map(product => `<li>${product.name} — ${formatMoney(product.price)}</li>`).join("")}</ul>`
+              : `<p>Supplier profile ready. Add more items under this supplier when needed.</p>`
+          }
+
+          <button class="checkout-btn" onclick="closeModal(); scrollToProducts();">
+            Browse products
+          </button>
+        </div>
+      `);
+    }
+
+    function openCheckout() {
+      if (!cart.length) {
+        showToast("Your cart is empty");
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+      openModal(`
+        <div class="modal-content">
+          <h2>Checkout</h2>
+          <p>Complete your order details below. This is wired as a demo checkout flow for the dashboard.</p>
+
+          <div class="checkout-summary">
+            ${cart.map(item => `${item.qty} × ${item.name}`).join("<br />")}
+            <br /><br />
+            <strong>Total: ${formatMoney(total)}</strong>
+          </div>
+
+          <div class="checkout-steps">
+            <input id="checkoutName" placeholder="Full name" />
+            <input id="checkoutPhone" placeholder="Phone number" />
+            <input id="checkoutAddress" placeholder="Delivery address" />
+            <select id="checkoutPayment">
+              <option>M-Pesa on delivery</option>
+              <option>Card payment</option>
+              <option>Cash on delivery</option>
+            </select>
+            <button class="checkout-btn" onclick="placeOrder()">Place order</button>
+          </div>
+        </div>
+      `);
+    }
+
+    function placeOrder() {
+      const name = document.getElementById("checkoutName").value.trim();
+      const phone = document.getElementById("checkoutPhone").value.trim();
+      const address = document.getElementById("checkoutAddress").value.trim();
+
+      if (!name || !phone || !address) {
+        showToast("Please fill in name, phone and address");
+        return;
+      }
+
+      cart = [];
+      updateCart();
+      closeCart();
+
+      openModal(`
+        <div class="modal-content">
+          <h2>Order received</h2>
+          <p>Thanks, ${name}. Your Nairobi Pantry order has been placed successfully.</p>
+
+          <div class="checkout-summary">
+            <strong>Delivery address:</strong> ${address}<br />
+            <strong>Phone:</strong> ${phone}<br />
+            <strong>Status:</strong> Preparing order
+          </div>
+
+          <button class="checkout-btn" onclick="closeModal()">Done</button>
+        </div>
+      `);
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    function scrollToProducts() {
+      document.getElementById("productsSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function scrollToRecipes() {
+      document.getElementById("recipesSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    searchInput.addEventListener("input", event => {
+      searchTerm = event.target.value;
+      renderProducts();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeModal();
+        closeCart();
+      }
+    });
+
+    renderFilters();
+    renderProducts();
+    renderRecipes();
+    renderSuppliers();
+    updateCart();
+  </script>
 </body>
 </html>
