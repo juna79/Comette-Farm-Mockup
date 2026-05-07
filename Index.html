@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Coomete Farm | Fresh Food Ordering</title>
+<meta name="description" content="Order fresh vegetables, fruit, dairy, meat, pantry and farm products from Coomete Farm." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#176b2c;--green2:#2f8a3a;--cream:#fffaf0;--lime:#e8f6d8;--dark:#142217;--muted:#687666;--line:#e3eadc;--gold:#e9b949;--red:#d94b3d;--shadow:0 20px 60px rgba(20,34,23,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f8f7ef;color:var(--dark)}button,input,textarea,select{font-family:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+.topbar{background:linear-gradient(90deg,#145825,#2f8a3a);color:#fff;padding:10px 6vw;display:flex;justify-content:space-between;gap:14px;font-size:13px;font-weight:800}
+.nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:15px 6vw;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;min-width:245px}.mark{width:50px;height:50px;border-radius:17px;background:var(--green);color:white;display:grid;place-items:center;font-size:27px;box-shadow:0 12px 28px rgba(23,107,44,.25)}.brand h1{margin:0;color:var(--green);font-size:25px;letter-spacing:-.04em;line-height:1}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px;font-weight:800}
+.search{flex:1;position:relative}.search span{position:absolute;left:15px;top:50%;transform:translateY(-50%)}.search input{width:100%;border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px 15px 14px 43px;font-size:15px;outline:none}.search input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(23,107,44,.08)}
+.nav-actions{display:flex;align-items:center;gap:10px}.btn,.chip{border:0;border-radius:999px;font-weight:900;transition:.2s}.btn{padding:12px 18px}.btn.primary{background:var(--green);color:white;box-shadow:0 12px 30px rgba(23,107,44,.24)}.btn.primary:hover{background:#10511f;transform:translateY(-1px)}.btn.ghost{background:#fff;color:var(--green);border:1px solid #bdd7bb}.btn.ghost:hover{background:var(--lime)}#cartCount{display:inline-grid;place-items:center;background:#fff;color:var(--green);min-width:24px;height:24px;border-radius:999px;margin-left:6px;padding:0 7px}
+.hero{margin:28px 6vw;border-radius:36px;overflow:hidden;min-height:520px;display:grid;grid-template-columns:1.05fr .95fr;position:relative;background:radial-gradient(circle at 70% 15%,#e9f8d9,transparent 32%),linear-gradient(135deg,#fffdf5,#edf8e6);box-shadow:var(--shadow)}.hero-text{padding:70px 60px;position:relative;z-index:1}.eyebrow{display:inline-flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;color:var(--green);font-weight:900;font-size:13px}.hero h2{font-family:'Playfair Display',serif;font-size:74px;line-height:.95;letter-spacing:-.055em;margin:24px 0 18px}.hero h2 span{color:var(--green)}.hero p{font-size:19px;line-height:1.7;color:#465044;max-width:610px}.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.hero-img{min-height:520px;background:url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=88') center/cover;clip-path:ellipse(78% 78% at 60% 50%)}.seal{position:absolute;right:38px;top:40px;width:132px;height:132px;border:2px solid var(--green);border-radius:50%;display:grid;place-items:center;text-align:center;color:var(--green);font-weight:900;background:rgba(255,255,255,.72);backdrop-filter:blur(8px)}
+.stats{margin:0 6vw 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 10px 32px rgba(19,34,22,.05)}.stat b{display:block;font-size:27px;color:var(--green)}.stat span{color:var(--muted);font-size:13px;line-height:1.5}
+.section{padding:34px 6vw}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:18px}.section h3{font-size:35px;margin:0;letter-spacing:-.045em}.section p{color:var(--muted);line-height:1.6;margin:7px 0 0}.tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}.tools select{border:1px solid var(--line);border-radius:999px;padding:12px 15px;background:#fff;color:var(--dark);font-weight:800}
+.chips{display:flex;gap:10px;overflow:auto;padding:6px 0 20px;position:sticky;top:81px;background:#f8f7ef;z-index:20}.chip{white-space:nowrap;background:#fff;border:1px solid var(--line);color:#40503e;padding:11px 15px}.chip.active,.chip:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:0 12px 36px rgba(19,34,22,.06)}.img-wrap{height:198px;position:relative;background:#edf2e8;overflow:hidden}.img-wrap img,.recipe-card img{width:100%;height:100%;object-fit:cover;display:block;transition:.35s}.card:hover .img-wrap img,.recipe-card:hover img{transform:scale(1.05)}.badge{position:absolute;left:14px;top:14px;background:#fff;color:var(--green);border-radius:999px;padding:8px 10px;font-size:11px;font-weight:900;box-shadow:0 10px 25px rgba(0,0,0,.12)}.deal-badge{background:#ffefc2;color:#7a4b00}.body{padding:18px}.cat{display:inline-block;color:var(--green);background:var(--lime);padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;margin-bottom:10px}.name{font-weight:900;font-size:17px;line-height:1.28;min-height:44px}.meta{display:flex;justify-content:space-between;gap:12px;align-items:end;margin:13px 0}.price{color:var(--green);font-size:24px;font-weight:900}.old{color:#9ca3af;text-decoration:line-through;font-size:13px;font-weight:800}.unit{font-size:12px;color:var(--muted);font-weight:800}
+.qty{display:grid;grid-template-columns:42px 1fr 42px;gap:8px;margin-top:12px}.qty button{border:0;border-radius:14px;background:#edf2e8;color:var(--green);font-size:20px;font-weight:900}.qty button.plus{background:var(--green);color:#fff}.qty input{height:42px;border:1px solid var(--line);border-radius:14px;text-align:center;font-size:16px;font-weight:900}.addline{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px}.addline button{border:0;border-radius:14px;background:var(--green);color:#fff;font-weight:900;padding:12px}.subtotal{margin-top:12px;border-radius:16px;background:#f4f7f0;padding:12px;display:flex;justify-content:space-between;color:#455044;font-size:13px}
+.recipe-card{cursor:pointer}.recipe-card .img-wrap{height:210px}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.tags span{background:#f4f7f0;border-radius:999px;padding:7px 10px;color:#475447;font-size:12px;font-weight:800}
+.split{margin:34px 6vw;display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{border-radius:30px;background:#173b20;color:#fff;padding:34px;box-shadow:var(--shadow)}.panel.light{background:#fff;color:var(--dark);border:1px solid var(--line)}.panel h3{font-size:30px;margin:0 0 10px}.panel p{color:inherit;opacity:.82;line-height:1.7}.newsletter{display:flex;gap:8px;margin-top:18px}.newsletter input{flex:1;border:1px solid var(--line);border-radius:16px;padding:14px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.34);z-index:40;opacity:0;pointer-events:none;transition:.2s}.overlay.show{opacity:1;pointer-events:auto}.drawer{position:fixed;right:0;top:0;height:100vh;width:min(500px,94vw);background:#fff;z-index:50;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-25px 0 70px rgba(0,0,0,.18)}.drawer.open{transform:translateX(0)}.drawer-head{padding:22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.drawer-head h3{margin:0;font-size:28px}.x{border:0;background:#f1f3ef;border-radius:50%;width:40px;height:40px;font-size:24px}.cart-list{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.cart-item img{width:60px;height:60px;object-fit:cover;border-radius:16px}.cart-item b{display:block;font-size:14px}.cart-item span{display:block;color:var(--muted);font-size:12px;margin-top:5px}.mini-controls{display:flex;gap:6px;margin-top:8px}.mini-controls button{border:0;border-radius:10px;background:#edf2e8;color:var(--green);font-weight:900;width:30px;height:28px}.cart-foot{border-top:1px solid var(--line);padding:18px;background:#fbfcf8}.field{margin-top:10px}.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:16px;padding:12px;font-size:14px}.cart-total{display:flex;justify-content:space-between;align-items:center;margin:16px 0;font-size:18px}.cart-total b{font-size:26px;color:var(--green)}.checkout{border-radius:18px;border:0;width:100%;font-size:16px;padding:16px}
+.floating-total{position:fixed;left:14px;right:14px;bottom:14px;z-index:35;background:#102817;color:#fff;border-radius:22px;padding:14px 16px;display:none;justify-content:space-between;align-items:center;box-shadow:0 20px 50px rgba(0,0,0,.25)}.floating-total button{background:#fff;color:var(--green);border:0;border-radius:999px;font-weight:900;padding:12px 16px}
+.modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:20px}.modal.show{display:grid}.modal-card{background:#fff;border-radius:30px;max-width:780px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 35px 100px rgba(0,0,0,.28)}.modal-card img{width:100%;height:300px;object-fit:cover}.modal-body{padding:26px}.modal-body h3{font-size:34px;margin:0 0 10px}.modal-body h4{margin:20px 0 8px}.modal-body li{margin:8px 0;color:#4b584a}.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.empty{background:#fff;border:1px dashed #c7d9c5;border-radius:24px;padding:30px;color:var(--muted);font-weight:800;text-align:center}footer{background:#132216;color:#fff;padding:48px 6vw;margin-top:30px}footer h3{font-size:28px;margin:0 0 8px}footer p{color:#cdd7ca;line-height:1.6;max-width:780px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}.hero h2{font-size:60px}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.topbar{display:none}.nav{padding:12px 4vw;flex-wrap:wrap}.brand{min-width:auto;width:100%}.nav-actions{margin-left:auto}.search{order:3;flex-basis:100%}.hero{margin:18px 4vw;grid-template-columns:1fr;min-height:auto}.hero-text{padding:34px 26px}.hero h2{font-size:48px}.hero-img{min-height:280px;clip-path:none}.seal{display:none}.section{padding:28px 4vw}.section-head{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.stats,.split{margin-left:4vw;margin-right:4vw;grid-template-columns:1fr}.chips{top:130px}.floating-total{display:flex}.card{border-radius:22px}.img-wrap{height:150px}.body{padding:14px}.name{font-size:15px}.price{font-size:20px}.nav-actions .btn.ghost{display:none}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.hero h2{font-size:42px}.hero p{font-size:16px}.stats{gap:10px}.stat b{font-size:22px}.modal-card img{height:220px}}
+</style>
+</head>
+<body>
+<div class="topbar"><div>🌱 Fresh from Coomete Farm to your table</div><div>Free delivery available on larger orders · WhatsApp checkout ready</div></div>
+<header class="nav"><a class="brand" href="#top"><div class="mark">☘</div><div><h1>COOMETE FARM</h1><p>Farm fresh. Always.</p></div></a><div class="search"><span>🔎</span><input id="searchInput" placeholder="Search vegetables, fruits, cheese, meat, herbs..." /></div><div class="nav-actions"><a class="btn ghost" href="#recipes">Recipes</a><a class="btn ghost" href="#deals">Deals</a><button class="btn primary" onclick="openCart()">Cart <span id="cartCount">0</span></button></div></header>
+<main id="top">
+<section class="hero"><div class="hero-text"><div class="eyebrow">🌿 Fresh food ordering · Nairobi ready</div><h2>Farm Fresh.<br><span>Naturally Better.</span></h2><p>A premium ordering website for Coomete Farm. Customers can browse every item, filter by category, choose quantities, see totals instantly, add recipe ingredients, and send the full order by WhatsApp.</p><div class="hero-ctas"><a class="btn primary" href="#shop">Shop products</a><a class="btn ghost" href="#recipes">Explore recipes</a></div></div><div class="hero-img"></div><div class="seal">100%<br>FRESH<br>ORDERING</div></section>
+<section class="stats"><div class="stat"><b id="productCount">310</b><span>Products from the Excel sheet</span></div><div class="stat"><b id="categoryCount">23</b><span>Categories, from cheese to vegetables</span></div><div class="stat"><b>Live</b><span>Cart totals, item subtotals and saved basket</span></div><div class="stat"><b>WhatsApp</b><span>Checkout message ready to send</span></div></section>
+<section class="section" id="deals"><div class="section-head"><div><h3>Deals of the Day</h3><p>Featured picks with a 10% demo discount. You can change these in the code.</p></div><button class="btn ghost" onclick="setCategory('All')">View all products</button></div><div class="grid" id="dealsGrid"></div></section>
+<section class="section" id="shop"><div class="section-head"><div><h3>Shop Coomete Farm</h3><p>All products are pulled from the uploaded Excel list. Use search, filters, quantity buttons, or direct add-to-cart.</p></div><div class="tools"><select id="sortSelect"><option value="default">Sort products</option><option value="az">A–Z</option><option value="priceLow">Price: low to high</option><option value="priceHigh">Price: high to low</option></select><button class="btn ghost" onclick="clearCart()">Clear cart</button></div></div><div class="chips" id="categoryChips"></div><div class="grid" id="productGrid"></div></section>
+<section class="section" id="recipes"><div class="section-head"><div><h3>Recipes Using Coomete Products</h3><p>Click a recipe to open it. You can add matching ingredients straight into the cart.</p></div></div><div class="grid" id="recipeGrid"></div></section>
+<section class="split"><div class="panel"><h3>Fresh food, simple ordering.</h3><p>This is designed to feel like a real premium farm shop: clean product browsing, simple ordering, and no complicated app flow for customers.</p></div><div class="panel light"><h3>Join the Coomete list</h3><p>Use this later for customer emails, weekly farm boxes, specials and delivery updates.</p><div class="newsletter"><input placeholder="Enter your email"><button class="btn primary">Subscribe</button></div></div></section>
+</main>
+<div class="overlay" id="overlay" onclick="closeCart();closeRecipe()"></div>
+<aside class="drawer" id="cartDrawer"><div class="drawer-head"><h3>Your Order</h3><button class="x" onclick="closeCart()">×</button></div><div class="cart-list" id="cartList"></div><div class="cart-foot"><div class="field"><input id="customerName" placeholder="Your name" /></div><div class="field"><textarea id="deliveryDetails" rows="3" placeholder="Delivery location / notes"></textarea></div><div class="cart-total"><span>Total</span><b id="cartTotal">KSh 0</b></div><button class="checkout btn primary" onclick="sendWhatsAppOrder()">Send Order via WhatsApp</button></div></aside>
+<div class="floating-total"><div><b id="mobileTotal">KSh 0</b><br><small id="mobileItems">0 items selected</small></div><button onclick="openCart()">View cart</button></div>
+<div class="modal" id="recipeModal"><div class="modal-card" id="recipeContent"></div></div>
+<footer><h3>Coomete Farm</h3><p>Fresh produce, farm products, pantry items and recipes in one simple ordering website. Replace the WhatsApp number in the script with the owner’s number before going live.</p></footer>
+<script>
+const WHATSAPP_NUMBER = '254700000000'; // Replace with Coomete Farm WhatsApp number, e.g. 2547XXXXXXXX
+const RAW_PRODUCTS = `97	Brown's Cheese	Biscuits (Charcoal Crackers) 250g	Pack	650	Pack
+564	Brown's Cheese	Biscuits (Cheddar Crackers) 250g	Pack	650	Pack
+814	Brown's Cheese	Biscuits (Rosemary) 250g	Pack	650	Pack
+75	Brown's Cheese	Bleu-De-Brun (Half Cheese)	Unit	2250	Unit
+74	Brown's Cheese	Bleu-De-Brun Portion 150g	Unit	700	Unit
+504	Brown's Cheese	Bocconcini 250g	Pack	750	Pack
+100	Brown's Cheese	Brie (Whole) (Ripened)	Pieces	4925	Kg's
+76	Brown's Cheese	Brie Portion 125g	Unit	630	Unit
+77	Brown's Cheese	Camembert 200g	Unit	700	Unit
+1559	Brown's Cheese	Cheddar (Cheese Love) White 250g	Pieces	600	Pieces
+1329	Brown's Cheese	Cheddar (Limuru) 250g	Pack	750	Pack
+808	Brown's Cheese	Cottage Cheese 250g	Unit	580	Unit
+502	Brown's Cheese	Cream Cheese (Soft) 250g	Unit	720	Unit
+90	Brown's Cheese	Dip  (whipped Feta) 300g	Unit	450	Unit
+1403	Brown's Cheese	Dip (Smoked Egg Plant) 250g	Pack	450	Pack
+505	Brown's Cheese	Feta (Lemon Pepper) 200g	Unit	740	Unit
+82	Brown's Cheese	Feta 200g	Unit	600	Unit
+1114	Brown's Cheese	Gouda (Half Cheese) Approx. 1kg	Kg's	2400	Kg's
+78	Brown's Cheese	Gouda (Mature) 250g	Pack	750	Pack
+1412	Brown's Cheese	Gouda (Mature) With Nettle Leaf 250g	Unit	750	Unit
+79	Brown's Cheese	Gouda 250g	Pack	750	Pack
+1423	Brown's Cheese	Gouda Cheese Love 250g	Pack	600	Pack
+1411	Brown's Cheese	Gouda With Cumin 250g	Pack	750	Pack
+1541	Brown's Cheese	Gouda With Mustard Seed 250g	Unit	750	Unit
+926	Brown's Cheese	Halloumi (Portion 200g)	Pack	850	Pack
+83	Brown's Cheese	Halloumi Cheese Love 200g	Unit	680	Unit
+81	Brown's Cheese	Halloumi Original 200g	Unit	850	Unit
+1354	Brown's Cheese	Hot Honey 250g	Pieces	750	Pieces
+480	Brown's Cheese	Honey (Acacia) 350g	Unit	750	Unit
+1390	Brown's Cheese	Honey (Blue Gum)  350g	Pack	750	Pack
+1404	Brown's Cheese	Honey (Creamed)  350g	Pack	750	Pack
+522	Brown's Cheese	Ice-Cream 125 ml	Unit	200	Unit
+122	Brown's Cheese	Mozzarella (Bocconcini) 250g	Pack	750	Pack
+1137	Brown's Cheese	Pizza Mozzarella 250g	Pack	725	Pack
+802	Brown's Cheese	Provolone 250g	Pack	750	Pack
+87	Brown's Cheese	Scamorza 250g	Pack	750	Pack
+1341	Brown's Cheese	Snacking Salami 150g	Unit	800	Unit
+4900	Brown's Cheese	Sour Cream 200g	Unit	500	Unit
+1128	Brown's Cheese - Ice-Creams	Brown's Ginger Nut Ice Cream 460ml	Pack	800	Pack
+1129	Brown's Cheese - Ice-Creams	Classic Vanilla Ice Cream 460ml	Pack	800	Pack
+1130	Brown's Cheese - Ice-Creams	Coffee, Cookies, Cream 460ml	Pack	800	Pack
+1131	Brown's Cheese - Ice-Creams	Dark Chocolate Sorbet 460ml	Pack	800	Pack
+1132	Brown's Cheese - Ice-Creams	Malt & Burnt White Chocolate 460ml	Pack	800	Pack
+1133	Brown's Cheese - Ice-Creams	Midnight Mint Chocolate Chip 460ml	Pack	800	Pack
+1134	Brown's Cheese - Ice-Creams	Strawberries & Cream Ice Cream 460ml	Pack	800	Pack
+1135	Brown's Cheese - Ice-Creams	Strawberry Yoghurt Ice Cream 460ml	Pack	800	Pack
+121	Dairy	Butter Salted 500g	Unit	1550	Unit
+69	Dairy	Cream 500 ml	Pack	900	Pack
+1553	Dairy	Cream Feta Dip (Lemon & Herb) 200g	Unit	360	Unit
+159	Dairy	Cream Sour 500ml	Unit	480	Unit
+567	Dairy	Eggs (Kenchic)	Pack	600	Pack
+124	Dairy	Eggs (Tray of 30)	Pack	600	Pack
+1115	Dairy	Eggs (Tray of 6)	Unit	150	Unit
+1116	Dairy	Eggs (Tray of 15)	Unit	300	Unit
+73	Dairy	Halloumi	Unit	410	Unit
+138	Dairy	Milk Goat 1Ltr	Unit	200	Unit
+120	Dairy	Milk Whole 1Ltr	Unit	200	Unit
+568	Dairy	Milk Yoghurt (Vanilla) 450g	Unit	250	Unit
+1200	Dairy	Yoghurt Greek 500g	Unit	450	Unit
+141	Dairy	Yoghurt Natural 500ml	Unit	250	Unit
+140	Dairy	Yoghurt Strawberry 500g	Unit	250	Unit
+180	Farmers Choice	Bacon Rindless Back Rashers	Pack	550	Pack
+181	Farmers Choice	Bacon Rindless Streaky Rashers	Pack	550	Pack
+182	Farmers Choice	Bacon Smoked Back Rashers	Pack	550	Pack
+183	Farmers Choice	Bacon Smoked Streaky Rashers	Pack	550	Pack
+184	Farmers Choice	Beef Brawns	Pack	250	Pack
+185	Farmers Choice	Beef Burgers	Pack	760	Pack
+186	Farmers Choice	Beef Sausages	Pack	650	Pack
+187	Farmers Choice	Chicken Sausages	Pack	650	Pack
+188	Farmers Choice	Frankfurters	Pack	680	Pack
+189	Farmers Choice	Hot Dogs	Pack	500	Pack
+190	Farmers Choice	Polony	Pack	250	Pack
+191	Farmers Choice	Pork Brawns	Pack	250	Pack
+192	Farmers Choice	Pork Sausages	Pack	650	Pack
+239	Flowers	Filler Flowers	Bunch	300	Bunch
+240	Flowers	Flowers Big Bunch	Bunch	400	Bunch
+241	Flowers	Flowers Medium Bunch	Bunch	300	Bunch
+242	Flowers	Flowers Small Bunch	Bunch	200	Bunch
+419	Fruit	Apple  Granny Smith	Pieces	100	Pieces
+420	Fruit	Apple  Royal Gala	Pieces	100	Pieces
+421	Fruit	Apple Red Chief	Pieces	100	Pieces
+422	Fruit	Avocado	Pieces	100	Pieces
+423	Fruit	Banana	Kg's	120	Kg's
+424	Fruit	Grapes Black Punnet	Punnet	550	Punnet
+425	Fruit	Grapes Green Punnet	Punnet	550	Punnet
+426	Fruit	Grapes Red Punnet	Punnet	550	Punnet
+427	Fruit	Lemons	Pieces	35	Pieces
+428	Fruit	Lime	Pieces	30	Pieces
+429	Fruit	Mango	Pieces	250	Pieces
+430	Fruit	Melon Cantaloupe	Pieces	250	Pieces
+431	Fruit	Melon Honeydew	Pieces	250	Pieces
+432	Fruit	Melon Water	Pieces	400	Pieces
+433	Fruit	Orange Imported	Pieces	100	Pieces
+434	Fruit	Passion Fruit	Kg's	400	Kg's
+435	Fruit	Pawpaw	Pieces	350	Pieces
+436	Fruit	Pear	Pieces	100	Pieces
+437	Fruit	Pineapple	Pieces	350	Pieces
+438	Fruit	Plum	Punnet	450	Punnet
+439	Fruit	Tangerine	Pieces	60	Pieces
+440	Fruit Berries	Blueberries Punnet	Punnet	550	Punnet
+441	Fruit Berries	Raspberries Punnet	Punnet	550	Punnet
+442	Fruit Berries	Strawberries Punnet	Punnet	450	Punnet
+7	Herbs	Basil	Bunch	50	Bunch
+6	Herbs	Bay Leaves	Bunch	30	Bunch
+8	Herbs	Chives	Bunch	50	Bunch
+9	Herbs	Coriander	Bunch	20	Bunch
+10	Herbs	Dill	Bunch	50	Bunch
+11	Herbs	Garlic	Pieces	30	Pieces
+12	Herbs	Ginger	Kg's	450	Kg's
+13	Herbs	Lemongrass	Bunch	40	Bunch
+14	Herbs	Marjoram	Bunch	50	Bunch
+15	Herbs	Mint	Bunch	50	Bunch
+16	Herbs	Parsley	Bunch	50	Bunch
+17	Herbs	Rosemary	Bunch	50	Bunch
+18	Herbs	Sage	Bunch	50	Bunch
+19	Herbs	Tarragon	Bunch	50	Bunch
+20	Herbs	Thyme	Bunch	50	Bunch
+526	Herbs (Live)	Basil Plant	Pot	250	Pot
+527	Herbs (Live)	Chives Plant	Pot	250	Pot
+528	Herbs (Live)	Mint Plant	Pot	250	Pot
+529	Herbs (Live)	Rosemary Plant	Pot	250	Pot
+530	Herbs (Live)	Thyme Plant	Pot	250	Pot
+31	Herbs - Salad	Lettuce Crispy	Pieces	80	Pieces
+32	Herbs - Salad	Lettuce Iceberg	Pieces	120	Pieces
+33	Herbs - Salad	Lettuce Mixed	Pack	150	Pack
+34	Herbs - Salad	Lettuce Red	Pieces	80	Pieces
+35	Herbs - Salad	Lettuce Romaine	Pieces	80	Pieces
+36	Herbs - Salad	Lettuce Rocket	Pack	100	Pack
+711	Juice - Kombucha	Kombucha 1Ltr	Unit	650	Unit
+712	Juice - Kombucha	Kombucha 500ml	Unit	350	Unit
+443	Juices	Apple Juice 1Ltr	Unit	450	Unit
+444	Juices	Apple Juice 500ml	Unit	250	Unit
+445	Juices	Orange Juice 1Ltr	Unit	450	Unit
+446	Juices	Orange Juice 500ml	Unit	250	Unit
+447	Juices	Passion Juice 1Ltr	Unit	450	Unit
+448	Juices	Passion Juice 500ml	Unit	250	Unit
+449	Juices	Pineapple Juice 1Ltr	Unit	450	Unit
+450	Juices	Pineapple Juice 500ml	Unit	250	Unit
+451	Kampi Kitchen	Beef Lasagne	Pack	850	Pack
+452	Kampi Kitchen	Chicken Pie	Pack	850	Pack
+453	Kampi Kitchen	Fish Pie	Pack	850	Pack
+454	Kampi Kitchen	Vegetable Lasagne	Pack	800	Pack
+455	Kampi Kitchen	Vegetable Pie	Pack	800	Pack
+456	Mayer's	Granola 500g	Pack	550	Pack
+457	Mayer's	Honey 500g	Unit	550	Unit
+458	Mayer's	Jam 300g	Unit	450	Unit
+459	Mayer's	Marmalade 300g	Unit	450	Unit
+460	Meat	Beef Fillet	Kg's	2200	Kg's
+461	Meat	Beef Mince	Kg's	950	Kg's
+462	Meat	Beef Rump Steak	Kg's	1600	Kg's
+463	Meat	Beef Sirloin Steak	Kg's	1650	Kg's
+464	Meat	Chicken Breast	Kg's	1200	Kg's
+465	Meat	Chicken Drumsticks	Kg's	850	Kg's
+466	Meat	Chicken Leg	Kg's	850	Kg's
+467	Meat	Chicken Thigh	Kg's	850	Kg's
+468	Meat	Lamb Chops	Kg's	1750	Kg's
+469	Meat	Lamb Mince	Kg's	1500	Kg's
+470	Meat	Pork Chops	Kg's	1100	Kg's
+471	Meat	Pork Mince	Kg's	950	Kg's
+472	Meat	Pork Sausages	Kg's	950	Kg's
+473	Meat (Fish)	Fish Fillet	Kg's	1650	Kg's
+474	Meat (Fish)	Salmon Fillet	Kg's	4200	Kg's
+475	Meat (Fish)	Tilapia Fillet	Kg's	1350	Kg's
+476	Meat (Fish)	Trout Fillet	Kg's	1900	Kg's
+477	Meat (Fish) Portions Oven cook For 20 Minutes	Fish Portion Herb Butter	Pack	850	Pack
+478	Meat (Fish) Portions Oven cook For 20 Minutes	Salmon Portion Herb Butter	Pack	1250	Pack
+479	Meat (Fish) Portions Oven cook For 20 Minutes	Trout Portion Herb Butter	Pack	950	Pack
+480	Meat (Pieces)	Chicken Whole	Pieces	1450	Pieces
+481	Meat (Pieces)	Duck Whole	Pieces	2500	Pieces
+482	Meats- Droewors, Tanda	Beef Droewors 200g	Pack	850	Pack
+483	Meats- Droewors, Tanda	Beef Biltong 200g	Pack	850	Pack
+484	Oil (Cold Pressed Canola)	Canola Oil 1Ltr	Unit	850	Unit
+485	Others	Charcoal Bag	Bag	850	Bag
+486	Others	Firewood Bag	Bag	550	Bag
+487	Others	Maize Flour 2kg	Pack	250	Pack
+488	Others	Wheat Flour 2kg	Pack	300	Pack
+489	Plants (Live)	Aloe Vera Plant	Pot	350	Pot
+490	Plants (Live)	Flowering Plant	Pot	650	Pot
+491	Plants (Live)	Indoor Plant	Pot	850	Pot
+492	Vegetable	Artichokes	Pieces	150	Pieces
+493	Vegetable	Asparagus	Punnet	550	Punnet
+494	Vegetable	Aubergine	Kg's	180	Kg's
+495	Vegetable	Beetroot	Kg's	150	Kg's
+496	Vegetable	Broccoli	Kg's	300	Kg's
+497	Vegetable	Cabbage	Pieces	120	Pieces
+498	Vegetable	Carrots	Kg's	150	Kg's
+499	Vegetable	Cauliflower	Pieces	250	Pieces
+500	Vegetable	Celery	Pieces	180	Pieces
+501	Vegetable	Cucumber	Pieces	80	Pieces
+502	Vegetable	Courgette	Kg's	180	Kg's
+503	Vegetable	Eggplant	Kg's	180	Kg's
+504	Vegetable	French Beans	Punnet	150	Punnet
+505	Vegetable	Green Peas	Punnet	150	Punnet
+506	Vegetable	Leeks	Bunch	100	Bunch
+507	Vegetable	Mushrooms Button	Punnet	350	Punnet
+508	Vegetable	Onions Red	Kg's	180	Kg's
+509	Vegetable	Onions White	Kg's	180	Kg's
+510	Vegetable	Parsley Root	Punnet	250	Punnet
+511	Vegetable	Pepper Green	Pieces	220	Kg's
+512	Vegetable	Pepper Red	Pieces	400	Kg's
+513	Vegetable	Pepper Yellow	Pieces	400	Kg's
+514	Vegetable	Potatoes	Kg's	120	Kg's
+515	Vegetable	Potatoes New	Kg's	180	Kg's
+516	Vegetable	Pumpkin Whole	Pieces	120	Kg's
+517	Vegetable	Radish Red	Bunch	35	Bunch
+518	Vegetable	Spinach Normal	Bunch	40	Bunch
+519	Vegetable	Spring Onion	Bunch	25	Bunch
+520	Vegetable	Sugar-Snap Peas	Punnet	80	Punnet
+521	Vegetable	Sukuma Wiki	Bunch	40	Bunch
+522	Vegetable	Sweet Corn Yellow	Pieces	100	Pieces
+523	Vegetable	Tomato Cherry Red Punnet	Punnet	180	Punnet
+524	Vegetable	Tomato English	Kg's	180	Kg's
+525	Vegetable	Tomato Italian	Kg's	150	Kg's`;
+const products = RAW_PRODUCTS.trim().split('\n').map(line => {
+  const [id, category, name, orderUnit, price, chargeUnit] = line.split('\t');
+  return { id:Number(id), category, name, orderUnit, price:Number(price), chargeUnit };
+});
+const imageMap = [
+  [/tomato|cherry/i,'https://images.unsplash.com/photo-1546470427-e26264be0b0d?auto=format&fit=crop&w=900&q=80'],[/onion|garlic|leek|spring onion/i,'https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=900&q=80'],[/potato|sweet potato/i,'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=900&q=80'],[/spinach|sukuma|lettuce|rocket|kale|chard|greens/i,'https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=900&q=80'],[/carrot/i,'https://images.unsplash.com/photo-1447175008436-054170c2e979?auto=format&fit=crop&w=900&q=80'],[/avocado/i,'https://images.unsplash.com/photo-1519162808019-7de1683fa2ad?auto=format&fit=crop&w=900&q=80'],[/banana|fruit|mango|orange|apple|grape|berry|strawberry|blueberry|raspberry|passion|melon|pineapple|pear|plum/i,'https://images.unsplash.com/photo-1619566636858-adf3ef46470b?auto=format&fit=crop&w=900&q=80'],[/cheese|brie|gouda|feta|cheddar|camembert|yoghurt|milk|cream|butter|dairy/i,'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=900&q=80'],[/beef|steak|meat|lamb|pork|chicken|sausage|bacon|fish|salmon|tilapia|trout/i,'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=900&q=80'],[/herb|basil|coriander|mint|thyme|rosemary|parsley|sage|oregano|dill|chilli/i,'https://images.unsplash.com/photo-1515586000433-45406d8e6662?auto=format&fit=crop&w=900&q=80'],[/flower|rose|lily|bouquet/i,'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80'],[/juice|kombucha/i,'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80'],[/ice|cream/i,'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=900&q=80'],[/biscuit|cracker|bread|cake|granola|kitchen|pie|pastry/i,'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80'],[/oil/i,'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=900&q=80'],[/plant|seedling|live/i,'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=900&q=80'],[/pepper|capsicum|cucumber|broccoli|beet|aubergine|eggplant|mushroom|pumpkin|peas|corn|vegetable/i,'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=900&q=80']
+];
+function imageFor(p) { const hit = imageMap.find(([rx]) => rx.test(p.name) || rx.test(p.category)); return hit ? hit[1] : 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80'; }
+const dealIds = [57,54,50,43,34,82,3,55,33,75,97,145,11,22,16,30];
+const recipes = [
+ {id:'sukuma',title:'Sukuma Wiki with Tomato & Onion',time:'20 mins',difficulty:'Easy',image:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80',intro:'A quick Kenyan-style greens dish using sukuma, tomato, onion and garlic.',ingredients:['Sukuma Wiki','Tomato English','Onions Red','Garlic'],steps:['Slice the sukuma thinly and rinse well.','Fry onion and garlic until soft.','Add tomatoes and cook down into a light sauce.','Add sukuma, season, and stir-fry until just tender.']},
+ {id:'curry',title:'Farm Basket Vegetable Curry',time:'45 mins',difficulty:'Easy',image:'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=1000&q=80',intro:'A hearty curry using potatoes, carrots, greens, onions and herbs.',ingredients:['Potatoes','Carrots','Spinach Normal','Onions Red','Tomato English'],steps:['Fry onions until golden.','Add tomatoes and spices.','Add potatoes and carrots with a little water.','Simmer until soft, then fold in spinach at the end.']},
+ {id:'soup',title:'Creamy Vegetable Soup',time:'35 mins',difficulty:'Easy',image:'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=80',intro:'A rich, comforting soup using carrots, potatoes, herbs and farm greens.',ingredients:['Carrots','Potatoes','Spinach Normal','Onions White','Parsley'],steps:['Cook onions, carrots and potatoes until soft.','Add water or stock and simmer.','Blend until smooth.','Finish with chopped greens and herbs.']},
+ {id:'salad',title:'Fresh Garden Salad Box',time:'15 mins',difficulty:'Very easy',image:'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1000&q=80',intro:'A fresh salad using lettuce, tomato, avocado, cucumber and herbs.',ingredients:['Lettuce Mixed','Tomato Cherry Red Punnet','Avocado','Cucumber','Basil'],steps:['Wash and dry the leaves.','Slice tomatoes, cucumber and avocado.','Toss gently with herbs.','Serve with lemon, olive oil, salt and pepper.']}
+];
+let cart = JSON.parse(localStorage.getItem('coometeCart') || '{}');
+let activeCategory = 'All';
+let searchTerm = '';
+const money = n => 'KSh ' + Number(n || 0).toLocaleString('en-KE');
+const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
+const dealSet = new Set(dealIds);
+const priceFor = p => dealSet.has(p.id) ? Math.round(p.price * 0.9) : p.price;
+const findProduct = name => products.find(p => p.name.toLowerCase() === name.toLowerCase()) || products.find(p => p.name.toLowerCase().includes(name.toLowerCase().split(' ')[0]));
+const esc = s => String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function saveCart() { localStorage.setItem('coometeCart', JSON.stringify(cart)); }
+function setCategory(cat) { activeCategory = cat; renderChips(); renderProducts(); document.querySelector('#shop').scrollIntoView({behavior:'smooth'}); }
+function renderChips() { document.getElementById('categoryChips').innerHTML = categories.map(c => `<button class="chip ${activeCategory===c?'active':''}" onclick="setCategory(${JSON.stringify(c)})">${esc(c)}</button>`).join(''); }
+function productCard(p) {
+ const qty = cart[p.id] || 0; const sale = priceFor(p); const isDeal = dealSet.has(p.id);
+ return `<article class="card"><div class="img-wrap"><img src="${imageFor(p)}" alt="${esc(p.name)}" loading="lazy"><span class="badge ${isDeal?'deal-badge':''}">${isDeal?'10% OFF':'Fresh pick'}</span></div><div class="body"><div class="cat">${esc(p.category)}</div><div class="name">${esc(p.name)}</div><div class="meta"><div>${isDeal?`<div class="old">${money(p.price)}</div>`:''}<div class="price">${money(sale)}</div><div class="unit">per ${esc(p.chargeUnit || p.orderUnit)}</div></div><div class="unit">Order: ${esc(p.orderUnit)}</div></div><div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><input type="number" min="0" value="${qty}" onchange="setQty(${p.id},this.value)"><button class="plus" onclick="changeQty(${p.id},1)">+</button></div><div class="addline"><button onclick="changeQty(${p.id},1);openCart()">Add to Cart</button><button onclick="changeQty(${p.id},1)">＋</button></div><div class="subtotal"><span>Subtotal</span><b>${money(qty * sale)}</b></div></div></article>`;
+}
+function renderDeals() { document.getElementById('dealsGrid').innerHTML = products.filter(p => dealSet.has(p.id)).slice(0,8).map(productCard).join(''); }
+function renderProducts() {
+ let list = products.filter(p => (activeCategory==='All'||p.category===activeCategory) && (p.name.toLowerCase().includes(searchTerm)||p.category.toLowerCase().includes(searchTerm)));
+ const sort = document.getElementById('sortSelect').value;
+ if(sort==='az') list.sort((a,b)=>a.name.localeCompare(b.name));
+ if(sort==='priceLow') list.sort((a,b)=>priceFor(a)-priceFor(b));
+ if(sort==='priceHigh') list.sort((a,b)=>priceFor(b)-priceFor(a));
+ document.getElementById('productGrid').innerHTML = list.map(productCard).join('') || '<div class="empty">No products found.</div>'; updateCartUI();
+}
+function setQty(id,value) { const qty=Math.max(0,Number(value)||0); if(qty===0) delete cart[id]; else cart[id]=qty; saveCart(); renderProducts(); renderDeals(); updateCartUI(); }
+function changeQty(id,delta) { setQty(id,(cart[id]||0)+delta); }
+function selectedItems() { return products.filter(p => cart[p.id] > 0).map(p => ({...p, qty:cart[p.id], unitPrice:priceFor(p), subtotal:cart[p.id]*priceFor(p)})); }
+function cartTotals() { const items=selectedItems(); return {items,count:items.reduce((s,p)=>s+p.qty,0),total:items.reduce((s,p)=>s+p.subtotal,0)}; }
+function updateCartUI() {
+ const {items,count,total}=cartTotals(); document.getElementById('cartCount').textContent=count; document.getElementById('cartTotal').textContent=money(total); document.getElementById('mobileTotal').textContent=money(total); document.getElementById('mobileItems').textContent=count+' items selected';
+ const list=document.getElementById('cartList'); if(!items.length) { list.innerHTML='<div class="empty">Your cart is empty. Add products from the catalogue.</div>'; return; }
+ list.innerHTML=items.map(p=>`<div class="cart-item"><img src="${imageFor(p)}" alt="${esc(p.name)}"><div><b>${esc(p.name)}</b><span>${p.qty} × ${money(p.unitPrice)} · ${esc(p.chargeUnit || p.orderUnit)}</span><div class="mini-controls"><button onclick="changeQty(${p.id},-1)">−</button><button onclick="changeQty(${p.id},1)">＋</button></div></div><strong>${money(p.subtotal)}</strong></div>`).join('');
+}
+function openCart() { document.getElementById('cartDrawer').classList.add('open'); document.getElementById('overlay').classList.add('show'); updateCartUI(); }
+function closeCart() { document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+function clearCart() { if(confirm('Clear the current order?')) { cart={}; saveCart(); renderProducts(); renderDeals(); updateCartUI(); } }
+function renderRecipes() { document.getElementById('recipeGrid').innerHTML = recipes.map(r => `<article class="card recipe-card" onclick="openRecipe('${r.id}')"><div class="img-wrap"><img src="${r.image}" alt="${esc(r.title)}"></div><div class="body"><div class="cat">${r.difficulty} · ${r.time}</div><div class="name">${esc(r.title)}</div><p>${esc(r.intro)}</p><div class="tags">${r.ingredients.slice(0,4).map(i=>`<span>${esc(i)}</span>`).join('')}</div></div></article>`).join(''); }
+function openRecipe(id) {
+ const r=recipes.find(x=>x.id===id); const found=r.ingredients.map(i=>findProduct(i)).filter(Boolean);
+ document.getElementById('recipeContent').innerHTML=`<img src="${r.image}" alt="${esc(r.title)}"><div class="modal-body"><button class="x" onclick="closeRecipe()" style="float:right">×</button><h3>${esc(r.title)}</h3><p>${esc(r.intro)}</p><div class="tags"><span>${r.time}</span><span>${r.difficulty}</span><span>${found.length} matched products</span></div><h4>Ingredients from Coomete Farm</h4><ul>${r.ingredients.map(i=>`<li>${esc(i)}</li>`).join('')}</ul><h4>Method</h4><ol>${r.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><div class="modal-actions"><button class="btn primary" onclick="addRecipeToCart('${r.id}')">Add recipe ingredients to cart</button><button class="btn ghost" onclick="closeRecipe()">Close</button></div></div>`;
+ document.getElementById('recipeModal').classList.add('show'); document.getElementById('overlay').classList.add('show');
+}
+function closeRecipe() { document.getElementById('recipeModal').classList.remove('show'); if(!document.getElementById('cartDrawer').classList.contains('open')) document.getElementById('overlay').classList.remove('show'); }
+function addRecipeToCart(id) { const r=recipes.find(x=>x.id===id); r.ingredients.map(i=>findProduct(i)).filter(Boolean).forEach(p=>cart[p.id]=(cart[p.id]||0)+1); saveCart(); renderProducts(); renderDeals(); updateCartUI(); closeRecipe(); openCart(); }
+function sendWhatsAppOrder() {
+ const {items,total}=cartTotals(); if(!items.length) return alert('Please add at least one product first.');
+ const name=document.getElementById('customerName').value.trim(); const delivery=document.getElementById('deliveryDetails').value.trim();
+ const lines=items.map(p=>`• ${p.name} — Qty: ${p.qty} ${p.orderUnit} — ${money(p.subtotal)}`).join('\n');
+ const text=`Hi Coomete Farm, I would like to place this order:\n\n${lines}\n\nTotal: ${money(total)}\n\nName: ${name || ' '}\nDelivery location / notes: ${delivery || ' '}`;
+ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,'_blank');
+}
+document.getElementById('productCount').textContent = products.length;
+document.getElementById('categoryCount').textContent = categories.length - 1;
+document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value.toLowerCase(); renderProducts(); });
+document.getElementById('sortSelect').addEventListener('change', renderProducts);
+renderChips(); renderDeals(); renderProducts(); renderRecipes(); updateCartUI();
+</script>
+</body>
+</html>
