@@ -1,1474 +1,987 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Comette Farm — Ordering Dashboard</title>
-
-  <style>
-    :root {
-      --bg: #f6f1e7;
-      --card: #ffffff;
-      --ink: #17231c;
-      --muted: #6d756e;
-      --line: #e5dccb;
-      --green: #245f3f;
-      --green-dark: #173f2b;
-      --green-soft: #e5f1e7;
-      --gold: #c5963b;
-      --danger: #b54545;
-      --shadow: 0 18px 50px rgba(22, 35, 27, 0.12);
-      --radius: 26px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(246, 241, 231, 0.94);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(23, 35, 28, 0.08);
-    }
-
-    .topbar-inner {
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: max-content;
-    }
-
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #245f3f, #91b95d);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 950;
-      box-shadow: 0 10px 24px rgba(36, 95, 63, 0.25);
-    }
-
-    .brand-title {
-      font-weight: 950;
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .search {
-      flex: 1;
-    }
-
-    .search input {
-      width: 100%;
-      border-radius: 999px;
-      border: 1px solid rgba(23, 35, 28, 0.13);
-      background: white;
-      padding: 14px 18px;
-      outline: none;
-      box-shadow: 0 10px 28px rgba(23, 35, 28, 0.05);
-    }
-
-    .search input:focus {
-      border-color: var(--green);
-    }
-
-    .cart-button {
-      border-radius: 999px;
-      padding: 13px 18px;
-      background: var(--green);
-      color: white;
-      font-weight: 900;
-      box-shadow: 0 12px 28px rgba(36, 95, 63, 0.25);
-    }
-
-    .cart-button span {
-      display: inline-grid;
-      place-items: center;
-      min-width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      background: white;
-      color: var(--green);
-      margin-left: 8px;
-      padding: 0 7px;
-      font-size: 12px;
-    }
-
-    .hero {
-      max-width: 1380px;
-      margin: 24px auto 0;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 18px;
-    }
-
-    .hero-main {
-      min-height: 380px;
-      border-radius: 36px;
-      padding: 38px;
-      background:
-        linear-gradient(120deg, rgba(21, 63, 41, 0.92), rgba(36, 95, 63, 0.68)),
-        url("https://images.pexels.com/photos/2255935/pexels-photo-2255935.jpeg?auto=compress&cs=tinysrgb&w=1600");
-      background-size: cover;
-      background-position: center;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .pill {
-      width: max-content;
-      max-width: 100%;
-      border-radius: 999px;
-      padding: 9px 13px;
-      background: rgba(255, 255, 255, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      font-size: 13px;
-      font-weight: 850;
-      backdrop-filter: blur(10px);
-    }
-
-    .hero h1 {
-      max-width: 760px;
-      margin: 24px 0 12px;
-      font-size: clamp(38px, 6vw, 76px);
-      line-height: 0.94;
-      letter-spacing: -0.065em;
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.86);
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
-    }
-
-    .primary-button,
-    .ghost-button {
-      border-radius: 999px;
-      padding: 13px 18px;
-      font-weight: 950;
-    }
-
-    .primary-button {
-      background: white;
-      color: var(--green-dark);
-    }
-
-    .ghost-button {
-      color: white;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-    }
-
-    .hero-side {
-      display: grid;
-      gap: 18px;
-    }
-
-    .panel {
-      background: white;
-      border-radius: 30px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    .panel h3 {
-      margin: 0 0 8px;
-      font-size: 26px;
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-
-    .panel p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .stat {
-      background: var(--green-soft);
-      border-radius: 18px;
-      padding: 14px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 24px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .main {
-      max-width: 1380px;
-      margin: 30px auto;
-      padding: 0 20px 70px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      margin: 34px 0 16px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(30px, 4vw, 46px);
-      letter-spacing: -0.055em;
-    }
-
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-    }
-
-    .sort-select {
-      border: 1px solid rgba(23, 35, 28, 0.12);
-      border-radius: 999px;
-      background: white;
-      padding: 12px 15px;
-      outline: none;
-      font-weight: 800;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-bottom: 18px;
-    }
-
-    .filter {
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: white;
-      border: 1px solid rgba(23, 35, 28, 0.1);
-      font-weight: 850;
-      color: var(--ink);
-    }
-
-    .filter.active {
-      background: var(--green);
-      color: white;
-      border-color: var(--green);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      background: white;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid rgba(23, 35, 28, 0.06);
-      box-shadow: 0 12px 34px rgba(23, 35, 28, 0.08);
-      display: flex;
-      flex-direction: column;
-      min-height: 420px;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .image-wrap {
-      height: 195px;
-      background: #efe7d8;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .image-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .image-fallback {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 18px;
-      background: linear-gradient(135deg, #e8f1e6, #f4ead8);
-      color: var(--green-dark);
-      font-weight: 950;
-    }
-
-    .tag {
-      position: absolute;
-      top: 11px;
-      left: 11px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.93);
-      padding: 7px 10px;
-      font-size: 12px;
-      font-weight: 950;
-      color: var(--green-dark);
-      box-shadow: 0 8px 18px rgba(23, 35, 28, 0.12);
-    }
-
-    .card-body {
-      padding: 17px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .group {
-      font-size: 12px;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      font-weight: 950;
-    }
-
-    .card h3 {
-      margin: 8px 0;
-      font-size: 19px;
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-    }
-
-    .meta {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      margin: 0 0 14px;
-    }
-
-    .bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 10px;
-      margin-top: auto;
-    }
-
-    .price {
-      font-size: 22px;
-      font-weight: 950;
-      color: var(--green-dark);
-    }
-
-    .small {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .add {
-      background: var(--ink);
-      color: white;
-      border-radius: 999px;
-      padding: 11px 14px;
-      font-weight: 950;
-    }
-
-    .view {
-      margin-top: 12px;
-      width: 100%;
-      border-radius: 999px;
-      padding: 10px;
-      background: var(--green-soft);
-      color: var(--green-dark);
-      font-weight: 900;
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      background: white;
-      border: 1px dashed rgba(23, 35, 28, 0.22);
-      border-radius: 24px;
-      padding: 34px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 16, 12, 0.55);
-      backdrop-filter: blur(7px);
-      z-index: 90;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.2s;
-    }
-
-    .overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .drawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: min(480px, 100%);
-      background: white;
-      z-index: 100;
-      transform: translateX(105%);
-      transition: 0.24s;
-      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.18);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .drawer.open {
-      transform: translateX(0);
-    }
-
-    .drawer-head {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(23, 35, 28, 0.08);
-    }
-
-    .drawer-head h2 {
-      margin: 0;
-    }
-
-    .close-button {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: var(--bg);
-      font-weight: 950;
-    }
-
-    .cart-items {
-      padding: 16px;
-      overflow: auto;
-      flex: 1;
-      display: grid;
-      gap: 11px;
-      align-content: start;
-    }
-
-    .cart-item {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 12px;
-      background: var(--bg);
-      border-radius: 18px;
-      padding: 11px;
-    }
-
-    .cart-item img {
-      width: 72px;
-      height: 72px;
-      border-radius: 14px;
-      object-fit: cover;
-      background: #e9dfcf;
-    }
-
-    .cart-item h4 {
-      margin: 0 0 4px;
-    }
-
-    .cart-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .qty {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .qty button {
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      background: white;
-      font-weight: 950;
-    }
-
-    .qty .remove {
-      width: auto;
-      border-radius: 999px;
-      color: var(--danger);
-      background: transparent;
-      margin-left: auto;
-    }
-
-    .drawer-foot {
-      padding: 17px;
-      border-top: 1px solid rgba(23, 35, 28, 0.08);
-      display: grid;
-      gap: 12px;
-    }
-
-    .total {
-      display: flex;
-      justify-content: space-between;
-      font-size: 22px;
-      font-weight: 950;
-    }
-
-    .checkout-button {
-      width: 100%;
-      border-radius: 999px;
-      padding: 14px;
-      background: var(--green);
-      color: white;
-      font-weight: 950;
-    }
-
-    .modal {
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -45%) scale(0.96);
-      width: min(740px, calc(100% - 28px));
-      max-height: calc(100vh - 38px);
-      overflow: auto;
-      background: white;
-      border-radius: 30px;
-      z-index: 110;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.2s;
-      box-shadow: var(--shadow);
-    }
-
-    .modal.open {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .modal-hero {
-      height: 280px;
-      position: relative;
-      background: #efe7d8;
-    }
-
-    .modal-hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .modal-content {
-      padding: 24px;
-    }
-
-    .modal-content h2 {
-      font-size: 34px;
-      letter-spacing: -0.05em;
-      margin: 0 0 10px;
-    }
-
-    .modal-content p {
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .modal-close {
-      position: absolute;
-      right: 14px;
-      top: 14px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.92);
-      font-weight: 950;
-      z-index: 2;
-    }
-
-    .form {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .form input,
-    .form select {
-      width: 100%;
-      border: 1px solid rgba(23, 35, 28, 0.12);
-      background: var(--bg);
-      border-radius: 15px;
-      padding: 13px;
-      outline: none;
-    }
-
-    .summary {
-      background: var(--bg);
-      border-radius: 18px;
-      padding: 14px;
-      color: var(--muted);
-      margin: 12px 0;
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 24px;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--ink);
-      color: white;
-      border-radius: 999px;
-      padding: 13px 17px;
-      font-weight: 900;
-      opacity: 0;
-      z-index: 200;
-      transition: 0.2s;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    @media (max-width: 1120px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-side {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .topbar-inner {
-        flex-wrap: wrap;
-      }
-
-      .search {
-        order: 3;
-        min-width: 100%;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-side {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-main {
-        padding: 26px;
-        min-height: 430px;
-      }
-
-      .section-head {
-        flex-direction: column;
-        align-items: start;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comette Farm — Premium Organic Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest: #1a3a2a;
+  --moss: #2d5a3d;
+  --sage: #4a7c59;
+  --fern: #6ba368;
+  --mint: #a8d5a2;
+  --cream: #f8f4ed;
+  --parchment: #f0ead8;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --clay: #8b5e3c;
+  --white: #ffffff;
+  --text-dark: #1c1c1c;
+  --text-mid: #4a4a4a;
+  --text-light: #7a7a7a;
+  --border: rgba(26,58,42,0.12);
+  --shadow-sm: 0 2px 12px rgba(26,58,42,0.08);
+  --shadow-md: 0 8px 32px rgba(26,58,42,0.12);
+  --shadow-lg: 0 20px 60px rgba(26,58,42,0.18);
+  --radius: 16px;
+  --radius-sm: 8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--moss);border-radius:3px;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(248,244,237,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.3s;}
+.nav.scrolled{box-shadow:var(--shadow-sm);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-mark{width:36px;height:36px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.nav-logo-mark svg{width:18px;height:18px;fill:var(--mint);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--forest);letter-spacing:0.02em;}
+.nav-brand span{color:var(--gold);}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-mid);text-decoration:none;letter-spacing:0.03em;transition:color 0.2s;}
+.nav-links a:hover{color:var(--forest);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.search-bar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:24px;padding:8px 16px;transition:all 0.2s;}
+.search-bar:focus-within{border-color:var(--sage);box-shadow:0 0 0 3px rgba(74,124,89,0.1);}
+.search-bar input{border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-dark);background:transparent;width:180px;}
+.search-bar svg{width:16px;height:16px;stroke:var(--text-light);flex-shrink:0;}
+.cart-btn{position:relative;display:flex;align-items:center;gap:8px;background:var(--forest);color:var(--white);border:none;border-radius:24px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;letter-spacing:0.03em;}
+.cart-btn:hover{background:var(--moss);transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,58,42,0.3);}
+.cart-badge{position:absolute;top:-6px;right:-6px;background:var(--gold);color:var(--forest);font-size:10px;font-weight:600;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;display:none;}
+.cart-badge.show{display:flex;}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;padding-top:72px;}
+.hero-left{background:var(--forest);display:flex;flex-direction:column;justify-content:center;padding:80px 64px;position:relative;overflow:hidden;}
+.hero-left::before{content:'';position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(168,213,162,0.15) 0%,transparent 70%);}
+.hero-left::after{content:'';position:absolute;bottom:-50px;right:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(201,168,76,0.1) 0%,transparent 70%);}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(168,213,162,0.15);border:1px solid rgba(168,213,162,0.3);border-radius:24px;padding:6px 16px;margin-bottom:28px;}
+.hero-eyebrow span{font-size:11px;font-weight:500;color:var(--mint);letter-spacing:0.12em;text-transform:uppercase;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:72px;line-height:1.0;font-weight:300;color:var(--white);margin-bottom:24px;}
+.hero-title em{font-style:italic;color:var(--gold-light);}
+.hero-subtitle{font-size:16px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.7;max-width:360px;margin-bottom:40px;}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--forest);border:none;border-radius:32px;padding:14px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.25s;letter-spacing:0.03em;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.4);}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.3);border-radius:32px;padding:14px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.25s;}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.6);}
+.hero-stats{display:flex;gap:40px;margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.1);}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--gold-light);}
+.hero-stat-label{font-size:12px;font-weight:400;color:rgba(255,255,255,0.5);letter-spacing:0.06em;text-transform:uppercase;margin-top:2px;}
+.hero-right{position:relative;overflow:hidden;}
+.hero-right img{width:100%;height:100%;object-fit:cover;}
+.hero-right-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,58,42,0.2) 0%,transparent 50%);}
+.hero-float-card{position:absolute;bottom:48px;right:32px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-lg);max-width:220px;}
+.hero-float-card-title{font-size:11px;font-weight:600;color:var(--sage);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+.hero-float-card-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--forest);line-height:1.3;}
+.hero-float-badge{position:absolute;top:32px;left:32px;background:var(--gold);color:var(--forest);font-size:11px;font-weight:700;padding:8px 16px;border-radius:24px;letter-spacing:0.05em;text-transform:uppercase;}
+.marquee-bar{background:var(--moss);padding:14px 0;overflow:hidden;}
+.marquee-inner{display:flex;gap:60px;animation:marquee 25s linear infinite;width:max-content;}
+.marquee-item{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;}
+.marquee-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.section{padding:80px 48px;}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;}
+.section-eyebrow{font-size:11px;font-weight:600;color:var(--sage);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--forest);line-height:1.1;}
+.section-title em{font-style:italic;color:var(--gold);}
+.section-subtitle{font-size:15px;color:var(--text-light);max-width:400px;line-height:1.6;}
+.categories-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;}
+.cat-tile{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;aspect-ratio:3/4;background:var(--forest);}
+.cat-tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.cat-tile.active{outline:2px solid var(--gold);outline-offset:2px;}
+.cat-tile img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.cat-tile:hover img{transform:scale(1.06);}
+.cat-tile-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,58,42,0.85) 0%,rgba(26,58,42,0.2) 60%,transparent 100%);}
+.cat-tile-content{position:absolute;bottom:0;left:0;right:0;padding:20px 16px;}
+.cat-tile-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--white);line-height:1.2;margin-bottom:4px;}
+.cat-tile-count{font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:0.06em;}
+.cat-tile-icon{position:absolute;top:14px;right:14px;width:32px;height:32px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.filter-section{padding:0 48px 32px;}
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.filter-label{font-size:12px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:0.08em;margin-right:8px;}
+.filter-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:24px;border:1px solid var(--border);background:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-mid);cursor:pointer;transition:all 0.2s;}
+.filter-btn:hover{border-color:var(--sage);color:var(--sage);}
+.filter-btn.active{background:var(--forest);color:var(--white);border-color:var(--forest);}
+.products-section{padding:0 48px 80px;}
+.products-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;}
+.products-count{font-size:14px;color:var(--text-light);}
+.products-count span{font-weight:600;color:var(--forest);}
+.sort-select{padding:8px 16px;border:1px solid var(--border);border-radius:24px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-mid);background:var(--white);outline:none;cursor:pointer;}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.product-card{background:var(--white);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;border:1px solid var(--border);cursor:pointer;}
+.product-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:transparent;}
+.product-card-img{position:relative;aspect-ratio:1;overflow:hidden;background:#f0ead8;}
+.product-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.product-card:hover .product-card-img img{transform:scale(1.07);}
+.product-card-badge{position:absolute;top:12px;left:12px;background:var(--forest);color:var(--white);font-size:10px;font-weight:600;padding:4px 10px;border-radius:12px;letter-spacing:0.06em;text-transform:uppercase;}
+.product-card-badge.organic{background:var(--sage);}
+.product-card-wish{position:absolute;top:12px;right:12px;width:32px;height:32px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:none;cursor:pointer;transition:all 0.2s;}
+.product-card-wish:hover{background:var(--white);transform:scale(1.1);}
+.product-card-body{padding:16px;}
+.product-card-group{font-size:10px;font-weight:600;color:var(--sage);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.product-card-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--forest);line-height:1.2;margin-bottom:8px;}
+.product-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.product-card-unit{font-size:12px;color:var(--text-light);}
+.product-card-price{font-size:20px;font-weight:600;color:var(--forest);}
+.product-card-footer{display:flex;align-items:center;gap:8px;}
+.add-cart-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--forest);color:var(--white);border:none;border-radius:24px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;}
+.add-cart-btn:hover{background:var(--moss);}
+.qty-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--parchment);border:1px solid var(--border);border-radius:50%;font-size:18px;font-weight:400;cursor:pointer;color:var(--forest);transition:all 0.2s;line-height:1;}
+.qty-btn:hover{background:var(--mint);border-color:var(--sage);}
+.qty-display{font-size:14px;font-weight:600;color:var(--forest);min-width:20px;text-align:center;}
+.no-results{grid-column:1/-1;text-align:center;padding:80px 20px;}
+.no-results-emoji{font-size:56px;margin-bottom:16px;}
+.no-results-title{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--forest);margin-bottom:8px;}
+.no-results-text{font-size:15px;color:var(--text-light);}
+.featured-strip{background:var(--forest);padding:64px 48px;}
+.featured-strip-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;}
+.feature-block{display:flex;align-items:flex-start;gap:20px;}
+.feature-icon{width:52px;height:52px;background:rgba(168,213,162,0.15);border:1px solid rgba(168,213,162,0.25);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.feature-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--white);margin-bottom:6px;}
+.feature-text{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;}
+.recipes-section{padding:80px 48px;background:var(--parchment);}
+.recipes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:48px;}
+.recipe-card{background:var(--white);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;border:1px solid var(--border);}
+.recipe-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.recipe-card-img{position:relative;aspect-ratio:4/3;overflow:hidden;}
+.recipe-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.recipe-card:hover .recipe-card-img img{transform:scale(1.06);}
+.recipe-card-cat{position:absolute;top:14px;left:14px;background:var(--white);color:var(--sage);font-size:10px;font-weight:600;padding:4px 12px;border-radius:12px;text-transform:uppercase;letter-spacing:0.07em;}
+.recipe-card-body{padding:22px;}
+.recipe-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--forest);line-height:1.2;margin-bottom:10px;}
+.recipe-card-desc{font-size:13px;color:var(--text-light);line-height:1.6;margin-bottom:16px;}
+.recipe-card-meta{display:flex;align-items:center;gap:20px;padding-top:16px;border-top:1px solid var(--border);}
+.recipe-meta-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-mid);}
+.recipe-meta-item svg{width:14px;height:14px;stroke:var(--sage);}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:2000;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px);}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:420px;background:var(--white);z-index:2001;transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;box-shadow:var(--shadow-lg);}
+.cart-drawer.open{transform:translateX(0);}
+.cart-header{padding:24px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--forest);}
+.cart-close{width:36px;height:36px;background:var(--parchment);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--text-mid);transition:all 0.2s;}
+.cart-close:hover{background:var(--mint);}
+.cart-items{flex:1;overflow-y:auto;padding:20px 28px;}
+.cart-empty{text-align:center;padding:60px 20px;}
+.cart-empty-emoji{font-size:48px;margin-bottom:16px;}
+.cart-empty-text{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--forest);margin-bottom:8px;}
+.cart-empty-sub{font-size:13px;color:var(--text-light);}
+.cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);}
+.cart-item-img{width:64px;height:64px;border-radius:var(--radius-sm);overflow:hidden;flex-shrink:0;}
+.cart-item-img img{width:100%;height:100%;object-fit:cover;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-size:14px;font-weight:500;color:var(--forest);line-height:1.3;margin-bottom:4px;}
+.cart-item-unit{font-size:11px;color:var(--text-light);}
+.cart-item-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+.cart-item-price{font-size:16px;font-weight:600;color:var(--forest);}
+.cart-item-qty{display:flex;align-items:center;gap:10px;}
+.cart-qty-btn{width:26px;height:26px;background:var(--parchment);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--forest);line-height:1;}
+.cart-qty-btn:hover{background:var(--mint);}
+.cart-qty-num{font-size:14px;font-weight:600;color:var(--forest);min-width:20px;text-align:center;}
+.cart-item-remove{background:none;border:none;cursor:pointer;color:var(--text-light);font-size:16px;padding:4px;transition:color 0.2s;}
+.cart-item-remove:hover{color:#e53e3e;}
+.cart-footer{padding:24px 28px;border-top:1px solid var(--border);}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.cart-subtotal-label{font-size:14px;color:var(--text-mid);}
+.cart-subtotal-val{font-size:18px;font-weight:600;color:var(--forest);}
+.cart-note{font-size:12px;color:var(--text-light);margin-bottom:20px;}
+.checkout-btn{width:100%;background:var(--forest);color:var(--white);border:none;border-radius:32px;padding:16px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.25s;letter-spacing:0.03em;}
+.checkout-btn:hover{background:var(--moss);box-shadow:0 8px 24px rgba(26,58,42,0.3);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.product-modal{background:var(--white);border-radius:24px;overflow:hidden;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;transform:scale(0.95) translateY(20px);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:var(--shadow-lg);}
+.modal-overlay.open .product-modal{transform:scale(1) translateY(0);}
+.product-modal-grid{display:grid;grid-template-columns:1fr 1fr;}
+.product-modal-img{aspect-ratio:1;overflow:hidden;}
+.product-modal-img img{width:100%;height:100%;object-fit:cover;}
+.product-modal-body{padding:40px 36px;display:flex;flex-direction:column;}
+.modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;color:var(--text-mid);}
+.modal-close:hover{background:var(--white);}
+.modal-group{font-size:11px;font-weight:600;color:var(--sage);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+.modal-name{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;color:var(--forest);line-height:1.1;margin-bottom:16px;}
+.modal-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+.modal-price{font-size:32px;font-weight:600;color:var(--forest);}
+.modal-unit-type{font-size:13px;color:var(--text-mid);margin-bottom:24px;}
+.modal-divider{height:1px;background:var(--border);margin:24px 0;}
+.modal-detail-row{display:flex;justify-content:space-between;margin-bottom:10px;}
+.modal-detail-label{font-size:13px;color:var(--text-light);}
+.modal-detail-val{font-size:13px;font-weight:500;color:var(--forest);}
+.modal-add-section{margin-top:auto;padding-top:24px;}
+.modal-qty-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.modal-qty-label{font-size:13px;color:var(--text-mid);}
+.modal-qty-controls{display:flex;align-items:center;gap:12px;background:var(--parchment);border-radius:24px;padding:4px 8px;}
+.modal-qty-btn{width:32px;height:32px;background:var(--white);border:1px solid var(--border);border-radius:50%;cursor:pointer;font-size:16px;color:var(--forest);display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.modal-qty-btn:hover{background:var(--mint);}
+.modal-qty-num{font-size:16px;font-weight:600;min-width:28px;text-align:center;color:var(--forest);}
+.modal-add-btn{width:100%;background:var(--forest);color:var(--white);border:none;border-radius:32px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.25s;}
+.modal-add-btn:hover{background:var(--moss);}
+.checkout-modal{background:var(--white);border-radius:24px;overflow:hidden;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;transform:scale(0.95);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:var(--shadow-lg);padding:40px;}
+.modal-overlay.open .checkout-modal{transform:scale(1);}
+.checkout-modal-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--forest);margin-bottom:8px;}
+.checkout-modal-sub{font-size:14px;color:var(--text-light);margin-bottom:32px;}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.form-input{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);background:var(--white);outline:none;transition:all 0.2s;}
+.form-input:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(74,124,89,0.1);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.payment-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+.payment-option{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all 0.2s;}
+.payment-option:hover{border-color:var(--sage);}
+.payment-option input[type=radio]{accent-color:var(--sage);}
+.payment-option-label{font-size:13px;font-weight:500;color:var(--text-dark);}
+.checkout-summary{background:var(--parchment);border-radius:var(--radius-sm);padding:16px;margin-bottom:24px;}
+.checkout-summary-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;color:var(--text-mid);}
+.checkout-summary-total{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);font-size:16px;font-weight:600;color:var(--forest);margin-top:8px;}
+.place-order-btn{width:100%;background:var(--forest);color:var(--white);border:none;border-radius:32px;padding:16px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.25s;margin-top:24px;}
+.place-order-btn:hover{background:var(--moss);box-shadow:0 8px 24px rgba(26,58,42,0.3);}
+.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5000;display:none;align-items:center;justify-content:center;}
+.success-overlay.show{display:flex;}
+.success-card{background:var(--white);border-radius:24px;padding:56px 48px;text-align:center;max-width:440px;}
+.success-icon{font-size:64px;margin-bottom:20px;}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--forest);margin-bottom:12px;}
+.success-text{font-size:15px;color:var(--text-light);line-height:1.6;margin-bottom:28px;}
+.success-close-btn{background:var(--forest);color:var(--white);border:none;border-radius:32px;padding:14px 32px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;}
+.footer{background:var(--forest);padding:64px 48px 32px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--white);margin-bottom:16px;}
+.footer-brand span{color:var(--gold-light);}
+.footer-about{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:280px;margin-bottom:24px;}
+.footer-socials{display:flex;gap:12px;}
+.social-link{width:36px;height:36px;background:rgba(255,255,255,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;text-decoration:none;transition:all 0.2s;}
+.social-link:hover{background:rgba(255,255,255,0.15);}
+.footer-col-title{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px;}
+.footer-links{display:flex;flex-direction:column;gap:10px;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.3);}
+.footer-tagline{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(255,255,255,0.3);}
+@media(max-width:1200px){.categories-grid{grid-template-columns:repeat(4,1fr);}.products-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){.nav{padding:0 24px;}.nav-links{display:none;}.hero{grid-template-columns:1fr;min-height:auto;}.hero-left{padding:60px 32px;}.hero-title{font-size:52px;}.hero-right{height:360px;}.section{padding:60px 24px;}.categories-grid{grid-template-columns:repeat(3,1fr);}.products-grid{grid-template-columns:repeat(2,1fr);}.recipes-grid{grid-template-columns:1fr 1fr;}.featured-strip-inner{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}.filter-section{padding:0 24px 28px;}.products-section{padding:0 24px 60px;}.cart-drawer{width:100%;max-width:420px;}.product-modal-grid{grid-template-columns:1fr;}.product-modal-img{aspect-ratio:16/9;}}
+@media(max-width:600px){.hero-title{font-size:40px;}.categories-grid{grid-template-columns:repeat(2,1fr);}.products-grid{grid-template-columns:1fr 1fr;}.recipes-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}.search-bar input{width:120px;}.section-title{font-size:36px;}.form-row{grid-template-columns:1fr;}}
+.hidden{display:none!important;}
+</style>
 </head>
-
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">CF</div>
-        <div>
-          <div class="brand-title">Comette Farm</div>
-          <div class="brand-subtitle">Fresh produce ordering dashboard</div>
-        </div>
-      </div>
 
-      <div class="search">
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search dill, parsley, eggplant dip, gouda, beef mince, apples..."
-        />
-      </div>
-
-      <button class="cart-button" onclick="openCart()">
-        Cart <span id="cartCount">0</span>
-      </button>
+<nav class="nav" id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8 8 4 10 4 15a8 8 0 0016 0c0-5-4-7-8-13z"/></svg>
     </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero-main">
-      <div>
-        <div class="pill">Comette Farm • full product ordering dashboard</div>
-        <h1>Fresh ordering, made simple.</h1>
-        <p>
-          Browse the full product list, filter by group, search exact items, view details,
-          add to cart and checkout from one clean HTML page.
-        </p>
-      </div>
-
-      <div class="hero-actions">
-        <button class="primary-button" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
-          Shop now
-        </button>
-        <button class="ghost-button" onclick="setGroup('Herbs')">
-          View herbs
-        </button>
-      </div>
-    </div>
-
-    <div class="hero-side">
-      <div class="panel">
-        <h3>Working product flow</h3>
-        <p>
-          Click Dairy, Meat, Fruit, Herbs or any other group and the dashboard filters properly.
-        </p>
-
-        <div class="stats">
-          <div class="stat">
-            <strong id="productCount">0</strong>
-            <span>Items</span>
-          </div>
-          <div class="stat">
-            <strong id="groupCount">0</strong>
-            <span>Groups</span>
-          </div>
-          <div class="stat">
-            <strong>Live</strong>
-            <span>Cart</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>Item-level images</h3>
-        <p>
-          The image engine maps specific product names first: dill gets dill, parsley gets parsley,
-          smoked eggplant dip gets dip, gouda gets gouda.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <main class="main" id="shop">
-    <div class="section-head">
-      <div>
-        <h2>Order list</h2>
-        <p id="resultText">Loading products...</p>
-      </div>
-
-      <select id="sortSelect" class="sort-select">
-        <option value="name">Sort by name</option>
-        <option value="priceLow">Price low to high</option>
-        <option value="priceHigh">Price high to low</option>
-        <option value="group">Sort by group</option>
-      </select>
-    </div>
-
-    <div id="filters" class="filters"></div>
-    <div id="productGrid" class="grid"></div>
-  </main>
-
-  <div id="overlay" class="overlay" onclick="closeAll()"></div>
-
-  <aside id="cartDrawer" class="drawer">
-    <div class="drawer-head">
-      <h2>Your cart</h2>
-      <button class="close-button" onclick="closeCart()">×</button>
-    </div>
-
-    <div id="cartItems" class="cart-items"></div>
-
-    <div class="drawer-foot">
-      <div class="total">
-        <span>Total</span>
-        <span id="cartTotal">KSh 0</span>
-      </div>
-      <button class="checkout-button" onclick="openCheckout()">Checkout</button>
-    </div>
-  </aside>
-
-  <div id="modal" class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div id="modalBody"></div>
+    <span class="nav-brand">Comette <span>Farm</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#shop">Shop</a>
+    <a href="#recipes">Recipes</a>
+    <a href="#about">About</a>
   </div>
+  <div class="nav-right">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search products..." autocomplete="off">
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Cart
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</nav>
 
-  <div id="toast" class="toast"></div>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span>🌿 Farm Fresh · Nairobi</span></div>
+    <h1 class="hero-title">Where <em>Nature</em><br>Meets Your<br>Table</h1>
+    <p class="hero-subtitle">Premium organic produce, artisan cheeses, freshly pressed juices and handcrafted goods — delivered from our farm to your door.</p>
+    <div class="hero-ctas">
+      <a href="#shop" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+        Shop Now
+      </a>
+      <a href="#recipes" class="btn-outline">Explore Recipes</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num">300+</div><div class="hero-stat-label">Products</div></div>
+      <div><div class="hero-stat-num">23</div><div class="hero-stat-label">Categories</div></div>
+      <div><div class="hero-stat-num">100%</div><div class="hero-stat-label">Organic</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=900&q=80&auto=format&fit=crop" alt="Fresh farm produce">
+    <div class="hero-right-overlay"></div>
+    <div class="hero-float-card">
+      <div class="hero-float-card-title">✦ Today's Pick</div>
+      <div class="hero-float-card-text">Freshly harvested garden herbs & artisan cheeses</div>
+    </div>
+    <div class="hero-float-badge">Farm Fresh Daily</div>
+  </div>
+</section>
 
-  <script>
-        const RAW_PRODUCTS = `
-Brown's Cheese|Biscuits (Charcoal Crackers) 250g|Pack|97|650|Pack
-Brown's Cheese|Biscuits (Cheddar Crackers) 250g|Pack|564|650|Pack
-Brown's Cheese|Biscuits (Rosemary) 250g|Pack|814|650|Pack
-Brown's Cheese|Bleu-De-Brun Portion 150g|Unit|74|700|Unit
-Brown's Cheese|Bocconcini 250g|Pack|504|750|Pack
-Brown's Cheese|Brie Portion 125g|Unit|76|630|Unit
-Brown's Cheese|Camembert 200g|Unit|77|700|Unit
-Brown's Cheese|Cheddar White 250g|Pieces|1559|600|Pieces
-Brown's Cheese|Cream Cheese 250g|Unit|502|720|Unit
-Brown's Cheese|Dip (Whipped Feta) 300g|Unit|90|450|Unit
-Brown's Cheese|Dip (Smoked Egg Plant) 250g|Pack|1403|450|Pack
-Brown's Cheese|Feta 200g|Unit|82|600|Unit
-Brown's Cheese|Gouda Portion 200g|Unit|84|580|Unit
-Brown's Cheese|Greek Yogurt 250g|Unit|758|450|Unit
-Brown's Cheese|Halloumi 200g|Unit|204|650|Unit
-Brown's Cheese|Hummus Chick Peas 250g|Pack|1407|450|Pack
-Brown's Cheese|Mascarpone 200g|Unit|101|570|Unit
-Brown's Cheese|Mozzarella 200g|Unit|94|500|Unit
-Brown's Cheese|Paneer 250g|Unit|92|525|Unit
-Brown's Cheese|Ricotta 420g|Unit|96|510|Unit
-Brown's Cheese|String Cheese 180g|Unit|759|500|Unit
-Brown's Cheese - Ice-Creams|Caramel Ice Cream 500ml|Pack|1155|950|Pack
-Brown's Cheese - Ice-Creams|Chocolate Ice Cream 500ml|Pack|1176|950|Pack
-Brown's Cheese - Ice-Creams|Cookies And Cream 500ml|Pack|1432|850|Pack
-Brown's Cheese - Ice-Creams|Vanilla Bean Ice Cream 500ml|Pack|1177|950|Pack
-Dairy|Cream 500ml|Pack|720|430|Pack
-Dairy|Milk Friesian 1L|Litres|1519|130|Litres
-Dairy|Milk Jersey 1L|Litres|150|150|Litres
-Farmers Choice|Beef Striploin 350g|Pack|1025|680|Pack
-Farmers Choice|Beef Boerewors 500g|Pack|940|750|Pack
-Farmers Choice|Minced Beef High Grade 500g|Pack|990|550|Pack
-Farmers Choice|Premium Pork Sausages 400g|Pack|207|480|Pack
-Farmers Choice|Pork Loin Chops|Kg's|1100|1000|Kg's
-Farmers Choice|Streaky Bacon 400g|Pack|956|900|Pack
-Flowers|Bouquet Large|Bunch|187|300|Bunch
-Flowers|Bouquet Small|Bunch|186|200|Bunch
-Fruit|Apples Green|Kg's|122|350|Kg's
-Fruit|Apples Red|Kg's|121|350|Kg's
-Fruit|Bananas Sweet|Bunch|123|180|Bunch
-Fruit|Bananas Green Matoke|Pieces|616|25|Pieces
-Fruit|Coconuts|Pieces|471|150|Pieces
-Fruit|Grapes|Punnet|384|500|Punnet
-Fruit|Kiwi|Pieces|1323|200|Pieces
-Fruit|Lemons Imported|Kg's|386|500|Kg's
-Fruit|Lemons Local|Kg's|127|250|Kg's
-Fruit|Limes|Kg's|128|220|Kg's
-Fruit|Mangoes Apple|Pieces|129|105|Pieces
-Fruit|Melon Sweet|Pieces|130|250|Kg's
-Fruit|Melon Water|Pieces|131|120|Kg's
-Fruit|Oranges Imported|Kg's|132|400|Kg's
-Fruit|Oranges Local|Kg's|133|190|Kg's
-Fruit|Passion Black|Kg's|134|300|Kg's
-Fruit|Passion Yellow|Kg's|377|350|Kg's
-Fruit|Paw Paw|Pieces|135|250|Kg's
-Fruit|Pears Imported|Pieces|362|700|Kg's
-Fruit|Pineapple|Pieces|137|150|Kg's
-Fruit|Plums|Punnet|1437|500|Punnet
-Fruit|Pomegranate|Pieces|1438|350|Pieces
-Fruit Berries|Blackberries|Punnet|1367|500|Punnet
-Fruit Berries|Blueberries|Punnet|377|650|Punnet
-Fruit Berries|Raspberries|Punnet|611|500|Punnet
-Fruit Berries|Strawberries|Punnet|515|350|Punnet
-Herbs|Basil|Bunch|161|50|Bunch
-Herbs|Bay Leaves|Bunch|451|50|Bunch
-Herbs|Chervil|Bunch|160|50|Bunch
-Herbs|Chives|Bunch|338|50|Bunch
-Herbs|Coriander|Bunch|157|25|Bunch
-Herbs|Curry Leaves|Bunch|159|50|Bunch
-Herbs|Dill|Bunch|162|50|Bunch
-Herbs|Kaffir Lime Leaves|Bunch|158|50|Bunch
-Herbs|Lemon Balm|Bunch|171|50|Bunch
-Herbs|Lemon Grass|Bunch|179|50|Bunch
-Herbs|Marjoram|Bunch|340|50|Bunch
-Herbs|Mint|Bunch|163|50|Bunch
-Herbs|Oregano|Bunch|164|50|Bunch
-Herbs|Parsley Curly|Bunch|165|50|Bunch
-Herbs|Parsley Flat|Bunch|166|50|Bunch
-Herbs|Rosemary|Bunch|167|50|Bunch
-Herbs|Sage|Bunch|168|50|Bunch
-Herbs|Tarragon|Bunch|169|50|Bunch
-Herbs|Thyme|Bunch|170|50|Bunch
-Herbs|Wild Rocket|Punnet|1515|100|Punnet
-Herbs - Salad|Baby Spinach|Punnet|310|150|Punnet
-Herbs - Salad|Lettuce Iceberg|Pieces|144|120|Pieces
-Herbs - Salad|Rocket|Punnet|180|100|Punnet
-Juices|Apple Juice 1L|Bottle|577|450|Bottle
-Juices|Carrot Juice 1L|Bottle|574|450|Bottle
-Juices|Orange Juice 1L|Bottle|572|450|Bottle
-Juices|Passion Juice 1L|Bottle|575|450|Bottle
-Juices|Pineapple Juice 1L|Bottle|576|450|Bottle
-Juices|Sugarcane Juice 1L|Bottle|573|450|Bottle
-Kampi Kitchen|Granola 500g|Pack|1201|750|Pack
-Kampi Kitchen|Honey 500g|Jar|1203|700|Jar
-Kampi Kitchen|Jam Strawberry 300g|Jar|1204|600|Jar
-Kampi Kitchen|Peanut Butter 500g|Jar|1208|650|Jar
-Kampi Kitchen|Pesto Basil 250g|Jar|1211|650|Jar
-Kampi Kitchen|Mixed Nuts 250g|Pack|1216|850|Pack
-Mayer's|Eggs Free Range 12 Pack|Pack|901|650|Pack
-Mayer's|Goat Cheese|Unit|904|800|Unit
-Meat|Chicken Breast|Kg's|1001|1200|Kg's
-Meat|Chicken Whole|Kg's|1002|750|Kg's
-Meat Fish|Salmon Fillet|Kg's|1003|3500|Kg's
-Meat Fish|Tilapia Fillet|Kg's|1004|1200|Kg's
-Meat Fish|Prawns|Kg's|1006|2500|Kg's
-Meat Pieces|Beef Fillet|Kg's|1010|1800|Kg's
-Meat Pieces|Beef Ribeye|Kg's|1011|2200|Kg's
-Meat Pieces|Lamb Chops|Kg's|1012|1900|Kg's
-Meat Pieces|Pork Ribs|Kg's|1013|1300|Kg's
-Meat Pieces|Chicken Wings|Kg's|1014|800|Kg's
-Meats Snacks|Droewors Beef|Pack|1016|700|Pack
-Meats Snacks|Biltong Beef|Pack|1017|750|Pack
-`;
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <div class="marquee-item"><span class="marquee-dot"></span>Organic Produce</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Artisan Cheese</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Fresh Herbs</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Farm Eggs</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Cold Pressed Juices</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Seasonal Fruit</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Premium Meats</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Handcrafted Jams</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Kombucha</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Live Plants</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Organic Produce</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Artisan Cheese</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Fresh Herbs</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Farm Eggs</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Cold Pressed Juices</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Seasonal Fruit</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Premium Meats</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Handcrafted Jams</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Kombucha</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Live Plants</div>
+  </div>
+</div>
 
-    const products = RAW_PRODUCTS.trim().split("\n").map((line, index) => {
-      const parts = line.split("|");
+<section class="section" id="shop">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Browse</div>
+      <h2 class="section-title">Shop by <em>Category</em></h2>
+    </div>
+    <div class="section-subtitle">Every item sourced fresh from trusted local farms and artisan producers.</div>
+  </div>
+  <div class="categories-grid" id="categoriesGrid"></div>
+</section>
 
-      return {
-        id: index + 1,
-        group: parts[0]?.trim() || "Other",
-        name: parts[1]?.trim() || "Item",
-        unit: parts[2]?.trim() || "Unit",
-        itemId: parts[3]?.trim() || "",
-        price: Number(parts[4]) || 0,
-        chargeUnit: parts[5]?.trim() || "Unit"
-      };
-    });
+<div class="filter-section">
+  <div class="filter-bar" id="filterBar"></div>
+</div>
 
-    const groups = ["All", ...new Set(products.map(item => item.group))];
+<div class="products-section">
+  <div class="products-header">
+    <div class="products-count">Showing <span id="productCount">0</span> products</div>
+    <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+      <option value="default">Default Order</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name-asc">Name: A–Z</option>
+    </select>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</div>
 
-    document.getElementById("productCount").textContent = products.length;
-    document.getElementById("groupCount").textContent = groups.length - 1;
+<div class="featured-strip" id="about">
+  <div class="featured-strip-inner">
+    <div class="feature-block">
+      <div class="feature-icon">🌱</div>
+      <div><div class="feature-title">Farm to Table</div><div class="feature-text">Every product sourced directly from our farm and trusted local producers. No middlemen, maximum freshness.</div></div>
+    </div>
+    <div class="feature-block">
+      <div class="feature-icon">🚚</div>
+      <div><div class="feature-title">Same Day Delivery</div><div class="feature-text">Order before 10am and receive your fresh produce the same day — anywhere in Nairobi.</div></div>
+    </div>
+    <div class="feature-block">
+      <div class="feature-icon">🤝</div>
+      <div><div class="feature-title">Trusted Quality</div><div class="feature-text">We guarantee freshness on every order. Not satisfied? We'll make it right, every time.</div></div>
+    </div>
+  </div>
+</div>
 
-    let activeGroup = "All";
-    let searchTerm = "";
-    let cart = [];
-    const specificImageTerms = {
-      "smoked egg plant": "eggplant dip food",
-      "whipped feta": "whipped feta dip",
-      "charcoal crackers": "charcoal crackers",
-      "cheddar crackers": "cheese crackers",
-      "rosemary crackers": "rosemary crackers",
-      "gouda": "gouda cheese",
-      "brie": "brie cheese",
-      "camembert": "camembert cheese",
-      "feta": "feta cheese",
-      "halloumi": "halloumi cheese",
-      "mozzarella": "mozzarella cheese",
-      "ricotta": "ricotta cheese",
-      "paneer": "paneer cheese",
-      "cream cheese": "cream cheese",
-      "goat cheese": "goat cheese",
-      "hummus": "hummus dip",
-      "greek yogurt": "greek yogurt",
-      "ice cream": "ice cream tub",
-      "basil": "fresh basil herb",
-      "dill": "fresh dill herb",
-      "mint": "fresh mint leaves",
-      "parsley curly": "curly parsley",
-      "parsley flat": "flat parsley herb",
-      "rosemary": "fresh rosemary herb",
-      "thyme": "fresh thyme herb",
-      "oregano": "fresh oregano herb",
-      "sage": "fresh sage herb",
-      "tarragon": "fresh tarragon herb",
-      "coriander": "fresh coriander herb",
-      "chives": "fresh chives herb",
-      "rocket": "rocket arugula leaves",
-      "baby spinach": "baby spinach leaves",
-      "lettuce": "iceberg lettuce",
-      "apples green": "green apples",
-      "apples red": "red apples",
-      "bananas": "bananas fruit",
-      "grapes": "fresh grapes",
-      "lemons": "fresh lemons",
-      "limes": "fresh limes",
-      "mangoes": "mango fruit",
-      "oranges": "fresh oranges",
-      "passion": "passion fruit",
-      "paw paw": "papaya fruit",
-      "pineapple": "pineapple fruit",
-      "plums": "plums fruit",
-      "pomegranate": "pomegranate fruit",
-      "strawberries": "fresh strawberries",
-      "blueberries": "fresh blueberries",
-      "raspberries": "fresh raspberries",
-      "blackberries": "fresh blackberries",
-      "beef striploin": "beef striploin steak",
-      "minced beef": "raw beef mince",
-      "pork sausages": "pork sausages",
-      "streaky bacon": "streaky bacon",
-      "chicken breast": "raw chicken breast",
-      "chicken whole": "whole chicken",
-      "salmon fillet": "salmon fillet",
-      "tilapia fillet": "tilapia fillet",
-      "prawns": "fresh prawns",
-      "beef ribeye": "ribeye steak",
-      "lamb chops": "lamb chops",
-      "pork ribs": "pork ribs",
-      "chicken wings": "chicken wings",
-      "droewors": "droewors",
-      "biltong": "biltong",
-      "apple juice": "apple juice",
-      "orange juice": "orange juice",
-      "carrot juice": "carrot juice",
-      "pineapple juice": "pineapple juice",
-      "granola": "granola breakfast",
-      "honey": "honey jar",
-      "jam strawberry": "strawberry jam",
-      "peanut butter": "peanut butter",
-      "pesto basil": "basil pesto",
-      "mixed nuts": "mixed nuts"
-    };
+<section class="recipes-section" id="recipes">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Inspiration</div>
+      <h2 class="section-title">Farm <em>Recipes</em></h2>
+    </div>
+    <div class="section-subtitle">Beautiful dishes made with our fresh produce, from our kitchen to yours.</div>
+  </div>
+  <div class="recipes-grid" id="recipesGrid"></div>
+</section>
 
-    function cleanName(name) {
-      return name
-        .toLowerCase()
-        .replace(/\([^)]*\)/g, "")
-        .replace(/[^a-z0-9\s]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Comette <span>Farm</span></div>
+      <p class="footer-about">Premium organic marketplace delivering farm-fresh produce, artisan cheeses, and handcrafted goods to your doorstep in Nairobi.</p>
+      <div class="footer-socials">
+        <a class="social-link" href="#">🐦</a>
+        <a class="social-link" href="#">📸</a>
+        <a class="social-link" href="#">💼</a>
+        <a class="social-link" href="#">📘</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <div class="footer-links"><a href="#">Vegetables</a><a href="#">Fruits</a><a href="#">Cheese</a><a href="#">Herbs</a><a href="#">Meat & Fish</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-links"><a href="#">About Us</a><a href="#">Our Farm</a><a href="#">Blog</a><a href="#">Careers</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <div class="footer-links"><a href="#">Delivery Info</a><a href="#">Returns</a><a href="#">FAQ</a><a href="#">Contact</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 Comette Farm. All rights reserved.</div>
+    <div class="footer-tagline">Where Nature Meets Your Table</div>
+  </div>
+</footer>
 
-    function getImage(itemName) {
-      const cleaned = cleanName(itemName);
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Basket</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-val">KES <span id="cartTotal">0</span></span>
+    </div>
+    <div class="cart-note">Delivery calculated at checkout</div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
 
-      for (const key in specificImageTerms) {
-        if (cleaned.includes(key)) {
-          return `https://loremflickr.com/900/700/${encodeURIComponent(specificImageTerms[key])}`;
-        }
-      }
-
-      return `https://loremflickr.com/900/700/${encodeURIComponent(cleaned + " food")}`;
-    }
-
-    function setGroup(group) {
-      activeGroup = group;
-      renderFilters();
-      renderProducts();
-    }
-
-    function renderFilters() {
-      const filters = document.getElementById("filters");
-
-      filters.innerHTML = groups.map(group => `
-        <button
-          class="filter ${group === activeGroup ? "active" : ""}"
-          onclick="setGroup('${group.replace(/'/g, "\\'")}')"
-        >
-          ${group}
-        </button>
-      `).join("");
-    }
-
-    function renderProducts() {
-      const grid = document.getElementById("productGrid");
-
-      let filtered = [...products];
-
-      if (activeGroup !== "All") {
-        filtered = filtered.filter(item => item.group === activeGroup);
-      }
-
-      if (searchTerm) {
-        filtered = filtered.filter(item =>
-          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.group.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
-
-      const sortValue = document.getElementById("sortSelect").value;
-
-      if (sortValue === "priceLow") {
-        filtered.sort((a, b) => a.price - b.price);
-      }
-
-      if (sortValue === "priceHigh") {
-        filtered.sort((a, b) => b.price - a.price);
-      }
-
-      if (sortValue === "group") {
-        filtered.sort((a, b) => a.group.localeCompare(b.group));
-      }
-
-      if (sortValue === "name") {
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-      }
-
-      document.getElementById("resultText").textContent =
-        `Showing ${filtered.length} products`;
-
-      if (!filtered.length) {
-        grid.innerHTML = `
-          <div class="empty">
-            <h3>No products found</h3>
-            <p>Try another search term.</p>
-          </div>
-        `;
-        return;
-      }
-
-      grid.innerHTML = filtered.map(item => `
-        <article class="card">
-          <div class="image-wrap">
-            <img
-              src="${getImage(item.name)}"
-              alt="${item.name}"
-              loading="lazy"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
-            />
-
-            <div class="image-fallback" style="display:none;">
-              ${item.name}
-            </div>
-
-            <div class="tag">${item.group}</div>
-          </div>
-
-          <div class="card-body">
-            <div class="group">${item.group}</div>
-
-            <h3>${item.name}</h3>
-
-            <p class="meta">
-              Unit: ${item.unit}<br>
-              Charge: ${item.chargeUnit}
-            </p>
-
-            <div class="bottom">
-              <div>
-                <div class="price">KSh ${item.price.toLocaleString()}</div>
-                <div class="small">${item.unit}</div>
-              </div>
-
-              <button class="add" onclick="addToCart(${item.id})">
-                Add
-              </button>
-            </div>
-
-            <button class="view" onclick="openItem(${item.id})">
-              View details
-            </button>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function addToCart(id) {
-      const item = products.find(product => product.id === id);
-
-      const existing = cart.find(product => product.id === id);
-
-      if (existing) {
-        existing.qty++;
-      } else {
-        cart.push({
-          ...item,
-          qty: 1
-        });
-      }
-
-      updateCart();
-      showToast(`${item.name} added to cart`);
-    }
-
-    function updateCart() {
-      document.getElementById("cartCount").textContent =
-        cart.reduce((sum, item) => sum + item.qty, 0);
-
-      const total =
-        cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
-      document.getElementById("cartTotal").textContent =
-        `KSh ${total.toLocaleString()}`;
-
-      const cartItems = document.getElementById("cartItems");
-
-      if (!cart.length) {
-        cartItems.innerHTML = `
-          <div class="empty">
-            <h3>Your cart is empty</h3>
-          </div>
-        `;
-        return;
-      }
-
-      cartItems.innerHTML = cart.map(item => `
-        <div class="cart-item">
-          <img src="${getImage(item.name)}" alt="${item.name}" />
-
-          <div>
-            <h4>${item.name}</h4>
-
-            <p>KSh ${item.price.toLocaleString()}</p>
-
-            <div class="qty">
-              <button onclick="changeQty(${item.id}, -1)">−</button>
-
-              <strong>${item.qty}</strong>
-
-              <button onclick="changeQty(${item.id}, 1)">+</button>
-
-              <button
-                class="remove"
-                onclick="removeItem(${item.id})"
-              >
-                Remove
-              </button>
+<div class="modal-overlay" id="productModal" onclick="closeProductModal(event)">
+  <div class="product-modal">
+    <button class="modal-close" onclick="closeProductModalDirect()">✕</button>
+    <div class="product-modal-grid">
+      <div class="product-modal-img"><img id="modalImg" src="" alt=""></div>
+      <div class="product-modal-body">
+        <div class="modal-group" id="modalGroup"></div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-price-row"><span class="modal-price">KES <span id="modalPrice"></span></span></div>
+        <div class="modal-unit-type" id="modalUnitType"></div>
+        <div class="modal-divider"></div>
+        <div class="modal-detail-row"><span class="modal-detail-label">Item ID</span><span class="modal-detail-val" id="modalId"></span></div>
+        <div class="modal-detail-row"><span class="modal-detail-label">Order Unit</span><span class="modal-detail-val" id="modalOrderUnit"></span></div>
+        <div class="modal-detail-row"><span class="modal-detail-label">Charge Unit</span><span class="modal-detail-val" id="modalChargeUnit"></span></div>
+        <div class="modal-add-section">
+          <div class="modal-qty-row">
+            <span class="modal-qty-label">Quantity:</span>
+            <div class="modal-qty-controls">
+              <button class="modal-qty-btn" onclick="changeModalQty(-1)">−</button>
+              <span class="modal-qty-num" id="modalQty">1</span>
+              <button class="modal-qty-btn" onclick="changeModalQty(1)">+</button>
             </div>
           </div>
+          <button class="modal-add-btn" onclick="addFromModal()">Add to Basket</button>
         </div>
-      `).join("");
-    }
+      </div>
+    </div>
+  </div>
+</div>
 
-    function changeQty(id, amount) {
-      const item = cart.find(product => product.id === id);
+<div class="modal-overlay" id="checkoutModal" onclick="closeCheckoutModal(event)">
+  <div class="checkout-modal">
+    <button class="modal-close" onclick="closeCheckoutDirect()" style="position:relative;top:0;right:0;margin-bottom:16px;align-self:flex-end;display:flex;">✕</button>
+    <div class="checkout-modal-title">Checkout</div>
+    <div class="checkout-modal-sub">Complete your order below</div>
+    <div class="checkout-summary" id="checkoutSummary"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="fname" placeholder="John"></div>
+      <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="lname" placeholder="Doe"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" id="phone" placeholder="+254 700 000 000"></div>
+    <div class="form-group"><label class="form-label">Delivery Address</label><input class="form-input" id="address" placeholder="Street, Area, Nairobi"></div>
+    <div class="form-group">
+      <label class="form-label">Payment Method</label>
+      <div class="payment-options">
+        <label class="payment-option"><input type="radio" name="payment" value="mpesa" checked><span class="payment-option-label">📱 M-Pesa</span></label>
+        <label class="payment-option"><input type="radio" name="payment" value="cash"><span class="payment-option-label">💵 Cash on Delivery</span></label>
+        <label class="payment-option"><input type="radio" name="payment" value="card"><span class="payment-option-label">💳 Card</span></label>
+        <label class="payment-option"><input type="radio" name="payment" value="bank"><span class="payment-option-label">🏦 Bank Transfer</span></label>
+      </div>
+    </div>
+    <button class="place-order-btn" onclick="placeOrder()">Place Order — KES <span id="checkoutTotal">0</span></button>
+  </div>
+</div>
 
-      if (!item) return;
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">Order Placed!</div>
+    <p class="success-text">Thank you! Your order has been received. Our team will contact you shortly to confirm delivery details.</p>
+    <button class="success-close-btn" onclick="closeSuccess()">Continue Shopping</button>
+  </div>
+</div>
 
-      item.qty += amount;
+<script>
+const PRODUCTS = [
+  {id:97,name:"Biscuits (Charcoal Crackers) 250g",group:"Brown's Cheese",orderUnit:"Pack",price:650,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80&auto=format&fit=crop"},
+  {id:564,name:"Biscuits (Cheddar Crackers) 250g",group:"Brown's Cheese",orderUnit:"Pack",price:650,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=500&q=80&auto=format&fit=crop"},
+  {id:814,name:"Biscuits (Rosemary) 250g",group:"Brown's Cheese",orderUnit:"Pack",price:650,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80&auto=format&fit=crop"},
+  {id:75,name:"Bleu-De-Brun (Half Cheese)",group:"Brown's Cheese",orderUnit:"Unit",price:2250,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=500&q=80&auto=format&fit=crop"},
+  {id:74,name:"Bleu-De-Brun Portion 150g",group:"Brown's Cheese",orderUnit:"Unit",price:700,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=500&q=80&auto=format&fit=crop"},
+  {id:504,name:"Bocconcini 250g",group:"Brown's Cheese",orderUnit:"Pack",price:750,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1588165171080-c89acfa5ee83?w=500&q=80&auto=format&fit=crop"},
+  {id:100,name:"Brie (Whole) (Ripened)",group:"Brown's Cheese",orderUnit:"Pieces",price:4925,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=500&q=80&auto=format&fit=crop"},
+  {id:76,name:"Brie Portion 125g",group:"Brown's Cheese",orderUnit:"Unit",price:630,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=500&q=80&auto=format&fit=crop"},
+  {id:77,name:"Camembert 200g",group:"Brown's Cheese",orderUnit:"Unit",price:700,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1619232293067-5f3ce88c7d14?w=500&q=80&auto=format&fit=crop"},
+  {id:1559,name:"Cheddar (Cheese Love) White 250g",group:"Brown's Cheese",orderUnit:"Pieces",price:600,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1584947897558-4e51a4f2a82c?w=500&q=80&auto=format&fit=crop"},
+  {id:1329,name:"Cheddar (Limuru) 250g",group:"Brown's Cheese",orderUnit:"Pack",price:750,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1584947897558-4e51a4f2a82c?w=500&q=80&auto=format&fit=crop"},
+  {id:808,name:"Cottage Cheese 250g",group:"Brown's Cheese",orderUnit:"Unit",price:580,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1559561853-08451507cbe7?w=500&q=80&auto=format&fit=crop"},
+  {id:502,name:"Cream Cheese (Soft) 250g",group:"Brown's Cheese",orderUnit:"Unit",price:720,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1554978991-e9f8c7a8b7e8?w=500&q=80&auto=format&fit=crop"},
+  {id:90,name:"Dip (Whipped Feta) 300g",group:"Brown's Cheese",orderUnit:"Unit",price:450,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1576181256399-834e3b3a49bf?w=500&q=80&auto=format&fit=crop"},
+  {id:1403,name:"Dip (Smoked Egg Plant) 250g",group:"Brown's Cheese",orderUnit:"Pack",price:450,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1576181256399-834e3b3a49bf?w=500&q=80&auto=format&fit=crop"},
+  {id:505,name:"Feta (Lemon Pepper) 200g",group:"Brown's Cheese",orderUnit:"Unit",price:740,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1550181280-b9ef01065f87?w=500&q=80&auto=format&fit=crop"},
+  {id:82,name:"Feta 200g",group:"Brown's Cheese",orderUnit:"Unit",price:600,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1550181280-b9ef01065f87?w=500&q=80&auto=format&fit=crop"},
+  {id:1114,name:"Gouda (Half Cheese) Approx. 1kg",group:"Brown's Cheese",orderUnit:"Kg",price:2400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=500&q=80&auto=format&fit=crop"},
+  {id:84,name:"Gouda (Portion) 200g",group:"Brown's Cheese",orderUnit:"Unit",price:580,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=500&q=80&auto=format&fit=crop"},
+  {id:83,name:"Gouda Approx 2Kg",group:"Brown's Cheese",orderUnit:"Unit",price:3685,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=500&q=80&auto=format&fit=crop"},
+  {id:758,name:"Greek Yogurt (250g)",group:"Brown's Cheese",orderUnit:"Unit",price:450,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80&auto=format&fit=crop"},
+  {id:204,name:"Halloumi 200g",group:"Brown's Cheese",orderUnit:"Unit",price:650,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1559847844-5315695dadae?w=500&q=80&auto=format&fit=crop"},
+  {id:1407,name:"Hummus (Chick Peas) 250g",group:"Brown's Cheese",orderUnit:"Pack",price:450,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=500&q=80&auto=format&fit=crop"},
+  {id:101,name:"Mascarpone 200g",group:"Brown's Cheese",orderUnit:"Unit",price:570,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1576181258494-baa60d85dc8f?w=500&q=80&auto=format&fit=crop"},
+  {id:94,name:"Mozarella 200g",group:"Brown's Cheese",orderUnit:"Unit",price:500,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1588165171080-c89acfa5ee83?w=500&q=80&auto=format&fit=crop"},
+  {id:92,name:"Paneer 250g",group:"Brown's Cheese",orderUnit:"Unit",price:525,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1601935111741-ae98b2b230b0?w=500&q=80&auto=format&fit=crop"},
+  {id:95,name:"Pizella 200g",group:"Brown's Cheese",orderUnit:"Unit",price:440,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=500&q=80&auto=format&fit=crop"},
+  {id:96,name:"Ricotta 420g",group:"Brown's Cheese",orderUnit:"Unit",price:510,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80&auto=format&fit=crop"},
+  {id:1507,name:"Sour Cream (250g)",group:"Brown's Cheese",orderUnit:"Pack",price:650,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=500&q=80&auto=format&fit=crop"},
+  {id:98,name:"Stone Portion 150g",group:"Brown's Cheese",orderUnit:"Unit",price:585,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=500&q=80&auto=format&fit=crop"},
+  {id:759,name:"String (Stick) Cheese 180g",group:"Brown's Cheese",orderUnit:"Unit",price:500,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=500&q=80&auto=format&fit=crop"},
+  {id:1155,name:"Caramel Ice-Cream 500ml (Tub)",group:"Brown's Cheese - Ice-Creams",orderUnit:"Pack",price:950,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&q=80&auto=format&fit=crop"},
+  {id:1176,name:"Chocolate Chip Fudge Ice Cream 500ml",group:"Brown's Cheese - Ice-Creams",orderUnit:"Pack",price:950,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80&auto=format&fit=crop"},
+  {id:1374,name:"Chocolate Ice Cream 2L",group:"Brown's Cheese - Ice-Creams",orderUnit:"Pack",price:3700,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80&auto=format&fit=crop"},
+  {id:1432,name:"Cookies And Cream 500ml",group:"Brown's Cheese - Ice-Creams",orderUnit:"Pack",price:850,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80&auto=format&fit=crop"},
+  {id:1207,name:"Onion Jam 200g",group:"Brown's Cheese - Ice-Creams",orderUnit:"Jar",price:450,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:1375,name:"Vanilla Bean Ice Cream 2L",group:"Brown's Cheese - Ice-Creams",orderUnit:"Pack",price:3700,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=500&q=80&auto=format&fit=crop"},
+  {id:1177,name:"Vanilla Bean Ice Cream 500ml (Tub)",group:"Brown's Cheese - Ice-Creams",orderUnit:"Pack",price:950,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=500&q=80&auto=format&fit=crop"},
+  {id:151,name:"Cream",group:"Dairy",orderUnit:"Litres",price:850,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80&auto=format&fit=crop"},
+  {id:720,name:"Cream (0.5 lts)",group:"Dairy",orderUnit:"Pack",price:430,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80&auto=format&fit=crop"},
+  {id:1519,name:"Milk (Friesian)",group:"Dairy",orderUnit:"Litres",price:130,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&q=80&auto=format&fit=crop"},
+  {id:149,name:"Milk (Half Cream)",group:"Dairy",orderUnit:"Litres",price:130,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&q=80&auto=format&fit=crop"},
+  {id:150,name:"Milk (Jersey)",group:"Dairy",orderUnit:"Litres",price:150,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&q=80&auto=format&fit=crop"},
+  {id:275,name:"Milk (Skim)",group:"Dairy",orderUnit:"Litres",price:50,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&q=80&auto=format&fit=crop"},
+  {id:1025,name:"Beef Striploin (350g Portion)",group:"Farmers Choice",orderUnit:"Pack",price:680,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500&q=80&auto=format&fit=crop"},
+  {id:940,name:"Beef Boerewors 500g",group:"Farmers Choice",orderUnit:"Pack",price:750,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1529042410759-befb1204b468?w=500&q=80&auto=format&fit=crop"},
+  {id:990,name:"Minced Beef (High Grade) 500g",group:"Farmers Choice",orderUnit:"Pack",price:550,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=500&q=80&auto=format&fit=crop"},
+  {id:207,name:"Premium Pork Sausages 400g",group:"Farmers Choice",orderUnit:"Pack",price:480,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500&q=80&auto=format&fit=crop"},
+  {id:1100,name:"Pork Loin Chops",group:"Farmers Choice",orderUnit:"Kg",price:1000,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80&auto=format&fit=crop"},
+  {id:956,name:"Streaky Bacon 400g",group:"Farmers Choice",orderUnit:"Pack",price:900,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=500&q=80&auto=format&fit=crop"},
+  {id:225,name:"Alstromaria (Mixed Colors)",group:"Flowers",orderUnit:"Bunch",price:70,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1490750967868-88df5691cc61?w=500&q=80&auto=format&fit=crop"},
+  {id:187,name:"Bouquet (Large)",group:"Flowers",orderUnit:"Bunch",price:300,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1487530811015-780705cc7f3a?w=500&q=80&auto=format&fit=crop"},
+  {id:186,name:"Bouquet (Small)",group:"Flowers",orderUnit:"Bunch",price:200,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1487530811015-780705cc7f3a?w=500&q=80&auto=format&fit=crop"},
+  {id:324,name:"Apples (Green By The Piece)",group:"Fruit",orderUnit:"Pieces",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?w=500&q=80&auto=format&fit=crop"},
+  {id:122,name:"Apples (Green)",group:"Fruit",orderUnit:"Kg",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?w=500&q=80&auto=format&fit=crop"},
+  {id:323,name:"Apples (Red By The Piece)",group:"Fruit",orderUnit:"Pieces",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80&auto=format&fit=crop"},
+  {id:121,name:"Apples (Red)",group:"Fruit",orderUnit:"Kg",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80&auto=format&fit=crop"},
+  {id:1523,name:"Bananas (Plantain)",group:"Fruit",orderUnit:"Bunch",price:600,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&q=80&auto=format&fit=crop"},
+  {id:123,name:"Bananas (Sweet)",group:"Fruit",orderUnit:"Bunch",price:180,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&q=80&auto=format&fit=crop"},
+  {id:1099,name:"Bananas (Sweet) Half Ripe",group:"Fruit",orderUnit:"Bunch",price:180,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&q=80&auto=format&fit=crop"},
+  {id:616,name:"Bananas Green (Matoke)",group:"Fruit",orderUnit:"Pieces",price:25,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&q=80&auto=format&fit=crop"},
+  {id:124,name:"Bananas Normal (Bunch)",group:"Fruit",orderUnit:"Bunch",price:130,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&q=80&auto=format&fit=crop"},
+  {id:327,name:"Bananas Normal (By The Pc)",group:"Fruit",orderUnit:"Pieces",price:130,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&q=80&auto=format&fit=crop"},
+  {id:126,name:"Bananas Normal (Half Ripe)",group:"Fruit",orderUnit:"Pieces",price:130,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&q=80&auto=format&fit=crop"},
+  {id:1298,name:"Bananas Normal (Half Ripe) Bunch",group:"Fruit",orderUnit:"Bunch",price:130,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&q=80&auto=format&fit=crop"},
+  {id:471,name:"Coconuts",group:"Fruit",orderUnit:"Pieces",price:150,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1555955043-44c4f3d8b9e4?w=500&q=80&auto=format&fit=crop"},
+  {id:385,name:"Grape Fruit (Imported) (Pc)",group:"Fruit",orderUnit:"Pieces",price:200,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1587496679742-bad502958fbf?w=500&q=80&auto=format&fit=crop"},
+  {id:384,name:"Grapes",group:"Fruit",orderUnit:"Punnet",price:500,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1423957702952-be18f4f5b4a3?w=500&q=80&auto=format&fit=crop"},
+  {id:1323,name:"Kiwi",group:"Fruit",orderUnit:"Pieces",price:200,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1585059895524-72359e06133a?w=500&q=80&auto=format&fit=crop"},
+  {id:386,name:"Lemons (Imported)",group:"Fruit",orderUnit:"Kg",price:500,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1576188973526-0e5d7047b0cf?w=500&q=80&auto=format&fit=crop"},
+  {id:481,name:"Lemons (Imported) (By The Pc)",group:"Fruit",orderUnit:"Pieces",price:500,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1576188973526-0e5d7047b0cf?w=500&q=80&auto=format&fit=crop"},
+  {id:127,name:"Lemons (Local)",group:"Fruit",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=500&q=80&auto=format&fit=crop"},
+  {id:542,name:"Lemons (Local) (By The Pc)",group:"Fruit",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=500&q=80&auto=format&fit=crop"},
+  {id:128,name:"Limes",group:"Fruit",orderUnit:"Kg",price:220,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80&auto=format&fit=crop"},
+  {id:463,name:"Limes (By The Pc)",group:"Fruit",orderUnit:"Pieces",price:220,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80&auto=format&fit=crop"},
+  {id:1185,name:"Madafu",group:"Fruit",orderUnit:"Pieces",price:110,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1581166397057-235af2b3c6dd?w=500&q=80&auto=format&fit=crop"},
+  {id:129,name:"Mangoes (Apple)",group:"Fruit",orderUnit:"Pieces",price:105,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&q=80&auto=format&fit=crop"},
+  {id:476,name:"Mangoes (Half Ripe)",group:"Fruit",orderUnit:"Pieces",price:105,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&q=80&auto=format&fit=crop"},
+  {id:130,name:"Melon (Sweet)",group:"Fruit",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1571575173700-afb9492e6a50?w=500&q=80&auto=format&fit=crop"},
+  {id:1586,name:"Melon (Thorn) Pc",group:"Fruit",orderUnit:"Pieces",price:60,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1571575173700-afb9492e6a50?w=500&q=80&auto=format&fit=crop"},
+  {id:131,name:"Melon (Water)",group:"Fruit",orderUnit:"Pieces",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563114773-84221bd62daa?w=500&q=80&auto=format&fit=crop"},
+  {id:325,name:"Oranges (Imported By The Piece)",group:"Fruit",orderUnit:"Pieces",price:400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:132,name:"Oranges (Imported)",group:"Fruit",orderUnit:"Kg",price:400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:190,name:"Oranges (Local By The Piece)",group:"Fruit",orderUnit:"Pieces",price:190,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=500&q=80&auto=format&fit=crop"},
+  {id:133,name:"Oranges (Local)",group:"Fruit",orderUnit:"Kg",price:190,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=500&q=80&auto=format&fit=crop"},
+  {id:470,name:"Oranges (Pixie)",group:"Fruit",orderUnit:"Kg",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:1527,name:"Oranges (Pixie) By The Piece",group:"Fruit",orderUnit:"Pieces",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:134,name:"Passion (Black)",group:"Fruit",orderUnit:"Kg",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604495772376-9657f0035dad?w=500&q=80&auto=format&fit=crop"},
+  {id:339,name:"Passion (Black) (By The pc)",group:"Fruit",orderUnit:"Pieces",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604495772376-9657f0035dad?w=500&q=80&auto=format&fit=crop"},
+  {id:377,name:"Passion (Yellow)",group:"Fruit",orderUnit:"Kg",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604495772376-9657f0035dad?w=500&q=80&auto=format&fit=crop"},
+  {id:1436,name:"Passion (Yellow) By The Pc",group:"Fruit",orderUnit:"Pieces",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604495772376-9657f0035dad?w=500&q=80&auto=format&fit=crop"},
+  {id:135,name:"Paw Paw",group:"Fruit",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=500&q=80&auto=format&fit=crop"},
+  {id:478,name:"Paw Paw (By The Kg)",group:"Fruit",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=500&q=80&auto=format&fit=crop"},
+  {id:518,name:"Paw Paw (Mountain)",group:"Fruit",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=500&q=80&auto=format&fit=crop"},
+  {id:626,name:"Paw Paw (Mountain) By The Kg",group:"Fruit",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=500&q=80&auto=format&fit=crop"},
+  {id:362,name:"Pears (Imported)(By The Piece)",group:"Fruit",orderUnit:"Pieces",price:700,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1514756331096-242fdeb70d4a?w=500&q=80&auto=format&fit=crop"},
+  {id:137,name:"Pineapple",group:"Fruit",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=500&q=80&auto=format&fit=crop"},
+  {id:1302,name:"Pineapple (Half Ripe)",group:"Fruit",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=500&q=80&auto=format&fit=crop"},
+  {id:1346,name:"Pomegranates (Imported)",group:"Fruit",orderUnit:"Pieces",price:450,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80&auto=format&fit=crop"},
+  {id:500,name:"Tangerines (Imported)",group:"Fruit",orderUnit:"Kg",price:750,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:926,name:"Tangerines (Imported) By The Pc",group:"Fruit",orderUnit:"Pieces",price:750,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:138,name:"Tangerines (Local)",group:"Fruit",orderUnit:"Kg",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:358,name:"Tangerines (Local) (By The Pc)",group:"Fruit",orderUnit:"Pieces",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80&auto=format&fit=crop"},
+  {id:139,name:"Tree Tomatoes",group:"Fruit",orderUnit:"Kg",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=500&q=80&auto=format&fit=crop"},
+  {id:357,name:"Tree Tomatoes (By The Piece)",group:"Fruit",orderUnit:"Pieces",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=500&q=80&auto=format&fit=crop"},
+  {id:1331,name:"Blue Berries",group:"Fruit Berries",orderUnit:"Punnet",price:500,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=500&q=80&auto=format&fit=crop"},
+  {id:223,name:"Gooseberries",group:"Fruit Berries",orderUnit:"Punnet",price:200,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1591886960571-74d43a9d4166?w=500&q=80&auto=format&fit=crop"},
+  {id:119,name:"Strawberries (Fresh)",group:"Fruit Berries",orderUnit:"Punnet",price:200,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=500&q=80&auto=format&fit=crop"},
+  {id:1357,name:"Strawberries (Frozen) By The Punnet",group:"Fruit Berries",orderUnit:"Punnet",price:300,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=500&q=80&auto=format&fit=crop"},
+  {id:120,name:"Strawberries (Frozen) By The Kg",group:"Fruit Berries",orderUnit:"Kg",price:600,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=500&q=80&auto=format&fit=crop"},
+  {id:203,name:"Raspberries (Fresh)",group:"Fruit Berries",orderUnit:"Punnet",price:350,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&q=80&auto=format&fit=crop"},
+  {id:155,name:"Basil (Green)",group:"Herbs",orderUnit:"Bunch",price:50,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1618375569909-3c8616cf7733?w=500&q=80&auto=format&fit=crop"},
+  {id:156,name:"Bay Leaves (By The Packet)",group:"Herbs",orderUnit:"Pack",price:50,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&q=80&auto=format&fit=crop"},
+  {id:157,name:"Chives (Flat)",group:"Herbs",orderUnit:"Bunch",price:50,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=500&q=80&auto=format&fit=crop"},
+  {id:494,name:"Chives (Flat) (By The kg)",group:"Herbs",orderUnit:"Kg",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=500&q=80&auto=format&fit=crop"},
+  {id:340,name:"Chives (Round)",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=500&q=80&auto=format&fit=crop"},
+  {id:561,name:"Chives (Round) By The Kg",group:"Herbs",orderUnit:"Kg",price:300,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=500&q=80&auto=format&fit=crop"},
+  {id:158,name:"Corriander",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1600689436986-c2b8a3b99f90?w=500&q=80&auto=format&fit=crop"},
+  {id:160,name:"Fennel (By The Kg)",group:"Herbs",orderUnit:"Kg",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500&q=80&auto=format&fit=crop"},
+  {id:234,name:"Fennel (By The Pc)",group:"Herbs",orderUnit:"Pieces",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500&q=80&auto=format&fit=crop"},
+  {id:161,name:"Garlic",group:"Herbs",orderUnit:"Kg",price:650,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1582515073490-39981397c445?w=500&q=80&auto=format&fit=crop"},
+  {id:409,name:"Garlic (By The Piece)",group:"Herbs",orderUnit:"Pieces",price:650,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1582515073490-39981397c445?w=500&q=80&auto=format&fit=crop"},
+  {id:511,name:"Garlic (Local)",group:"Herbs",orderUnit:"Kg",price:650,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1582515073490-39981397c445?w=500&q=80&auto=format&fit=crop"},
+  {id:162,name:"Ginger",group:"Herbs",orderUnit:"Kg",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80&auto=format&fit=crop"},
+  {id:410,name:"Ginger (By The Piece)",group:"Herbs",orderUnit:"Pieces",price:350,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80&auto=format&fit=crop"},
+  {id:213,name:"Lemon Grass",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1608234807905-4466023792f5?w=500&q=80&auto=format&fit=crop"},
+  {id:153,name:"Marjoram (Sweet)",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?w=500&q=80&auto=format&fit=crop"},
+  {id:163,name:"Mint",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=500&q=80&auto=format&fit=crop"},
+  {id:600,name:"Mint (Apple)",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=500&q=80&auto=format&fit=crop"},
+  {id:152,name:"Oregano",group:"Herbs",orderUnit:"Bunch",price:35,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1593200248641-5695ee18c1df?w=500&q=80&auto=format&fit=crop"},
+  {id:164,name:"Parsley Curly",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1598635881793-21c2ead9d4f3?w=500&q=80&auto=format&fit=crop"},
+  {id:231,name:"Parsley Flat (Bunch)",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1598635881793-21c2ead9d4f3?w=500&q=80&auto=format&fit=crop"},
+  {id:166,name:"Rosemary",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=500&q=80&auto=format&fit=crop"},
+  {id:167,name:"Sage",group:"Herbs",orderUnit:"Bunch",price:35,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1556909180-d33b954a7c8b?w=500&q=80&auto=format&fit=crop"},
+  {id:369,name:"Tarragon",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?w=500&q=80&auto=format&fit=crop"},
+  {id:154,name:"Thyme",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1593627765738-b7e2acde7e72?w=500&q=80&auto=format&fit=crop"},
+  {id:1608,name:"Turmeric Roots (By the Piece)",group:"Herbs",orderUnit:"Pieces",price:700,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500&q=80&auto=format&fit=crop"},
+  {id:168,name:"Water Cress",group:"Herbs",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1542736667-069246bdbc6d?w=500&q=80&auto=format&fit=crop"},
+  {id:721,name:"Edible Flowers",group:"Herbs - Salad",orderUnit:"Pack",price:100,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1490750967868-88df5691cc61?w=500&q=80&auto=format&fit=crop"},
+  {id:236,name:"Rocket (By The Kg)",group:"Herbs - Salad",orderUnit:"Kg",price:330,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1540914124281-342587941389?w=500&q=80&auto=format&fit=crop"},
+  {id:286,name:"Rocket (By The Packet)",group:"Herbs - Salad",orderUnit:"Pack",price:60,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1540914124281-342587941389?w=500&q=80&auto=format&fit=crop"},
+  {id:311,name:"Basil (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1618375569909-3c8616cf7733?w=500&q=80&auto=format&fit=crop"},
+  {id:573,name:"Bay Leaves (Live In Bag)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&q=80&auto=format&fit=crop"},
+  {id:352,name:"Chives (Flat) (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=500&q=80&auto=format&fit=crop"},
+  {id:313,name:"Chives Round (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=500&q=80&auto=format&fit=crop"},
+  {id:312,name:"Corriander (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1600689436986-c2b8a3b99f90?w=500&q=80&auto=format&fit=crop"},
+  {id:609,name:"Herbs (Mixed) (Growing Box) (Small)",group:"Herbs (Live)",orderUnit:"Unit",price:1000,chargeUnit:"Unit",img:"https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=500&q=80&auto=format&fit=crop"},
+  {id:397,name:"Lemon Grass (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1608234807905-4466023792f5?w=500&q=80&auto=format&fit=crop"},
+  {id:485,name:"Lemon Verbena (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?w=500&q=80&auto=format&fit=crop"},
+  {id:315,name:"Marjoram (Sweet) (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?w=500&q=80&auto=format&fit=crop"},
+  {id:803,name:"Mint (Apple) Live",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=500&q=80&auto=format&fit=crop"},
+  {id:351,name:"Mint (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=500&q=80&auto=format&fit=crop"},
+  {id:165,name:"Oregano (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1593200248641-5695ee18c1df?w=500&q=80&auto=format&fit=crop"},
+  {id:310,name:"Parsley (Curly) (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1598635881793-21c2ead9d4f3?w=500&q=80&auto=format&fit=crop"},
+  {id:288,name:"Parsley Flat (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1598635881793-21c2ead9d4f3?w=500&q=80&auto=format&fit=crop"},
+  {id:435,name:"Rocket (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1540914124281-342587941389?w=500&q=80&auto=format&fit=crop"},
+  {id:191,name:"Rosemary (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:350,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=500&q=80&auto=format&fit=crop"},
+  {id:437,name:"Sage (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1556909180-d33b954a7c8b?w=500&q=80&auto=format&fit=crop"},
+  {id:399,name:"Sorrel (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1542736667-069246bdbc6d?w=500&q=80&auto=format&fit=crop"},
+  {id:434,name:"Tarragon (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?w=500&q=80&auto=format&fit=crop"},
+  {id:214,name:"Thyme (Live)",group:"Herbs (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1593627765738-b7e2acde7e72?w=500&q=80&auto=format&fit=crop"},
+  {id:1178,name:"Water Cress (With roots)",group:"Herbs (Live)",orderUnit:"Bunch",price:80,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1542736667-069246bdbc6d?w=500&q=80&auto=format&fit=crop"},
+  {id:1390,name:"Kombucha (Hibiscus Ginger)",group:"Juice - Kombucha",orderUnit:"Litres",price:400,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1600271772470-bd22a42787b3?w=500&q=80&auto=format&fit=crop"},
+  {id:1391,name:"Kombucha (Lavender)",group:"Juice - Kombucha",orderUnit:"Litres",price:400,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1600271772470-bd22a42787b3?w=500&q=80&auto=format&fit=crop"},
+  {id:1392,name:"Kombucha (Moringa)",group:"Juice - Kombucha",orderUnit:"Litres",price:400,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1600271772470-bd22a42787b3?w=500&q=80&auto=format&fit=crop"},
+  {id:1393,name:"Kombucha (Rosemary & Mint)",group:"Juice - Kombucha",orderUnit:"Litres",price:400,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1600271772470-bd22a42787b3?w=500&q=80&auto=format&fit=crop"},
+  {id:353,name:"Apple Juice",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=500&q=80&auto=format&fit=crop"},
+  {id:483,name:"Cocktail Juice",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=500&q=80&auto=format&fit=crop"},
+  {id:1419,name:"Madafu In a Bottle (Lt)",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1581166397057-235af2b3c6dd?w=500&q=80&auto=format&fit=crop"},
+  {id:103,name:"Mango Juice",group:"Juices",orderUnit:"Litres",price:252,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1546173159-315724a31696?w=500&q=80&auto=format&fit=crop"},
+  {id:104,name:"Orange Juice",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=500&q=80&auto=format&fit=crop"},
+  {id:105,name:"Passion Juice",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=500&q=80&auto=format&fit=crop"},
+  {id:106,name:"Pineapple Juice",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1564577160324-112d603f750f?w=500&q=80&auto=format&fit=crop"},
+  {id:1669,name:"Pineapple Mint Juice",group:"Juices",orderUnit:"Litres",price:250,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=500&q=80&auto=format&fit=crop"},
+  {id:108,name:"Tree Tomato Juice",group:"Juices",orderUnit:"Litres",price:280,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1571575173700-afb9492e6a50?w=500&q=80&auto=format&fit=crop"},
+  {id:1423,name:"Chutney - Chilli And Ginger (500Ml)",group:"Kampi Kitchen",orderUnit:"Jar",price:900,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:660,name:"Chutney - Mango (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:900,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:659,name:"Chutney - Tomato (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:900,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:658,name:"Jam - Blackberry (500 Ml)",group:"Kampi Kitchen",orderUnit:"Jar",price:1000,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:652,name:"Jam - Blueberry (500 Ml)",group:"Kampi Kitchen",orderUnit:"Jar",price:1000,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:1286,name:"Jam - Mixed Berry (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:655,name:"Jam - Plum (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:928,name:"Jam - Raspberry (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:646,name:"Jam - Strawberry (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:657,name:"Harissa",group:"Kampi Kitchen",orderUnit:"Jar",price:900,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1598030473535-ed08266aad4c?w=500&q=80&auto=format&fit=crop"},
+  {id:1422,name:"Marmalade - Chilli And Orange (500ml)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:643,name:"Marmalade - Orange (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:644,name:"Marmalade - Orange and Lemon (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:1151,name:"Marmalade - Orange And Lime 500g",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:645,name:"Marmalade - Orange, Grapefruit & Lemon (500g)",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:1129,name:"Marmalade - Orange, Tangerine & Lemon",group:"Kampi Kitchen",orderUnit:"Jar",price:925,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=500&q=80&auto=format&fit=crop"},
+  {id:579,name:"Water (1 litre) Still",group:"Mayer's",orderUnit:"Bottles",price:100,chargeUnit:"Bottles",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:1233,name:"Water (20 Lts Bottle)",group:"Mayer's",orderUnit:"Bottles",price:600,chargeUnit:"Bottles",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:578,name:"Water (500 mls)",group:"Mayer's",orderUnit:"Bottles",price:50,chargeUnit:"Bottles",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:1229,name:"Water (500mls) Carton",group:"Mayer's",orderUnit:"Carton",price:950,chargeUnit:"Carton",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:1593,name:"Water (Sparkling) 1 Litre (Carton)",group:"Mayer's",orderUnit:"Carton",price:1180,chargeUnit:"Carton",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:1297,name:"Water (Sparkling) 12 x 750ml (Glass) Crate",group:"Mayer's",orderUnit:"Crate",price:1200,chargeUnit:"Crate",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:347,name:"Water (Still) 1 Litre (Carton)",group:"Mayer's",orderUnit:"Carton",price:950,chargeUnit:"Carton",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500&q=80&auto=format&fit=crop"},
+  {id:62,name:"Chicken (Whole) Approx. 2-3kg",group:"Meat",orderUnit:"Pieces",price:700,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=500&q=80&auto=format&fit=crop"},
+  {id:61,name:"Duck (Whole) 2.3-2.8kg",group:"Meat",orderUnit:"Pieces",price:850,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&q=80&auto=format&fit=crop"},
+  {id:1097,name:"Fish Fillet - Snapper (By The Kg)",group:"Meat (Fish)",orderUnit:"Kg",price:1800,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&q=80&auto=format&fit=crop"},
+  {id:766,name:"Fish Fillet - Snapper (Approx. 300g/Pack)",group:"Meat (Fish)",orderUnit:"Pack",price:1800,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&q=80&auto=format&fit=crop"},
+  {id:837,name:"Prawns (Peeled) kg",group:"Meat (Fish)",orderUnit:"Kg",price:3400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80&auto=format&fit=crop"},
+  {id:1242,name:"Squid (Clean) By The Kg",group:"Meat (Fish)",orderUnit:"Kg",price:1400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&q=80&auto=format&fit=crop"},
+  {id:66,name:"Smoked Salmon 100g",group:"Meat (Fish)",orderUnit:"Pack",price:1440,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80&auto=format&fit=crop"},
+  {id:67,name:"Smoked Salmon 200g",group:"Meat (Fish)",orderUnit:"Pack",price:2782,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80&auto=format&fit=crop"},
+  {id:891,name:"Salmon Portion (Approx. 200g/Pc)",group:"Meat (Fish) Portions",orderUnit:"Pack",price:9200,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80&auto=format&fit=crop"},
+  {id:537,name:"Chicken Breast (Double)",group:"Meat (Pieces)",orderUnit:"Pack",price:1000,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80&auto=format&fit=crop"},
+  {id:1163,name:"Chicken Liver (Kg)",group:"Meat (Pieces)",orderUnit:"Kg",price:700,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80&auto=format&fit=crop"},
+  {id:535,name:"Chicken Thigh (2pc in a pack)",group:"Meat (Pieces)",orderUnit:"Pack",price:700,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80&auto=format&fit=crop"},
+  {id:536,name:"Chicken Wings (8 Pcs)",group:"Meat (Pieces)",orderUnit:"Pack",price:750,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500&q=80&auto=format&fit=crop"},
+  {id:1094,name:"Duck Breast. Approx. 500g/pack",group:"Meat (Pieces)",orderUnit:"Pack",price:2400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&q=80&auto=format&fit=crop"},
+  {id:1095,name:"Duck Legs (2pc/pack) Approx. 500g",group:"Meat (Pieces)",orderUnit:"Pack",price:1600,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&q=80&auto=format&fit=crop"},
+  {id:1674,name:"Droewors (Beef) 55g",group:"Meats - Droewors",orderUnit:"Pack",price:350,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1529042410759-befb1204b468?w=500&q=80&auto=format&fit=crop"},
+  {id:1673,name:"Droewors (Beef & Mutton) 55g",group:"Meats - Droewors",orderUnit:"Pack",price:350,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1529042410759-befb1204b468?w=500&q=80&auto=format&fit=crop"},
+  {id:1413,name:"Mountain Oil (1 Litre) Herbal",group:"Oil (Cold Pressed Canola)",orderUnit:"Litres",price:475,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80&auto=format&fit=crop"},
+  {id:1412,name:"Mountain Oil (1 Litre) Pure",group:"Oil (Cold Pressed Canola)",orderUnit:"Litres",price:475,chargeUnit:"Litres",img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80&auto=format&fit=crop"},
+  {id:628,name:"Eggs (15 Pc Pack)",group:"Others",orderUnit:"Pack",price:375,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1569288052389-dac9b01ac769?w=500&q=80&auto=format&fit=crop"},
+  {id:548,name:"Eggs (By The Tray)",group:"Others",orderUnit:"Tray",price:750,chargeUnit:"Tray",img:"https://images.unsplash.com/photo-1569288052389-dac9b01ac769?w=500&q=80&auto=format&fit=crop"},
+  {id:142,name:"Eggs (Free Range)",group:"Others",orderUnit:"Dozen",price:300,chargeUnit:"Dozen",img:"https://images.unsplash.com/photo-1569288052389-dac9b01ac769?w=500&q=80&auto=format&fit=crop"},
+  {id:673,name:"Tea Leaves (0.5 kg pack)",group:"Others",orderUnit:"Pack",price:280,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?w=500&q=80&auto=format&fit=crop"},
+  {id:1617,name:"Honey (Pure) (Bundu) 500g",group:"Others",orderUnit:"Jar",price:530,chargeUnit:"Jar",img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80&auto=format&fit=crop"},
+  {id:1618,name:"Honey (Pure) (Bundu) Kg",group:"Others",orderUnit:"Kg",price:1050,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80&auto=format&fit=crop"},
+  {id:51,name:"Artichokes (Live)",group:"Plants (Live)",orderUnit:"Bag",price:400,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=500&q=80&auto=format&fit=crop"},
+  {id:1236,name:"Gooseberry (Live)",group:"Plants (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1591886960571-74d43a9d4166?w=500&q=80&auto=format&fit=crop"},
+  {id:444,name:"Rhubarb (Live) (Bag)",group:"Plants (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1601045569976-ca4bac89a97f?w=500&q=80&auto=format&fit=crop"},
+  {id:389,name:"Strawberry Plants (Live)",group:"Plants (Live)",orderUnit:"Bag",price:300,chargeUnit:"Bag",img:"https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=500&q=80&auto=format&fit=crop"},
+  {id:295,name:"Strawberry splits",group:"Plants (Live)",orderUnit:"Pieces",price:30,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=500&q=80&auto=format&fit=crop"},
+  {id:474,name:"Arrow Root",group:"Vegetable",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:270,name:"Aubergine",group:"Vegetable",orderUnit:"Pieces",price:170,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1503140265272-f68655cf4ab0?w=500&q=80&auto=format&fit=crop"},
+  {id:2,name:"Aubergine (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:170,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1503140265272-f68655cf4ab0?w=500&q=80&auto=format&fit=crop"},
+  {id:3,name:"Avocado",group:"Vegetable",orderUnit:"Pieces",price:60,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&q=80&auto=format&fit=crop"},
+  {id:6,name:"Beetroot (Kg)",group:"Vegetable",orderUnit:"Kg",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1595928607994-08ef29e6b5a8?w=500&q=80&auto=format&fit=crop"},
+  {id:1125,name:"Borecole (Curly Kale)",group:"Vegetable",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?w=500&q=80&auto=format&fit=crop"},
+  {id:1128,name:"Borecole (Tuscan Kale)",group:"Vegetable",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?w=500&q=80&auto=format&fit=crop"},
+  {id:7,name:"Broccoli",group:"Vegetable",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=500&q=80&auto=format&fit=crop"},
+  {id:391,name:"Broccoli (By The Pc)",group:"Vegetable",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=500&q=80&auto=format&fit=crop"},
+  {id:260,name:"Brussel Sprouts (By The Punnet)",group:"Vegetable",orderUnit:"Punnet",price:250,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1518677235982-65ed6e3fd060?w=500&q=80&auto=format&fit=crop"},
+  {id:9,name:"Butter Nut",group:"Vegetable",orderUnit:"Pieces",price:130,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=500&q=80&auto=format&fit=crop"},
+  {id:10,name:"Cabbage (Green)",group:"Vegetable",orderUnit:"Pieces",price:120,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&q=80&auto=format&fit=crop"},
+  {id:11,name:"Cabbage (Red)",group:"Vegetable",orderUnit:"Pieces",price:200,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&q=80&auto=format&fit=crop"},
+  {id:294,name:"Cabbage (Red) (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:200,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&q=80&auto=format&fit=crop"},
+  {id:12,name:"Cabbage (Savoy)",group:"Vegetable",orderUnit:"Pieces",price:65,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&q=80&auto=format&fit=crop"},
+  {id:336,name:"Cabbage (Savoy) (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:65,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&q=80&auto=format&fit=crop"},
+  {id:14,name:"Carrots (By The Piece)",group:"Vegetable",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1447175008436-054170c2e979?w=500&q=80&auto=format&fit=crop"},
+  {id:13,name:"Carrots (Normal) (Kg)",group:"Vegetable",orderUnit:"Kg",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1447175008436-054170c2e979?w=500&q=80&auto=format&fit=crop"},
+  {id:568,name:"Cauliflower (Green) (By the Kg)",group:"Vegetable",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1510627489301-7d311a9e4745?w=500&q=80&auto=format&fit=crop"},
+  {id:15,name:"Cauliflower (White)",group:"Vegetable",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1510627489301-7d311a9e4745?w=500&q=80&auto=format&fit=crop"},
+  {id:242,name:"Cauliflower (White) (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1510627489301-7d311a9e4745?w=500&q=80&auto=format&fit=crop"},
+  {id:26,name:"Celery",group:"Vegetable",orderUnit:"Bunch",price:220,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1615485020932-5c8cc91428b2?w=500&q=80&auto=format&fit=crop"},
+  {id:1596,name:"Chayote (By The Pc)",group:"Vegetable",orderUnit:"Pieces",price:60,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1574266773694-5eac7e1cdd37?w=500&q=80&auto=format&fit=crop"},
+  {id:403,name:"Chillis (Scotch Bonnet) By The Punnet",group:"Vegetable",orderUnit:"Punnet",price:120,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1582456891-5e76e69b7f6b?w=500&q=80&auto=format&fit=crop"},
+  {id:387,name:"Chillis (Scotch Bonnet) By The Kg",group:"Vegetable",orderUnit:"Kg",price:600,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1582456891-5e76e69b7f6b?w=500&q=80&auto=format&fit=crop"},
+  {id:291,name:"Chillis (Mixed)",group:"Vegetable",orderUnit:"Punnet",price:120,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80&auto=format&fit=crop"},
+  {id:18,name:"Courgette (Green)",group:"Vegetable",orderUnit:"Kg",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80&auto=format&fit=crop"},
+  {id:412,name:"Courgette (Green) (By The Pc)",group:"Vegetable",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80&auto=format&fit=crop"},
+  {id:19,name:"Cucumber (English)",group:"Vegetable",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=500&q=80&auto=format&fit=crop"},
+  {id:1468,name:"Cucumber (Local) pc",group:"Vegetable",orderUnit:"Pieces",price:250,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=500&q=80&auto=format&fit=crop"},
+  {id:248,name:"Green Beans (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:200,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?w=500&q=80&auto=format&fit=crop"},
+  {id:22,name:"Green Beans (Punnet)",group:"Vegetable",orderUnit:"Punnet",price:80,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?w=500&q=80&auto=format&fit=crop"},
+  {id:1224,name:"Kohl Rabi (Green) Pc",group:"Vegetable",orderUnit:"Pieces",price:90,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1598030304671-5aa1d6f21128?w=500&q=80&auto=format&fit=crop"},
+  {id:378,name:"Leeks (By The Pc)",group:"Vegetable",orderUnit:"Pieces",price:200,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?w=500&q=80&auto=format&fit=crop"},
+  {id:24,name:"Leeks (Kg)",group:"Vegetable",orderUnit:"Kg",price:200,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?w=500&q=80&auto=format&fit=crop"},
+  {id:554,name:"Lettuce (Endive)",group:"Vegetable",orderUnit:"Pieces",price:50,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:28,name:"Lettuce (Cos)",group:"Vegetable",orderUnit:"Pieces",price:50,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:30,name:"Lettuce (Iceberg)",group:"Vegetable",orderUnit:"Pieces",price:50,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:264,name:"Lettuce (Lollo Bioda) (Green)",group:"Vegetable",orderUnit:"Pieces",price:50,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:220,name:"Lettuce (Ronali) Green",group:"Vegetable",orderUnit:"Pieces",price:50,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:221,name:"Lettuce (Rubili) Red",group:"Vegetable",orderUnit:"Pieces",price:50,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:48,name:"Lettuce (Salad Pack)",group:"Vegetable",orderUnit:"Pack",price:100,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1543257580-7269da773bf5?w=500&q=80&auto=format&fit=crop"},
+  {id:417,name:"Maize (Green) (Soft)",group:"Vegetable",orderUnit:"Pieces",price:60,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&q=80&auto=format&fit=crop"},
+  {id:31,name:"Mangetout (Punnet)",group:"Vegetable",orderUnit:"Punnet",price:80,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1576129562383-ba6b9c0c23cf?w=500&q=80&auto=format&fit=crop"},
+  {id:33,name:"Mushroom (Button)",group:"Vegetable",orderUnit:"Punnet",price:450,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:1260,name:"Mushroom (Portobello) 250g",group:"Vegetable",orderUnit:"Punnet",price:500,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1573520420935-2f6b71da8db0?w=500&q=80&auto=format&fit=crop"},
+  {id:305,name:"Okra (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:240,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563207153-f403bf289096?w=500&q=80&auto=format&fit=crop"},
+  {id:34,name:"Onions (Red)",group:"Vegetable",orderUnit:"Kg",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1508747703725-719777637510?w=500&q=80&auto=format&fit=crop"},
+  {id:700,name:"Onions (Red) By The Pc",group:"Vegetable",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1508747703725-719777637510?w=500&q=80&auto=format&fit=crop"},
+  {id:35,name:"Onions (White)",group:"Vegetable",orderUnit:"Kg",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:855,name:"Onions (White) By The Piece",group:"Vegetable",orderUnit:"Pieces",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:93,name:"Parsnips (Punnet)",group:"Vegetable",orderUnit:"Punnet",price:250,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1574774949938-c5ee5ede50f0?w=500&q=80&auto=format&fit=crop"},
+  {id:38,name:"Pepper (Green)",group:"Vegetable",orderUnit:"Pieces",price:220,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80&auto=format&fit=crop"},
+  {id:41,name:"Pepper (Red)",group:"Vegetable",orderUnit:"Pieces",price:400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80&auto=format&fit=crop"},
+  {id:40,name:"Pepper (Yellow)",group:"Vegetable",orderUnit:"Pieces",price:400,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80&auto=format&fit=crop"},
+  {id:43,name:"Potatoes",group:"Vegetable",orderUnit:"Kg",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:408,name:"Potatoes (By the Piece)",group:"Vegetable",orderUnit:"Pieces",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:215,name:"Potatoes (New)",group:"Vegetable",orderUnit:"Kg",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:543,name:"Potatoes (Red)",group:"Vegetable",orderUnit:"Kg",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80&auto=format&fit=crop"},
+  {id:44,name:"Potatoes Sweet",group:"Vegetable",orderUnit:"Kg",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1596363505729-4190a9506133?w=500&q=80&auto=format&fit=crop"},
+  {id:341,name:"Potatoes Sweet (By The Piece)",group:"Vegetable",orderUnit:"Pieces",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1596363505729-4190a9506133?w=500&q=80&auto=format&fit=crop"},
+  {id:45,name:"Pumpkin (Whole)",group:"Vegetable",orderUnit:"Pieces",price:120,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=500&q=80&auto=format&fit=crop"},
+  {id:46,name:"Radish (Red)",group:"Vegetable",orderUnit:"Bunch",price:35,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?w=500&q=80&auto=format&fit=crop"},
+  {id:252,name:"Rhubarb (By The Kg)",group:"Vegetable",orderUnit:"Kg",price:100,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1601045569976-ca4bac89a97f?w=500&q=80&auto=format&fit=crop"},
+  {id:498,name:"Rhubarb (By The Pc)",group:"Vegetable",orderUnit:"Pieces",price:100,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1601045569976-ca4bac89a97f?w=500&q=80&auto=format&fit=crop"},
+  {id:326,name:"Spinach (Normal By The Kg)",group:"Vegetable",orderUnit:"Kg",price:100,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80&auto=format&fit=crop"},
+  {id:50,name:"Spinach (Normal)",group:"Vegetable",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80&auto=format&fit=crop"},
+  {id:244,name:"Spinach (Pak Choy) By The Kg",group:"Vegetable",orderUnit:"Kg",price:80,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80&auto=format&fit=crop"},
+  {id:257,name:"Spinach (Pak Choy) By the Packet",group:"Vegetable",orderUnit:"Pack",price:50,chargeUnit:"Pack",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80&auto=format&fit=crop"},
+  {id:52,name:"Spring Onion",group:"Vegetable",orderUnit:"Bunch",price:25,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1508747703725-719777637510?w=500&q=80&auto=format&fit=crop"},
+  {id:53,name:"Sugar-Snap Peas",group:"Vegetable",orderUnit:"Punnet",price:80,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1576129562383-ba6b9c0c23cf?w=500&q=80&auto=format&fit=crop"},
+  {id:54,name:"Sukuma Wiki",group:"Vegetable",orderUnit:"Bunch",price:40,chargeUnit:"Bunch",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80&auto=format&fit=crop"},
+  {id:55,name:"Sweet Corn (Yellow)",group:"Vegetable",orderUnit:"Pieces",price:100,chargeUnit:"Pieces",img:"https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&q=80&auto=format&fit=crop"},
+  {id:56,name:"Tomato (Cherry) Red Punnet",group:"Vegetable",orderUnit:"Punnet",price:180,chargeUnit:"Punnet",img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&q=80&auto=format&fit=crop"},
+  {id:57,name:"Tomato (English)",group:"Vegetable",orderUnit:"Kg",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80&auto=format&fit=crop"},
+  {id:490,name:"Tomato (English) By The Pc",group:"Vegetable",orderUnit:"Pieces",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80&auto=format&fit=crop"},
+  {id:337,name:"Tomato (English) Half Ripe",group:"Vegetable",orderUnit:"Kg",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80&auto=format&fit=crop"},
+  {id:786,name:"Tomato (English) Half Ripe Pc",group:"Vegetable",orderUnit:"Pieces",price:180,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80&auto=format&fit=crop"},
+  {id:58,name:"Tomato (Italian)",group:"Vegetable",orderUnit:"Kg",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80&auto=format&fit=crop"},
+  {id:856,name:"Tomato (Italian) (By The Piece)",group:"Vegetable",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80&auto=format&fit=crop"},
+  {id:624,name:"Tomato (Italian) (Half Ripe)",group:"Vegetable",orderUnit:"Kg",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80&auto=format&fit=crop"},
+  {id:1156,name:"Tomato (Italian) (Half Ripe) Pc",group:"Vegetable",orderUnit:"Pieces",price:150,chargeUnit:"Kg",img:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80&auto=format&fit=crop"},
+];
 
-      if (item.qty <= 0) {
-        cart = cart.filter(product => product.id !== id);
-      }
+const CATEGORY_DATA = {
+  "All":{icon:"🛒",img:"https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80&auto=format&fit=crop"},
+  "Vegetable":{icon:"🥦",img:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80&auto=format&fit=crop"},
+  "Fruit":{icon:"🍊",img:"https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&q=80&auto=format&fit=crop"},
+  "Herbs":{icon:"🌿",img:"https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400&q=80&auto=format&fit=crop"},
+  "Brown's Cheese":{icon:"🧀",img:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=400&q=80&auto=format&fit=crop"},
+  "Dairy":{icon:"🥛",img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&q=80&auto=format&fit=crop"},
+  "Meat":{icon:"🥩",img:"https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&q=80&auto=format&fit=crop"},
+  "Fruit Berries":{icon:"🍓",img:"https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=400&q=80&auto=format&fit=crop"},
+  "Juices":{icon:"🍹",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80&auto=format&fit=crop"},
+  "Kampi Kitchen":{icon:"🫙",img:"https://images.unsplash.com/photo-1563248174-7b7e2d1e8c46?w=400&q=80&auto=format&fit=crop"},
+  "Others":{icon:"🥚",img:"https://images.unsplash.com/photo-1569288052389-dac9b01ac769?w=400&q=80&auto=format&fit=crop"},
+  "Flowers":{icon:"💐",img:"https://images.unsplash.com/photo-1487530811015-780705cc7f3a?w=400&q=80&auto=format&fit=crop"},
+};
 
-      updateCart();
-    }
+const RECIPES = [
+  {title:"Roasted Vegetable Medley",cat:"Vegetables",time:"45 min",serves:4,diff:"Easy",desc:"A beautiful tray of seasonal farm vegetables roasted with olive oil, garlic and fresh thyme until golden and caramelised.",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format&fit=crop"},
+  {title:"Herb Crusted Salmon",cat:"Seafood",time:"30 min",serves:2,diff:"Medium",desc:"Pan-seared salmon fillet coated with fresh parsley, dill and lemon zest served with a simple butter sauce.",img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80&auto=format&fit=crop"},
+  {title:"Strawberry Pavlova",cat:"Dessert",time:"2 hr",serves:8,diff:"Medium",desc:"Light meringue topped with whipped cream and fresh strawberries, raspberries and passion fruit from the garden.",img:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format&fit=crop"},
+  {title:"Farm Fresh Bruschetta",cat:"Vegetarian",time:"15 min",serves:6,diff:"Easy",desc:"Toasted sourdough with ripe cherry tomatoes, fresh basil, buffalo mozzarella and a drizzle of cold-pressed oil.",img:"https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&q=80&auto=format&fit=crop"},
+  {title:"Rosemary Lamb Chops",cat:"Meat",time:"40 min",serves:4,diff:"Medium",desc:"Juicy lamb chops marinated in fresh rosemary, garlic and lemon with grilled asparagus and mint yogurt.",img:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80&auto=format&fit=crop"},
+  {title:"Mango Passion Smoothie",cat:"Drinks",time:"10 min",serves:2,diff:"Easy",desc:"A tropical blend of ripe mangoes, passion fruit and freshly squeezed orange juice with a hint of ginger.",img:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&q=80&auto=format&fit=crop"},
+  {title:"Beetroot & Goat Cheese Salad",cat:"Salad",time:"20 min",serves:4,diff:"Easy",desc:"Roasted beetroot with rocket, crumbled feta, toasted walnuts and a honey-lemon dressing.",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format&fit=crop"},
+  {title:"Chicken & Herb Casserole",cat:"Meat",time:"1 hr 20 min",serves:6,diff:"Medium",desc:"Slow-braised chicken thighs with thyme, sage, leeks and carrots in a rich white wine sauce.",img:"https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?w=600&q=80&auto=format&fit=crop"},
+  {title:"Avocado Toast with Eggs",cat:"Breakfast",time:"15 min",serves:2,diff:"Easy",desc:"Creamy smashed avocado on sourdough with free-range poached eggs, chilli flakes and microgreens.",img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&q=80&auto=format&fit=crop"},
+  {title:"Prawn & Coconut Curry",cat:"Seafood",time:"35 min",serves:4,diff:"Medium",desc:"Plump prawns in a fragrant coconut milk curry with lemongrass, ginger and fresh coriander.",img:"https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=80&auto=format&fit=crop"},
+  {title:"Blueberry Chia Parfait",cat:"Dessert",time:"10 min",serves:2,diff:"Easy",desc:"Layers of Greek yogurt, chia pudding, fresh blueberries and a drizzle of pure wildflower honey.",img:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format&fit=crop"},
+  {title:"Caramelised Onion Soup",cat:"Soup",time:"1 hr",serves:4,diff:"Medium",desc:"Deeply caramelised red and white onions in rich beef stock topped with melted Gruyère croutons.",img:"https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80&auto=format&fit=crop"},
+  {title:"Garden Green Frittata",cat:"Breakfast",time:"25 min",serves:4,diff:"Easy",desc:"A golden baked egg frittata packed with courgette, spinach, spring onion and crumbled feta cheese.",img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&q=80&auto=format&fit=crop"},
+  {title:"Duck Breast with Orange",cat:"Meat",time:"50 min",serves:2,diff:"Advanced",desc:"Pan-seared duck breast with a zesty orange and thyme sauce, served with roasted butternut squash.",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&auto=format&fit=crop"},
+  {title:"Watermelon & Mint Salad",cat:"Salad",time:"10 min",serves:6,diff:"Easy",desc:"Refreshing summer salad with chilled watermelon, fresh mint, cucumber and a squeeze of lime.",img:"https://images.unsplash.com/photo-1563114773-84221bd62daa?w=600&q=80&auto=format&fit=crop"},
+  {title:"Basil Pesto Pasta",cat:"Vegetarian",time:"20 min",serves:4,diff:"Easy",desc:"Fresh homemade basil pesto tossed with pasta, cherry tomatoes and freshly shaved parmesan.",img:"https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600&q=80&auto=format&fit=crop"},
+  {title:"Smoked Salmon Blinis",cat:"Seafood",time:"30 min",serves:8,diff:"Medium",desc:"Fluffy buckwheat blinis topped with cream cheese, smoked salmon, capers and fresh dill.",img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80&auto=format&fit=crop"},
+  {title:"Passion Fruit Cheesecake",cat:"Dessert",time:"4 hr",serves:10,diff:"Medium",desc:"Creamy no-bake cheesecake with a buttery biscuit base and a tangy fresh passion fruit topping.",img:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format&fit=crop"},
+];
 
-    function removeItem(id) {
-      cart = cart.filter(product => product.id !== id);
-      updateCart();
-    }
+let cart=[], currentFilter="All", currentSearch="", modalQty=1, currentModalProduct=null;
 
-    function openCart() {
-      document.getElementById("overlay").classList.add("open");
-      document.getElementById("cartDrawer").classList.add("open");
-    }
+function init(){
+  renderCategories();renderFilterBar();renderProducts();renderRecipes();updateCartUI();
+  document.getElementById('searchInput').addEventListener('input',e=>{currentSearch=e.target.value.toLowerCase();renderProducts();});
+  window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20));
+}
 
-    function closeCart() {
-      document.getElementById("overlay").classList.remove("open");
-      document.getElementById("cartDrawer").classList.remove("open");
-    }
+function getGroupedCategories(){const map={};PRODUCTS.forEach(p=>{const t=getTopGroup(p.group);if(!map[t])map[t]=0;map[t]++;});return map;}
+function getTopGroup(g){if(g.includes("Cheese")||g.includes("Ice-Cream"))return"Brown's Cheese";if(g.includes("Meat"))return"Meat";if(g.includes("Herbs"))return"Herbs";return g;}
 
-    function closeModal() {
-      document.getElementById("overlay").classList.remove("open");
-      document.getElementById("modal").classList.remove("open");
-    }
+function renderCategories(){
+  const grid=document.getElementById('categoriesGrid');
+  const counts=getGroupedCategories();
+  const cats=["All","Vegetable","Fruit","Herbs","Brown's Cheese","Dairy","Meat","Fruit Berries","Juices","Kampi Kitchen","Others","Flowers"];
+  grid.innerHTML=cats.map(cat=>{
+    const d=CATEGORY_DATA[cat]||{icon:"🌿",img:"https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80"};
+    const count=cat==="All"?PRODUCTS.length:Object.entries(counts).filter(([k])=>getTopGroup(k)===cat||k===cat).reduce((a,[,v])=>a+v,0);
+    return`<div class="cat-tile${currentFilter===cat?' active':''}" onclick="setFilter('${cat.replace(/'/g,"\\'")}')"><img src="${d.img}" alt="${cat}" loading="lazy"><div class="cat-tile-overlay"></div><div class="cat-tile-icon">${d.icon}</div><div class="cat-tile-content"><div class="cat-tile-name">${cat}</div><div class="cat-tile-count">${count} items</div></div></div>`;
+  }).join('');
+}
 
-    function closeAll() {
-      closeCart();
-      closeModal();
-    }
+function setFilter(cat){currentFilter=cat;renderCategories();renderFilterBar();renderProducts();setTimeout(()=>document.querySelector('.products-section').scrollIntoView({behavior:'smooth'}),100);}
 
-    function openItem(id) {
-      const item = products.find(product => product.id === id);
+function renderFilterBar(){
+  const allGroups=[...new Set(PRODUCTS.map(p=>p.group))].sort();
+  document.getElementById('filterBar').innerHTML=`<span class="filter-label">Filter:</span><button class="filter-btn${currentFilter==='All'?' active':''}" onclick="setFilter('All')">All Products</button>`+allGroups.map(g=>`<button class="filter-btn${currentFilter===g?' active':''}" onclick="setFilter('${g.replace(/'/g,"\\'")}')">${g}</button>`).join('');
+}
 
-      document.getElementById("modalBody").innerHTML = `
-        <div class="modal-hero">
-          <img
-            src="${getImage(item.name)}"
-            alt="${item.name}"
-          />
-        </div>
+function getFilteredProducts(){
+  let p=[...PRODUCTS];
+  if(currentFilter!=="All")p=p.filter(x=>x.group===currentFilter||getTopGroup(x.group)===currentFilter);
+  if(currentSearch)p=p.filter(x=>x.name.toLowerCase().includes(currentSearch)||x.group.toLowerCase().includes(currentSearch));
+  const s=document.getElementById('sortSelect')?.value||'default';
+  if(s==='price-asc')p.sort((a,b)=>a.price-b.price);
+  else if(s==='price-desc')p.sort((a,b)=>b.price-a.price);
+  else if(s==='name-asc')p.sort((a,b)=>a.name.localeCompare(b.name));
+  return p;
+}
 
-        <div class="modal-content">
-          <div class="group">${item.group}</div>
+function renderProducts(){
+  const products=getFilteredProducts();
+  document.getElementById('productCount').textContent=products.length;
+  const grid=document.getElementById('productsGrid');
+  if(products.length===0){grid.innerHTML=`<div class="no-results"><div class="no-results-emoji">🔍</div><div class="no-results-title">No products found</div><div class="no-results-text">Try a different search or category</div></div>`;return;}
+  grid.innerHTML=products.map(p=>{
+    const qty=(cart.find(c=>c.id===p.id)||{qty:0}).qty;
+    return`<div class="product-card" onclick="openProductModal(${p.id})"><div class="product-card-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80'"><span class="product-card-badge organic">Organic</span><button class="product-card-wish" onclick="event.stopPropagation()">♡</button></div><div class="product-card-body"><div class="product-card-group">${p.group}</div><div class="product-card-name">${p.name}</div><div class="product-card-meta"><span class="product-card-unit">Per ${p.chargeUnit}</span><span class="product-card-price">KES ${p.price.toLocaleString()}</span></div><div class="product-card-footer" onclick="event.stopPropagation()">${qty>0?`<button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button><span class="qty-display">${qty}</span><button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>`:`<button class="add-cart-btn" onclick="addToCart(${p.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add to Basket</button>`}</div></div></div>`;
+  }).join('');
+}
 
-          <h2>${item.name}</h2>
+function addToCart(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const e=cart.find(c=>c.id===id);if(e)e.qty++;else cart.push({...p,qty:1});updateCartUI();renderProducts();showToast(`${p.name} added`);}
+function changeQty(id,d){const i=cart.find(c=>c.id===id);if(!i){if(d>0)addToCart(id);return;}i.qty+=d;if(i.qty<=0)cart=cart.filter(c=>c.id!==id);updateCartUI();renderProducts();}
+function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartUI();renderProducts();}
+function getTotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0);}
 
-          <p>
-            Spreadsheet item ID: ${item.itemId}<br>
-            Order unit: ${item.unit}<br>
-            Charge unit: ${item.chargeUnit}
-          </p>
+function updateCartUI(){
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  const badge=document.getElementById('cartBadge');badge.textContent=count;badge.classList.toggle('show',count>0);
+  const itemsEl=document.getElementById('cartItems'),footer=document.getElementById('cartFooter');
+  if(cart.length===0){itemsEl.innerHTML=`<div class="cart-empty"><div class="cart-empty-emoji">🧺</div><div class="cart-empty-text">Your basket is empty</div><div class="cart-empty-sub">Add some farm-fresh products</div></div>`;footer.style.display='none';}
+  else{itemsEl.innerHTML=cart.map(i=>`<div class="cart-item"><div class="cart-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80'"></div><div class="cart-item-info"><div class="cart-item-name">${i.name}</div><div class="cart-item-unit">${i.group}</div><div class="cart-item-bottom"><span class="cart-item-price">KES ${(i.price*i.qty).toLocaleString()}</span><div class="cart-item-qty"><button class="cart-qty-btn" onclick="changeQty(${i.id},-1)">−</button><span class="cart-qty-num">${i.qty}</span><button class="cart-qty-btn" onclick="changeQty(${i.id},1)">+</button></div><button class="cart-item-remove" onclick="removeFromCart(${i.id})">🗑</button></div></div></div>`).join('');document.getElementById('cartTotal').textContent=getTotal().toLocaleString();footer.style.display='block';}
+}
 
-          <div class="summary">
-            Product image generated from exact item naming logic.
-          </div>
+function toggleCart(){document.getElementById('cartOverlay').classList.toggle('open');document.getElementById('cartDrawer').classList.toggle('open');}
 
-          <button
-            class="checkout-button"
-            onclick="addToCart(${item.id})"
-          >
-            Add to cart
-          </button>
-        </div>
-      `;
+function openProductModal(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  currentModalProduct=p;modalQty=1;
+  document.getElementById('modalImg').src=p.img;
+  document.getElementById('modalImg').onerror=function(){this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80';};
+  document.getElementById('modalGroup').textContent=p.group;
+  document.getElementById('modalName').textContent=p.name;
+  document.getElementById('modalPrice').textContent=p.price.toLocaleString();
+  document.getElementById('modalUnitType').textContent=`Charged per ${p.chargeUnit}`;
+  document.getElementById('modalId').textContent=p.id;
+  document.getElementById('modalOrderUnit').textContent=p.orderUnit;
+  document.getElementById('modalChargeUnit').textContent=p.chargeUnit;
+  document.getElementById('modalQty').textContent=1;
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeProductModal(e){if(e.target===document.getElementById('productModal'))closeProductModalDirect();}
+function closeProductModalDirect(){document.getElementById('productModal').classList.remove('open');document.body.style.overflow='';}
+function changeModalQty(d){modalQty=Math.max(1,modalQty+d);document.getElementById('modalQty').textContent=modalQty;}
+function addFromModal(){if(!currentModalProduct)return;const e=cart.find(c=>c.id===currentModalProduct.id);if(e)e.qty+=modalQty;else cart.push({...currentModalProduct,qty:modalQty});updateCartUI();renderProducts();closeProductModalDirect();showToast(`${currentModalProduct.name} × ${modalQty} added`);}
 
-      document.getElementById("overlay").classList.add("open");
-      document.getElementById("modal").classList.add("open");
-    }
+function openCheckout(){
+  toggleCart();
+  const total=getTotal();
+  document.getElementById('checkoutSummary').innerHTML=cart.map(i=>`<div class="checkout-summary-row"><span>${i.name} × ${i.qty}</span><span>KES ${(i.price*i.qty).toLocaleString()}</span></div>`).join('')+`<div class="checkout-summary-total"><span>Total</span><span>KES ${total.toLocaleString()}</span></div>`;
+  document.getElementById('checkoutTotal').textContent=total.toLocaleString();
+  document.getElementById('checkoutModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCheckoutModal(e){if(e.target===document.getElementById('checkoutModal'))closeCheckoutDirect();}
+function closeCheckoutDirect(){document.getElementById('checkoutModal').classList.remove('open');document.body.style.overflow='';}
+function placeOrder(){
+  const f=document.getElementById('fname').value.trim(),ph=document.getElementById('phone').value.trim(),a=document.getElementById('address').value.trim();
+  if(!f||!ph||!a){alert('Please fill in your name, phone and address.');return;}
+  closeCheckoutDirect();cart=[];updateCartUI();renderProducts();
+  document.getElementById('successOverlay').classList.add('show');
+}
+function closeSuccess(){document.getElementById('successOverlay').classList.remove('show');}
 
-    function openCheckout() {
-      if (!cart.length) {
-        showToast("Your cart is empty");
-        return;
-      }
+function renderRecipes(){
+  document.getElementById('recipesGrid').innerHTML=RECIPES.map(r=>`<div class="recipe-card"><div class="recipe-card-img"><img src="${r.img}" alt="${r.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80'"><span class="recipe-card-cat">${r.cat}</span></div><div class="recipe-card-body"><div class="recipe-card-title">${r.title}</div><div class="recipe-card-desc">${r.desc}</div><div class="recipe-card-meta"><div class="recipe-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${r.time}</div><div class="recipe-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Serves ${r.serves}</div><div class="recipe-meta-item">⭐ ${r.diff}</div></div></div></div>`).join('');
+}
 
-      const total =
-        cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--forest);color:white;padding:12px 24px;border-radius:32px;font-size:14px;font-weight:500;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.2);';document.body.appendChild(t);}
+  t.textContent='✓  '+msg;t.style.opacity='1';clearTimeout(t._to);t._to=setTimeout(()=>t.style.opacity='0',2500);
+}
 
-      document.getElementById("modalBody").innerHTML = `
-        <div class="modal-content">
-          <h2>Checkout</h2>
-
-          <div class="summary">
-            ${cart.map(item =>
-              `${item.qty} × ${item.name}`
-            ).join("<br>")}
-
-            <br><br>
-
-            <strong>Total: KSh ${total.toLocaleString()}</strong>
-          </div>
-
-          <div class="form">
-            <input placeholder="Full name" />
-            <input placeholder="Phone number" />
-            <input placeholder="Delivery address" />
-
-            <select>
-              <option>M-Pesa</option>
-              <option>Cash on Delivery</option>
-              <option>Card Payment</option>
-            </select>
-
-            <button
-              class="checkout-button"
-              onclick="finishOrder()"
-            >
-              Place order
-            </button>
-          </div>
-        </div>
-      `;
-
-      document.getElementById("overlay").classList.add("open");
-      document.getElementById("modal").classList.add("open");
-    }
-
-    function finishOrder() {
-      cart = [];
-      updateCart();
-
-      document.getElementById("modalBody").innerHTML = `
-        <div class="modal-content">
-          <h2>Order placed</h2>
-
-          <p>
-            Your Comette Farm order has been received successfully.
-          </p>
-
-          <button
-            class="checkout-button"
-            onclick="closeAll()"
-          >
-            Done
-          </button>
-        </div>
-      `;
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-
-      toast.textContent = message;
-      toast.classList.add("show");
-
-      clearTimeout(window.toastTimer);
-
-      window.toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 1700);
-    }
-
-    document.getElementById("searchInput").addEventListener("input", event => {
-      searchTerm = event.target.value;
-      renderProducts();
-    });
-
-    document.getElementById("sortSelect").addEventListener("change", () => {
-      renderProducts();
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeAll();
-      }
-    });
-
-    renderFilters();
-    renderProducts();
-    updateCart();
-  </script>
+init();
+</script>
 </body>
 </html>
