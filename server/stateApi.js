@@ -1,7 +1,7 @@
 /* Shared shop state (this week's stock, prices and added items) + staff login.
    Used by netlify/functions/state.mjs (Netlify Blobs) and tools/serve.js (a local file), so both behave the same.
    handle({method, path, password, bodyText}, {store:{get(),set(obj)}, env}) -> {status, body}
-   Env: STAFF_PASSWORD  (required; set in Netlify. Locally defaults to 1234 only when NETLIFY is not set.)         */
+   Env: STAFF_PASSWORD  (required; set in Netlify. Locally (tools/serve.js sets LOCAL_DEV=1) it defaults to 1234.)         */
 const crypto = require('crypto');
 
 const CATEGORIES = ['Vegetables', 'Fruit', 'Herbs & Salad', 'Dairy, Cheese & Eggs', 'Meat & Fish', 'Drinks', 'Pantry', 'Flowers', 'Live Plants'];
@@ -50,7 +50,7 @@ function checkPassword(given, expected) {
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function handle({method, path, password, bodyText}, {store, env}) {
-  const expected = env.STAFF_PASSWORD || (!env.NETLIFY ? '1234' : '');
+  const expected = env.STAFF_PASSWORD || (env.LOCAL_DEV === '1' ? '1234' : '');   // the 1234 default exists only in the local preview
   try {
     if (path === '/api/state' && method === 'GET') return {status: 200, body: (await store.get()) || {}};
     if (!expected) return {status: 503, body: {ok: false, error: 'The staff password has not been set up yet.'}};

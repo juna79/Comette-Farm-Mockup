@@ -72,7 +72,7 @@ async function sendOne(msg, {to, replyTo, env}) {
   const live = env.EMAIL_LIVE === '1';
   const gmail = env.GMAIL_USER && env.GMAIL_APP_PASSWORD;
   if (!live || !(gmail || env.RESEND_API_KEY)) {                         // safe default: write to ./outbox instead of sending
-    const dir = env.NETLIFY ? path.join(require('os').tmpdir(), 'outbox') : path.join(__dirname, '..', 'outbox'); fs.mkdirSync(dir, {recursive: true});
+    const dir = env.LOCAL_DEV === '1' ? path.join(__dirname, '..', 'outbox') : path.join(require('os').tmpdir(), 'outbox'); fs.mkdirSync(dir, {recursive: true});
     const f = path.join(dir, `${Date.now()}-${to.replace(/[^a-z0-9@.]/gi, '_')}.html`);
     fs.writeFileSync(f, `<!-- To: ${to}\n     Reply-To: ${replyTo || ''}\n     Subject: ${msg.subject} -->\n<meta charset="utf-8">\n${msg.html}`);
     return {mode: 'outbox', file: path.basename(f)};
@@ -92,7 +92,7 @@ async function sendOne(msg, {to, replyTo, env}) {
 
 async function handleOrder(o, env = process.env) {
   validate(o);
-  if (env.NETLIFY && !(env.EMAIL_LIVE === '1' && ((env.GMAIL_USER && env.GMAIL_APP_PASSWORD) || env.RESEND_API_KEY))) {              // on the live site, never pretend an order was sent while sending is switched off
+  if (env.LOCAL_DEV !== '1' && !(env.EMAIL_LIVE === '1' && ((env.GMAIL_USER && env.GMAIL_APP_PASSWORD) || env.RESEND_API_KEY))) {              // on the live site, never pretend an order was sent while sending is switched off
     const er = new Error('Online ordering is not open yet. Please call the office to place your order.'); er.status = 503; throw er;
   }
   const owner = env.ORDER_TO || DEFAULT_ORDER_TO;
