@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greens Greens – Fresh produce delivered</title>
+<meta name="description" content="Fresh vegetables, fruit, herbs, dairy, meat and pantry goods delivered to your door. Order online and pay cash on delivery.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="demo-bar" id="demoBar">Prototype — orders are emailed to Greens Greens. Payment is cash on delivery.</div>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#" aria-label="Greens Greens home"><span class="brand-mark">🌿</span><span class="brand-name">Greens Greens</span></a>
+    <label class="search"><span class="sr">Search produce</span>
+      <input id="q" type="search" placeholder="Search tomatoes, cheese, mint…" autocomplete="off">
+    </label>
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart"><span aria-hidden="true">🛒</span><span class="cart-count" id="cartCount">0</span><span class="cart-total" id="cartTotalTop"></span></button>
+  </div>
+  <nav class="chips" id="chips" aria-label="Categories"></nav>
+</header>
+
+<main id="shop">
+  <section class="intro">
+    <h1>Fresh from the farm, to your door.</h1>
+    <p>Pick what you need and send your order. We deliver on your delivery day and you pay cash on delivery. Prices change weekly.</p>
+  </section>
+  <p class="banner" id="deliveryBanner"></p>
+  <div class="result-line" id="resultLine" aria-live="polite"></div>
+  <div class="grid" id="grid"></div>
+  <p class="foot-note">Fruit and vegetables sold by weight are priced per kg. Where you order by the piece or bunch, the price shown is an estimate; we weigh your order and confirm the final amount on delivery.</p>
+</main>
+
+<main id="admin" hidden></main>
+<main id="credits" hidden></main>
+
+<footer class="foot"><span>© Greens Greens · <a href="#credits">Photo credits</a></span><a href="#admin">Staff login</a></footer>
+
+<div class="mobile-bar" id="mobileBar" hidden><button id="mobileCart"><span id="mbCount"></span><span>View cart</span><strong id="mbTotal"></strong></button></div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Your cart" aria-hidden="true"></aside>
+
+<dialog id="checkout" aria-labelledby="coTitle"></dialog>
+<div id="printArea" class="print-area"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
+<script src="data/catalogue.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
