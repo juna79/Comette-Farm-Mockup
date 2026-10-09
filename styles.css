@@ -247,3 +247,11 @@ td.sub{color:var(--muted);font-size:12.5px}
   .trust{display:none}
 }
 .grid{min-height:70vh;align-content:start}
+
+.dh{gap:10px}
+.dh h2{margin-right:auto}
+.empty-btn{border:1.5px solid var(--line);background:#fff;color:var(--danger);font-weight:700;font-size:13px;padding:7px 12px;border-radius:999px;transition:background .15s,border-color .15s}
+.empty-btn:hover{background:var(--danger-l);border-color:var(--danger)}
+.toast.action{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px}
+.toast.action button{border:0;background:#f3d27a;color:#2a2410;font-weight:800;border-radius:999px;padding:7px 14px;font-size:14px}
+.toast{z-index:60}

@@ -157,7 +157,7 @@ function renderDrawer() {
         <button class="linkbtn" data-del="${l.sku}">Remove</button></div>
       <input class="noteinp" data-note="${l.sku}" value="${esc(l.note)}" placeholder="Note (e.g. ripe for Saturday)" aria-label="Note for ${esc(l.p.name)}">
     </div>`).join('') : `<div class="empty-cart">Your cart is empty.<br>Add something fresh.</div>`;
-  d.innerHTML = `<div class="dh"><h2>Your cart</h2><button class="x" data-close aria-label="Close cart">×</button></div>
+  d.innerHTML = `<div class="dh"><h2>Your cart</h2>${L.length ? '<button class="empty-btn" data-empty>Empty cart</button>' : ''}<button class="x" data-close aria-label="Close cart">×</button></div>
     <div class="dbody">${body}</div>
     <div class="dfoot">
       <div class="row"><span>Subtotal${hasEst ? ' (estimated)' : ''}</span><strong>${kes(subtotal())}</strong></div>
@@ -506,7 +506,17 @@ function revealResults() {
   if (offset > 16 || offset < -400) window.scrollTo({top: Math.max(0, window.scrollY + offset - 12), behavior: 'auto'});   // 'auto' = instant, so typing never feels laggy
 }
 /* ---------- events ---------- */
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1800); }
+function toast(msg) { const t = $('#toast'); t.classList.remove('action'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1800); }
+function toastUndo(msg, onUndo) {                           // a longer toast with an Undo button
+  const t = $('#toast'); t.classList.add('action'); t.innerHTML = `<span>${esc(msg)}</span><button type="button" data-undo>Undo</button>`;
+  t.classList.add('show'); clearTimeout(toast.t); toast.undo = onUndo;
+  toast.t = setTimeout(() => { t.classList.remove('show'); toast.undo = null; }, 6000);
+}
+function emptyCart() {
+  const snapshot = JSON.parse(JSON.stringify(cart)); if (!Object.keys(snapshot).length) return;
+  cart = {}; saveCart(); renderGrid(); updateBars(); renderDrawer();
+  toastUndo('Cart emptied', () => { cart = snapshot; saveCart(); pruneCart(); renderGrid(); updateBars(); if ($('#drawer').classList.contains('open')) renderDrawer(); });
+}
 document.addEventListener('click', e => {
   const t = e.target.closest('button, a'); if (!t) return;
   const d = t.dataset;
@@ -516,6 +526,8 @@ document.addEventListener('click', e => {
   else if (d.inc) { setQty(+d.inc, cart[d.inc].qty + step(BY_SKU[d.inc].v)); }
   else if (d.dec) { setQty(+d.dec, cart[d.dec].qty - step(BY_SKU[d.dec].v)); }
   else if (d.del) { setQty(+d.del, 0); }
+  else if ('empty' in d) emptyCart();
+  else if ('undo' in d) { const fn = toast.undo; toast.undo = null; $('#toast').classList.remove('show'); if (fn) fn(); }
   else if (t.id === 'cartBtn' || t.id === 'mobileCart') openDrawer();
   else if ('close' in d) closeDrawer();
   else if (t.id === 'toCheckout') openCheckout();
