@@ -246,3 +246,4 @@ td.sub{color:var(--muted);font-size:12.5px}
   .btn-light,.btn-ghost{padding:12px 14px;font-size:14px;flex:1;white-space:nowrap}
   .trust{display:none}
 }
+.grid{min-height:70vh;align-content:start}

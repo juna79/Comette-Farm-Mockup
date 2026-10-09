@@ -98,9 +98,14 @@ function cardHTML(p) {
   return `<article class="card${out ? ' out' : ''}" data-id="${p.id}">${artHTML(p)}<div class="cbody"><h3>${esc(p.name)}</h3>` +
     (p.brand ? `<div class="brandline">${esc(p.brand)}</div>` : '') + `${opts}${price}<div class="buy">${buy}</div></div></article>`;
 }
+function matchesQuery(p, q) {                               // match the item's name; match the brand only when the brand itself is typed ("brown", "kampi")
+  if (p.name.toLowerCase().includes(q)) return true;
+  const first = (p.brand || '').toLowerCase().split(/\s+/)[0] || '';                  // first word only, so "cheese" does not match "Brown's Cheese"
+  return q.length >= 3 && first.replace(/['’]s$/, '').startsWith(q);
+}
 function visibleProducts() {
   const q = ui.q.trim().toLowerCase();
-  return PRODUCTS.filter(p => (ui.cat === 'All' || p.category === ui.cat) && (!q || (p.name + ' ' + p.category + ' ' + p.brand).toLowerCase().includes(q)));
+  return PRODUCTS.filter(p => (ui.cat === 'All' || p.category === ui.cat) && (!q || matchesQuery(p, q)));
 }
 function renderBanner() {
   const el = $('#deliveryBanner'); if (!el) return;
@@ -494,12 +499,18 @@ function downloadList() {
   PRODUCTS.forEach(p => p.variants.forEach(v => { const e = eff(v); rows.push([p.category, v.src, UNIT_LABEL[v.unit] || v.unit, v.sku, 0, '', e.price, UNIT_LABEL[v.chargeUnit] || v.chargeUnit]); }));
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), 'Order List'); XLSX.writeFile(wb, 'greens-greens-list.xlsx');
 }
+/* Bring the results into view when searching or choosing a category, so people never have to scroll past the hero. */
+function revealResults() {
+  const line = $('#resultLine'), hdr = $('.top'); if (!line || !hdr || $('#shop').hidden) return;
+  const offset = line.getBoundingClientRect().top - hdr.offsetHeight;          // header height (not its position: the top strip scrolls away)
+  if (offset > 16 || offset < -400) window.scrollTo({top: Math.max(0, window.scrollY + offset - 12), behavior: 'auto'});   // 'auto' = instant, so typing never feels laggy
+}
 /* ---------- events ---------- */
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1800); }
 document.addEventListener('click', e => {
   const t = e.target.closest('button, a'); if (!t) return;
   const d = t.dataset;
-  if (d.cat) { ui.cat = d.cat; renderChips(); renderGrid(); }
+  if (d.cat) { ui.cat = d.cat; renderChips(); renderGrid(); revealResults(); }
   else if (d.scroll) { const el = document.getElementById(d.scroll); if (el) el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}); }
   else if (d.add) { setQty(+d.add, step(BY_SKU[d.add].v)); toast('Added to cart'); }
   else if (d.inc) { setQty(+d.inc, cart[d.inc].qty + step(BY_SKU[d.inc].v)); }
@@ -531,7 +542,11 @@ document.addEventListener('change', e => {
 function focusAfter(sel) { const el = $(sel); if (el) el.focus(); }
 document.addEventListener('input', e => {
   const t = e.target;
-  if (t.id === 'q') { ui.q = t.value; renderGrid(); }
+  if (t.id === 'q') {
+    ui.q = t.value;
+    if (t.value.trim() && ui.cat !== 'All') { ui.cat = 'All'; renderChips(); }      // a search always looks across the whole shop
+    renderGrid(); if (t.value.trim()) revealResults();
+  }
   else if (t.closest('#coForm') && t.name) { co.data[t.name] = t.value; if (t.name === 'phone') $('#fixedDay').innerHTML = fixedDayHTML(); }
 });
 document.addEventListener('submit', e => {
