@@ -92,6 +92,9 @@ async function sendOne(msg, {to, replyTo, env}) {
 
 async function handleOrder(o, env = process.env) {
   validate(o);
+  if (env.NETLIFY && !(env.EMAIL_LIVE === '1' && ((env.GMAIL_USER && env.GMAIL_APP_PASSWORD) || env.RESEND_API_KEY))) {              // on the live site, never pretend an order was sent while sending is switched off
+    const er = new Error('Online ordering is not open yet. Please call the office to place your order.'); er.status = 503; throw er;
+  }
   const owner = env.ORDER_TO || DEFAULT_ORDER_TO;
   const res = {owner: await sendOne(buildOwnerEmail(o), {to: owner, replyTo: o.customer.email, env})};
   if (env.SEND_CUSTOMER_COPY !== '0') {
