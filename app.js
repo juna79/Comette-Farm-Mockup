@@ -22,12 +22,12 @@ const UNIT_LABEL = {kg:'kg',piece:'piece',bunch:'bunch',pack:'pack',unit:'each',
 
 const DEFAULT_SETTINGS = {
   shopName: 'Greens Greens',
-  orderEmail: '',                     // shown in the "send by email instead" fallback (the real inbox is set on the server: ORDER_TO)
+  orderEmail: 'coometefarm.greens@gmail.com',   // used by the "send by email instead" fallback (the real inbox is set on the server: ORDER_TO)
   // client groups: each group gets the weekly sheet on its own day and is delivered on `deliver` (0=Sun..6=Sat)
   groups: [{id:'mon', name:'Monday group', deliver:3}, {id:'tue', name:'Tuesday group', deliver:4}, {id:'thu', name:'Thursday group', deliver:6}]
 };
 let settings = Object.assign({}, DEFAULT_SETTINGS, store.get('gg_settings', {}));
-let ov = store.get('gg_ov', {prod:{}, sku:{}});          // owner overrides: {prod:{id:{inStock}}, sku:{sku:{price,estKg}}}
+let ov = {prod:{}, sku:{}};                               // this week's overrides from the server: {sku:{sku:{price,estKg,out}}}
 let cart = store.get('gg_cart', {});                      // {sku:{qty,note}}
 let orders = store.get('gg_orders', []);
 let clients = store.get('gg_clients', []);                // [{name, phone:'2547…', group:'mon'}]
@@ -35,8 +35,7 @@ let me = store.get('gg_me', {});                          // last customer detai
 const sel = {};                                           // chosen variant per product id
 const ui = {cat:'All', q:''};
 
-let extraItems = store.get('gg_extra', []);                 // products added from uploaded sheets
-CAT.products.push(...extraItems);
+let extraItems = [];                                      // products added from uploaded sheets (from the server)
 const PRODUCTS = CAT.products;
 const BY_ID = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
 const BY_SKU = {};
@@ -242,6 +241,7 @@ function renderCheckout() {
       <p>Thank you, ${esc(o.customer.name.split(' ')[0])}. Your order <strong>${esc(o.id)}</strong> has been sent to us.</p></div>
       <div class="summary">${orderSummaryHTML(o)}</div>
       <p class="hint">Please pay cash on delivery. ${o.date ? `Delivery on <strong>${dateText(o.date)}</strong>` : 'We’ll message you to confirm your delivery day'} to ${esc(o.customer.address)}.</p>
+      <p class="contact-line">Questions about your order? Call <a href="tel:+254720257912">0720 257 912</a>, Rory <a href="tel:+254705283877">0705 283 877</a> or Agnes <a href="tel:+254720315116">0720 315 116</a>.</p>
       <button class="primary" data-closeco>Done</button>
       <p class="center"><button class="linkbtn" data-print="${esc(o.id)}">Print receipt</button></p></div>`;
   }
@@ -303,8 +303,7 @@ function receiptHTML(o) {
 }
 
 /* ---------- admin ---------- */
-const adm = {authed:false};
-const saveOv = () => store.set('gg_ov', ov);
+const adm = {authed:false};   // set after the server accepts the staff password (kept for this browser tab only)
 const saveSettings = () => store.set('gg_settings', settings);
 async function renderCredits() {
   const el = $('#credits'); el.innerHTML = '<h1 style="font-size:28px;margin:24px 0 8px">Photo credits</h1><p class="hint">Product photos are from Wikimedia Commons, used under their free licences. Thank you to the photographers.</p><p><a href="#">← Back to shop</a></p><div id="creditList">Loading…</div>';
@@ -327,7 +326,7 @@ function renderAdmin() {
   const root = $('#admin');
   if (!adm.authed) {
     root.innerHTML = `<div class="panel" style="max-width:380px;margin:40px auto"><h2>Staff login</h2>
-      <form id="pinForm"><div class="field"><label for="pin">PIN</label><input id="pin" type="password" inputmode="numeric" autocomplete="off"></div><button class="primary">Sign in</button></form>
+      <form id="pinForm"><div class="field"><label for="pin">Password</label><input id="pin" type="password" autocomplete="current-password"></div><button class="primary">Sign in</button></form>
       <p><a href="#">← Back to shop</a></p></div>`;
     return;
   }
@@ -335,7 +334,8 @@ function renderAdmin() {
   adminWeekly($('#admBody'));
 }
 /* ---------- weekly stock/price upload ---------- */
-let weeklyMeta = store.get('gg_weekly', null);               // {updated, file, counts}
+let weeklyMeta = null;                                        // {updated, file, counts} from the server
+let serverPrev = null;                                        // the state before the last save, for Undo
 let weeklyPreview = null;                                     // parsed upload awaiting confirmation
 const normName = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 function parseStockSheet(buf, fileName) {
@@ -388,6 +388,33 @@ function pruneCart() {
   let n = 0; Object.keys(cart).forEach(sku => { const e = BY_SKU[sku]; if (!e || varOut(e.v)) { delete cart[sku]; n++; } });
   if (n) saveCart(); return n;
 }
+/* ---------- shared state (Netlify) ---------- */
+function installState(s) {
+  if (!s || typeof s !== 'object') return;
+  for (let i = PRODUCTS.length - 1; i >= 0; i--) if (PRODUCTS[i].isNew) { const p = PRODUCTS[i]; PRODUCTS.splice(i, 1); delete BY_ID[p.id]; p.variants.forEach(v => delete BY_SKU[v.sku]); }
+  ov = s.ov && s.ov.sku ? {prod: {}, sku: s.ov.sku} : {prod: {}, sku: {}};
+  extraItems = Array.isArray(s.extra) ? s.extra : [];
+  extraItems.forEach(p => { PRODUCTS.push(p); BY_ID[p.id] = p; p.variants.forEach(v => BY_SKU[v.sku] = {p, v}); });
+  weeklyMeta = s.weeklyMeta || null; serverPrev = s.prev || null;
+}
+async function loadState() {
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 4000);
+    const r = await fetch('/api/state', {cache: 'no-store', signal: ctl.signal}); clearTimeout(t);
+    if (r.ok) installState(await r.json());
+  } catch { /* offline or not deployed: show the base catalogue */ }
+}
+const staffPw = () => { try { return sessionStorage.getItem('gg_pw') || ''; } catch { return ''; } };
+async function saveState(next) {
+  try {
+    const r = await fetch('/api/state', {method: 'POST', headers: {'Content-Type': 'application/json', 'x-staff-password': staffPw()}, body: JSON.stringify(next)});
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j.ok) return {ok: true};
+    if (r.status === 401) { adm.authed = false; try { sessionStorage.removeItem('gg_pw'); } catch {} return {ok: false, error: 'Your session has expired. Please sign in again.'}; }
+    return {ok: false, error: j.error || 'The shop could not save this. Please try again.'};
+  } catch { return {ok: false, error: 'Could not reach the shop. Check the internet connection and try again.'}; }
+}
+
 const UNIT_WORDS = {"kg's":'kg', kg:'kg', kgs:'kg', pieces:'piece', piece:'piece', pc:'piece', pcs:'piece', bunch:'bunch', pack:'pack', packs:'pack', unit:'unit', punnet:'punnet', litres:'litre', litre:'litre', ltr:'litre', jar:'jar', bag:'bag', bottles:'bottle', bottle:'bottle', carton:'carton', crate:'crate', tray:'tray', dozen:'dozen'};
 const unitOf = s => UNIT_WORDS[String(s || '').trim().toLowerCase()] || (String(s || '').trim() ? String(s).trim().toLowerCase() : 'unit');
 function guessCategory(group, name) {
@@ -403,28 +430,38 @@ function guessCategory(group, name) {
   return 'Pantry';
 }
 const tidyName = s => String(s).replace(/\s+/g, ' ').trim();
-function addNewItems(list) {
-  const made = [];
+function makeNewItems(list) {
+  const made = [], used = new Set();
   list.forEach(n => {
-    let sku = n.id && !BY_SKU[n.id] ? n.id : 0; if (!sku) { sku = 900000 + extraItems.length + made.length + 1; while (BY_SKU[sku]) sku++; }
+    let sku = n.id && !BY_SKU[n.id] && !used.has(n.id) ? n.id : 0;
+    if (!sku) { sku = 900001 + extraItems.length + made.length; while (BY_SKU[sku] || used.has(sku)) sku++; }
+    used.add(sku);
     const ou = unitOf(n.ou), cu = n.cu ? unitOf(n.cu) : ou, est = ou !== cu;
     const v = {sku, src: tidyName(n.name), unit: ou, price: n.price, chargeUnit: cu, ripeness: ''};
     if (est) { v.estimate = true; v.estKg = ou === 'bunch' ? 0.3 : 0.25; v.estPrice = Math.round(n.price * v.estKg); }
-    const cat = guessCategory(n.group || '', n.name);
-    const p = {id: 'x' + Date.now().toString(36) + made.length, name: tidyName(n.name), category: cat, brand: '', emoji: '', inStock: true, slug: '', isNew: true, variants: [v]};
-    PRODUCTS.push(p); BY_ID[p.id] = p; BY_SKU[sku] = {p, v}; made.push(p);
+    made.push({id: 'x' + Date.now().toString(36) + made.length, name: tidyName(n.name), category: guessCategory(n.group || '', n.name), brand: '', emoji: '', inStock: true, slug: '', isNew: true, variants: [v]});
   });
-  extraItems = [...extraItems, ...made]; store.set('gg_extra', extraItems);
   return made;
 }
-function applyWeekly() {
+async function applyWeekly() {
   const d = weeklyPreview; if (!d) return;
-  store.set('gg_ov_prev', {ov, weeklyMeta, extraCount: extraItems.length});
-  ov = JSON.parse(JSON.stringify(ov)); ov.prod = {};          // a weekly sheet replaces any manual in/out toggles
-  d.apply.forEach(a => { const o = (ov.sku[a.sku] ??= {}); o.out = a.out; if (a.price != null) o.price = a.price; });
-  const added = addNewItems(d.newItems || []);
-  weeklyMeta = {updated: new Date().toISOString(), file: d.file, counts: {available: d.matched + added.length, out: d.total - d.matched, prices: d.priceChanges.length, added: added.length}};
-  store.set('gg_weekly', weeklyMeta); saveOv(); weeklyPreview = null; pruneCart(); renderBanner(); renderGrid(); renderAdmin(); toast(added.length ? `Saved – ${added.length} new item${added.length === 1 ? '' : 's'} added` : 'Saved – the shop is updated');
+  const btn = $('#applyWeekly'); if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  const nextOv = JSON.parse(JSON.stringify(ov)); nextOv.prod = {};
+  d.apply.forEach(x => { const o = (nextOv.sku[x.sku] ??= {}); o.out = x.out; if (x.price != null) o.price = x.price; });
+  const made = makeNewItems(d.newItems || []);
+  const meta = {updated: new Date().toISOString(), file: d.file, counts: {available: d.matched + made.length, out: d.total - d.matched, prices: d.priceChanges.length, added: made.length}};
+  const next = {ov: nextOv, extra: [...extraItems, ...made], weeklyMeta: meta, prev: {ov, weeklyMeta, extraCount: extraItems.length}};
+  const r = await saveState(next);
+  if (!r.ok) { renderAdmin(); const m = $('#weeklyMsg'); if (m) m.innerHTML = `<p class="err" style="color:var(--danger);font-weight:700">Not saved. ${esc(r.error)}</p>`; return; }
+  installState({...next, prev: next.prev});
+  weeklyPreview = null; pruneCart(); renderBanner(); renderGrid(); renderAdmin(); toast(made.length ? `Saved – ${made.length} new item${made.length === 1 ? '' : 's'} added` : 'Saved – the shop is updated');
+}
+async function undoWeekly() {
+  const p = serverPrev; if (!p || !confirm('Go back to how the shop was before the last weekly update?')) return;
+  const next = {ov: p.ov, extra: extraItems.slice(0, p.extraCount), weeklyMeta: p.weeklyMeta, prev: null};
+  const r = await saveState(next);
+  if (!r.ok) { renderAdmin(); const m = $('#weeklyMsg'); if (m) m.innerHTML = `<p class="err" style="color:var(--danger);font-weight:700">Not undone. ${esc(r.error)}</p>`; return; }
+  installState(next); pruneCart(); renderBanner(); renderGrid(); renderAdmin(); toast('Update undone');
 }
 function adminWeekly(el) {
   const d = weeklyPreview, when = t => new Date(t).toLocaleString('en-GB', {weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'});
@@ -432,7 +469,7 @@ function adminWeekly(el) {
   el.innerHTML = `<div class="panel">
     <h2 style="font-size:18px;margin-bottom:6px">Upload this week’s spreadsheet</h2>
     <p class="hint">Upload the sheet of what you have this week (Excel or CSV, same layout as the order sheet – it needs the <strong>ItemID</strong> or <strong>Item</strong> column, and a price column if prices change). Everything on the sheet is <strong>in stock</strong>; anything <strong>not on it shows “Not available this week”</strong>. Prices on the sheet replace the shop prices. You’ll see a summary to check, then press Save.</p>
-    ${weeklyMeta ? `<p class="hint">Last update: <strong>${esc(when(weeklyMeta.updated))}</strong> from “${esc(weeklyMeta.file)}” – ${weeklyMeta.counts.available} available, ${weeklyMeta.counts.out} not available, ${weeklyMeta.counts.prices} price changes${weeklyMeta.counts.added ? ', ' + weeklyMeta.counts.added + ' new items added' : ''}. ${store.get('gg_ov_prev', null) ? '<button class="linkbtn" id="undoWeekly">Undo this update</button>' : ''}</p>` : ''}
+    ${weeklyMeta ? `<p class="hint">Last update: <strong>${esc(when(weeklyMeta.updated))}</strong> from “${esc(weeklyMeta.file)}” – ${weeklyMeta.counts.available} available, ${weeklyMeta.counts.out} not available, ${weeklyMeta.counts.prices} price changes${weeklyMeta.counts.added ? ', ' + weeklyMeta.counts.added + ' new items added' : ''}. ${serverPrev ? '<button class="linkbtn" id="undoWeekly">Undo this update</button>' : ''}</p>` : ''}
     <div class="tools"><label class="secondary" style="cursor:pointer;position:relative">Choose this week’s sheet… <input type="file" id="weeklyFile" accept=".xls,.xlsx,.csv" style="position:absolute;left:-9999px"></label>
       <button class="secondary" id="dlList">Download the current list (Excel)</button></div>
     <div id="weeklyMsg" role="status"></div>
@@ -477,7 +514,7 @@ document.addEventListener('click', e => {
   else if (t.id === 'dlList') downloadList();
   else if (t.id === 'applyWeekly') applyWeekly();
   else if (t.id === 'cancelWeekly') { weeklyPreview = null; renderAdmin(); }
-  else if (t.id === 'undoWeekly') { const p = store.get('gg_ov_prev', null); if (p && confirm('Go back to how the shop was before the last weekly update?')) { ov = p.ov; weeklyMeta = p.weeklyMeta; if (p.extraCount != null && extraItems.length > p.extraCount) { extraItems.slice(p.extraCount).forEach(x => { const i = PRODUCTS.indexOf(x); if (i >= 0) PRODUCTS.splice(i, 1); delete BY_ID[x.id]; x.variants.forEach(v => delete BY_SKU[v.sku]); }); extraItems = extraItems.slice(0, p.extraCount); store.set('gg_extra', extraItems); renderGrid(); } store.set('gg_ov', ov); store.set('gg_weekly', weeklyMeta); store.set('gg_ov_prev', null); renderBanner(); renderAdmin(); toast('Update undone'); } }
+  else if (t.id === 'undoWeekly') undoWeekly();
 });
 document.addEventListener('change', e => {
   const t = e.target, d = t.dataset;
@@ -498,14 +535,24 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('submit', e => {
   if (e.target.id === 'coForm') { e.preventDefault(); if (validate()) { co.pending = null; submitOrder(); } else renderCheckout(); }
-  else if (e.target.id === 'pinForm') { e.preventDefault(); if ($('#pin').value === '1234') { adm.authed = true; renderAdmin(); } else { $('#pin').value = ''; toast('Wrong PIN'); } }
+  else if (e.target.id === 'pinForm') {
+    e.preventDefault(); const pw = $('#pin').value; const btn = $('#pinForm button'); btn.disabled = true;
+    fetch('/api/login', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({password: pw})}).then(async r => {
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j.ok) { try { sessionStorage.setItem('gg_pw', pw); } catch {} adm.authed = true; renderAdmin(); }
+      else { btn.disabled = false; $('#pin').value = ''; toast(j.error || 'Wrong password'); }
+    }).catch(() => { btn.disabled = false; toast('Could not reach the shop. Check the internet connection.'); });
+  }
 });
 $('#scrim').addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 window.addEventListener('hashchange', showRoute);
 
 /* ---------- init ---------- */
-pruneCart();
-linkGroup();                                                // remember ?g=<group> from a shop link
-renderChips(); renderBanner(); showRoute();
+(async () => {
+  await loadState();                                          // the saved week from the server (falls back to the base catalogue)
+  pruneCart();
+  linkGroup();                                                // remember ?g=<group> from a shop link
+  renderChips(); renderBanner(); showRoute();
+})();
 })();

@@ -175,3 +175,13 @@ td.sub{color:var(--muted);font-size:12.5px}
 .payrow label{font-size:13px;display:inline-flex;gap:6px;align-items:center}
 .payrow input,.payrow select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;width:auto}
 .payrow input[type=number]{width:110px}
+.foot{display:block}
+.foot-contact{padding:4px 0 14px}
+.foot-contact strong{display:block;color:var(--ink);font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.foot-contact ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px}
+.foot-contact li span{color:var(--muted);margin-right:6px}
+.foot-contact a{color:var(--green-d);font-weight:700;text-decoration:none;font-size:15px}
+.foot-contact a:hover{text-decoration:underline}
+.foot-meta{display:flex;justify-content:space-between}
+.contact-line{font-size:13px;color:var(--muted);margin:10px 0 0;text-align:center}
+.contact-line a{color:var(--green-d);font-weight:700;text-decoration:none;white-space:nowrap}

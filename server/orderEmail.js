@@ -1,10 +1,13 @@
 /* Order -> email. Shared by the local preview server (tools/serve.js) and the hosted function (netlify/functions/order.js).
-   Env:  ORDER_TO          where orders are emailed (Greens Greens' inbox)
-         ORDER_FROM        verified sender, e.g. "Greens Greens Orders <orders@yourdomain.com>"
-         RESEND_API_KEY    email provider key (https://resend.com). Without it, emails are written to ./outbox/ instead.
-         SEND_CUSTOMER_COPY=1  also email the customer a copy (default on)                                   */
+   Nothing leaves the building unless EMAIL_LIVE=1. Otherwise every email is written to ./outbox/ for inspection.
+   Env:  EMAIL_LIVE          set to 1 to actually send (default: off)
+         ORDER_TO            where orders are emailed (default coometefarm.greens@gmail.com)
+         GMAIL_USER + GMAIL_APP_PASSWORD   send through the Greens Greens Gmail (no domain needed; emails really come from that address)
+         RESEND_API_KEY + ORDER_FROM       alternative provider (https://resend.com)
+         SEND_CUSTOMER_COPY  set to 0 to skip the confirmation copy to the customer              */
 const fs = require('fs'), path = require('path');
 
+const DEFAULT_ORDER_TO = 'coometefarm.greens@gmail.com';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const kes = n => 'KES ' + Math.round(n).toLocaleString('en-KE');
 const day = k => k ? new Date(k + 'T00:00').toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'}) : 'To be confirmed';
@@ -56,30 +59,40 @@ function buildCustomerEmail(o, shop = 'Greens Greens') {
   const subject = `Your ${shop} order ${o.id}`;
   const text = [`Thank you ${o.customer.name.split(' ')[0]}, we have your order ${o.id}.`, '', `Delivery: ${o.date ? day(o.date) : 'we will confirm your delivery day'}`, `To: ${o.customer.address}`, '',
     ...o.lines.map(l => `- ${l.name} x ${l.qtyText}${l.est ? ' (weighed)' : ''}  KES ${Math.round(l.total)}`), '',
-    `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – cash on delivery.`, o.hasEstimate ? 'Some items are sold by weight, so the final amount is confirmed on delivery.' : ''].join('\n');
+    `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – cash on delivery.`, o.hasEstimate ? 'Some items are sold by weight, so the final amount is confirmed on delivery.' : '', '', 'Questions? Office mobile 0720 257 912, Rory 0705 283 877, Agnes 0720 315 116', 'ENJOY YOUR FARM FRESH PRODUCTS'].join('\n');
   const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1d2a22"><h2 style="margin:0 0 8px">Thank you, ${esc(o.customer.name.split(' ')[0])}</h2>
     <p>We’ve received your order <b>${esc(o.id)}</b>. Delivery: <b>${esc(day(o.date))}</b> to ${esc(o.customer.address)}.</p>${orderTable(o)}
-    <p style="color:#555;font-size:13px">Please pay cash on delivery. Reply to this email if you need to change anything.</p></div>`;
+    <p style="color:#555;font-size:13px">Please pay cash on delivery. Reply to this email if you need to change anything.</p>
+    <p style="color:#555;font-size:13px">Questions? Office mobile 0720 257 912 · Rory 0705 283 877 · Agnes 0720 315 116</p>
+    <p style="color:#2f7d4f;font-size:12px;letter-spacing:.08em;text-transform:uppercase">Enjoy your farm fresh products</p></div>`;
   return {subject, text, html};
 }
 
 async function sendOne(msg, {to, replyTo, env}) {
-  const from = env.ORDER_FROM || 'Greens Greens Orders <onboarding@resend.dev>';
-  if (!env.RESEND_API_KEY) {                                             // no provider configured: write to ./outbox for inspection
-    const dir = path.join(__dirname, '..', 'outbox'); fs.mkdirSync(dir, {recursive: true});
+  const live = env.EMAIL_LIVE === '1';
+  const gmail = env.GMAIL_USER && env.GMAIL_APP_PASSWORD;
+  if (!live || !(gmail || env.RESEND_API_KEY)) {                         // safe default: write to ./outbox instead of sending
+    const dir = env.NETLIFY ? path.join(require('os').tmpdir(), 'outbox') : path.join(__dirname, '..', 'outbox'); fs.mkdirSync(dir, {recursive: true});
     const f = path.join(dir, `${Date.now()}-${to.replace(/[^a-z0-9@.]/gi, '_')}.html`);
     fs.writeFileSync(f, `<!-- To: ${to}\n     Reply-To: ${replyTo || ''}\n     Subject: ${msg.subject} -->\n<meta charset="utf-8">\n${msg.html}`);
     return {mode: 'outbox', file: path.basename(f)};
   }
+  if (gmail) {
+    const nodemailer = require('nodemailer');
+    const tx = nodemailer.createTransport({service: 'gmail', auth: {user: env.GMAIL_USER, pass: env.GMAIL_APP_PASSWORD}});
+    await tx.sendMail({from: `Greens Greens Orders <${env.GMAIL_USER}>`, to, replyTo, subject: msg.subject, text: msg.text, html: msg.html});
+    return {mode: 'sent', via: 'gmail'};
+  }
+  const from = env.ORDER_FROM || 'Greens Greens Orders <onboarding@resend.dev>';
   const r = await fetch('https://api.resend.com/emails', {method: 'POST', headers: {Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json'},
     body: JSON.stringify({from, to: [to], reply_to: replyTo, subject: msg.subject, html: msg.html, text: msg.text})});
-  if (!r.ok) { const e = new Error('Email provider error ' + r.status + ': ' + (await r.text()).slice(0, 200)); e.status = 502; throw e; }
-  return {mode: 'sent'};
+  if (!r.ok) { const er = new Error('Email provider error ' + r.status + ': ' + (await r.text()).slice(0, 200)); er.status = 502; throw er; }
+  return {mode: 'sent', via: 'resend'};
 }
 
 async function handleOrder(o, env = process.env) {
   validate(o);
-  const owner = env.ORDER_TO || 'orders@example.com';
+  const owner = env.ORDER_TO || DEFAULT_ORDER_TO;
   const res = {owner: await sendOne(buildOwnerEmail(o), {to: owner, replyTo: o.customer.email, env})};
   if (env.SEND_CUSTOMER_COPY !== '0') {
     try { res.customer = await sendOne(buildCustomerEmail(o), {to: o.customer.email, env}); }

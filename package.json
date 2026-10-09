@@ -1,0 +1,13 @@
+{
+  "name": "greens-greens",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Greens Greens online order shop",
+  "scripts": {
+    "start": "node tools/serve.js 5180"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.14",
+    "@netlify/blobs": "^8.1.0"
+  }
+}

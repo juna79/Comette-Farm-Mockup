@@ -3,7 +3,17 @@ const http = require('http'), fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..'), port = +process.argv[2] || 5180;
 const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.json':'application/json'};
 const {handleOrder} = require('../server/orderEmail');
+const stateApi = require('../server/stateApi');
+const STATE_FILE = path.join(root, '.local-state.json');          // local stand-in for Netlify Blobs (gitignored)
+const fileStore = { get: () => { try { return JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch { return null; } }, set: o => fs.writeFileSync(STATE_FILE, JSON.stringify(o)) };
 http.createServer((req, res) => {
+  if (req.url.split('?')[0] === '/api/state' || req.url.split('?')[0] === '/api/login') {
+    let b = ''; req.on('data', d => { b += d; if (b.length > 1000000) req.destroy(); });
+    return req.on('end', async () => {
+      const out = await stateApi.handle({method: req.method, path: req.url.split('?')[0], password: req.headers['x-staff-password'] || '', bodyText: b}, {store: fileStore, env: process.env});
+      res.writeHead(out.status, {'Content-Type': 'application/json', 'Cache-Control': 'no-store'}); res.end(JSON.stringify(out.body));
+    });
+  }
   if (req.method === 'POST' && req.url === '/api/order') {          // local stand-in for the hosted function
     let b = ''; req.on('data', d => { b += d; if (b.length > 100000) req.destroy(); });
     return req.on('end', async () => {
