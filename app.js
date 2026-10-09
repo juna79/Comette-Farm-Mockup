@@ -500,6 +500,7 @@ document.addEventListener('click', e => {
   const t = e.target.closest('button, a'); if (!t) return;
   const d = t.dataset;
   if (d.cat) { ui.cat = d.cat; renderChips(); renderGrid(); }
+  else if (d.scroll) { const el = document.getElementById(d.scroll); if (el) el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}); }
   else if (d.add) { setQty(+d.add, step(BY_SKU[d.add].v)); toast('Added to cart'); }
   else if (d.inc) { setQty(+d.inc, cart[d.inc].qty + step(BY_SKU[d.inc].v)); }
   else if (d.dec) { setQty(+d.dec, cart[d.dec].qty - step(BY_SKU[d.dec].v)); }

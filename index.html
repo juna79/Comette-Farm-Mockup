@@ -8,11 +8,11 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="demo-bar" id="demoBar">Prototype — orders are emailed to Greens Greens. Payment is cash on delivery.</div>
+<div class="demo-bar" id="demoBar"><span>Farm fresh produce, delivered weekly</span><span class="sep" aria-hidden="true">·</span><span>Pay cash on delivery</span><span class="sep" aria-hidden="true">·</span><a href="tel:+254720257912">Call the office 0720 257 912</a></div>
 
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="#" aria-label="Greens Greens home"><span class="brand-mark">🌿</span><span class="brand-name">Greens Greens</span></a>
+    <a class="brand" href="#" aria-label="Greens Greens home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14"/><path d="M5 19c2-5 5-8 9-10"/></svg></span><span class="brand-name">Greens <em>Greens</em></span></a>
     <label class="search"><span class="sr">Search produce</span>
       <input id="q" type="search" placeholder="Search tomatoes, cheese, mint…" autocomplete="off">
     </label>
@@ -22,11 +22,23 @@
 </header>
 
 <main id="shop">
-  <section class="intro">
-    <h1>Fresh from the farm, to your door.</h1>
-    <p>Pick what you need and send your order. We deliver on your delivery day and you pay cash on delivery. Prices change weekly.</p>
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-copy">
+      <span class="eyebrow">Farm fresh · Delivered weekly</span>
+      <h1 id="heroTitle">Fresh from the farm, <em>to your door.</em></h1>
+      <p class="lead">Pick what you need, send your order, and pay cash when it arrives. Stock and prices are refreshed every week.</p>
+      <p class="banner" id="deliveryBanner"></p>
+      <div class="hero-cta">
+        <button class="btn-light" data-scroll="grid">Start ordering</button>
+        <a class="btn-ghost" href="tel:+254720257912">Call 0720 257 912</a>
+      </div>
+      <ul class="trust"><li>Picked fresh</li><li>Cash on delivery</li><li>New prices weekly</li></ul>
+    </div>
+    <div class="hero-photos" aria-hidden="true">
+      <img src="images/avocado.jpg" alt="" class="p1"><img src="images/strawberries.jpg" alt="" class="p2"><img src="images/kale_curly.jpg" alt="" class="p3">
+      <img src="images/eggs-free-range.jpg" alt="" class="p4"><img src="images/tomato_round.jpg" alt="" class="p5"><img src="images/carrots.jpg" alt="" class="p6">
+    </div>
   </section>
-  <p class="banner" id="deliveryBanner"></p>
   <div class="result-line" id="resultLine" aria-live="polite"></div>
   <div class="grid" id="grid"></div>
   <p class="foot-note">Fruit and vegetables sold by weight are priced per kg. Where you order by the piece or bunch, the price shown is an estimate; we weigh your order and confirm the final amount on delivery.</p>
