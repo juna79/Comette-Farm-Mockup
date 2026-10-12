@@ -111,11 +111,11 @@ function renderBanner() {
   const el = $('#deliveryBanner'); if (!el) return;
   const dl = resolveDelivery(me.phone);
   const fmt = d => d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
-  const days = [...new Set(settings.groups.map(g => DAYS[g.deliver] + 's'))];
-  const upd = weeklyMeta ? ` <small style="opacity:.8">Prices and availability updated ${new Date(weeklyMeta.updated).toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'})}.</small>` : '';
-  el.innerHTML = (dl.group
-    ? `Your delivery day: <strong>${fmt(dl.date)}</strong> (${esc(dl.group.name)}).`
-    : `We deliver on ${days.length > 1 ? days.slice(0, -1).join(', ') + ' and ' + days.at(-1) : days[0]}, depending on your group. We’ll match you by phone number at checkout.`) + upd;
+  const upd = weeklyMeta ? `Prices and availability updated ${new Date(weeklyMeta.updated).toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'})}.` : '';
+  // Only promise a delivery day when we actually know it (the customer arrived through a group link). Otherwise show just the update date, or nothing.
+  el.classList.toggle('plain', !dl.group);
+  el.innerHTML = dl.group ? `Your delivery day: <strong>${fmt(dl.date)}</strong> (${esc(dl.group.name)}).${upd ? ` <small style="opacity:.8">${upd}</small>` : ''}` : upd;
+  el.hidden = !el.innerHTML;
 }
 function renderGrid() {
   const list = visibleProducts();
@@ -207,7 +207,7 @@ function openCheckout() {
 function fixedDayHTML() {
   const dl = resolveDelivery(co.data.phone);
   if (dl.group) return `${esc(dateText(dateKey(dl.date)))}<small>${esc(dl.group.name)}</small>`;
-  return normPhone(co.data.phone || '') ? `We’ll confirm your day<small>We don’t have this number on our client list yet</small>` : `Enter your phone number<small>to see your delivery day</small>`;
+  return '';
 }
 function renderCheckout() {
   const dlg = $('#checkout'), t = totals(), dt = co.data, er = co.errors;
@@ -222,7 +222,7 @@ function renderCheckout() {
       <div class="field"><label for="f_email">Email address</label><input id="f_email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" value="${esc(dt.email)}" required>${er.email ? `<span class="err">${er.email}</span>` : ''}<span class="sub" style="color:var(--muted);font-size:12.5px">We’ll email you a copy of your order.</span></div>
       <div aria-hidden="true" style="position:absolute;left:-9999px"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" value=""></label></div>
       <div class="field"><label for="f_addr">Delivery details</label><textarea id="f_addr" name="address" rows="3" placeholder="Estate, road, house number, landmark, gate code…" required>${esc(dt.address)}</textarea>${er.address ? `<span class="err">${er.address}</span>` : ''}</div>
-      <div class="field"><span class="lbl">Delivery day</span><div class="fixed" id="fixedDay">${fixedDayHTML()}</div></div>
+      ${resolveDelivery(dt.phone).group ? `<div class="field"><span class="lbl">Delivery day</span><div class="fixed" id="fixedDay">${fixedDayHTML()}</div></div>` : ''}
       <div class="field"><label for="f_notes">Anything else? (optional)</label><textarea id="f_notes" name="notes" rows="2" placeholder="Any notes for your order">${esc(dt.notes)}</textarea></div>
       <div class="summary">
         <div class="row big"><span>${hasEst ? 'Estimated total' : 'Total'}</span><span>${kes(t.total)}</span></div>
@@ -245,7 +245,7 @@ function renderCheckout() {
     dlg.innerHTML = `<div class="dlg"><div class="center"><div class="tick" aria-hidden="true">✓</div><h2 id="coTitle">Order confirmed</h2>
       <p>Thank you, ${esc(o.customer.name.split(' ')[0])}. Your order <strong>${esc(o.id)}</strong> has been sent to us.</p></div>
       <div class="summary">${orderSummaryHTML(o)}</div>
-      <p class="hint">Please pay cash on delivery. ${o.date ? `Delivery on <strong>${dateText(o.date)}</strong>` : 'We’ll message you to confirm your delivery day'} to ${esc(o.customer.address)}.</p>
+      <p class="hint">Please pay cash on delivery. ${o.date ? `Delivery on <strong>${dateText(o.date)}</strong> to ${esc(o.customer.address)}.` : `Delivering to ${esc(o.customer.address)}.`}</p>
       <p class="contact-line">Questions about your order? Call <a href="tel:+254720257912">0720 257 912</a>, Rory <a href="tel:+254705283877">0705 283 877</a> or Agnes <a href="tel:+254720315116">0720 315 116</a>.</p>
       <button class="primary" data-closeco>Done</button>
       <p class="center"><button class="linkbtn" data-print="${esc(o.id)}">Print receipt</button></p></div>`;
@@ -276,7 +276,7 @@ function buildOrder() {
     payMethod:'On delivery', payStatus:'Unpaid', finalTotal:null, mpesaRef:'', status:'New', website: co.data.website || ''};
 }
 const mailtoFor = o => 'mailto:' + (settings.orderEmail || '') + '?subject=' + encodeURIComponent(`Order ${o.id} – ${o.customer.name}`) + '&body=' + encodeURIComponent(
-  [`Name: ${o.customer.name}`, `Phone: ${o.customer.phone}`, `Email: ${o.customer.email}`, `Delivery details: ${o.customer.address}`, `Delivery: ${o.date ? dateText(o.date) : 'to be confirmed'}`, o.customer.notes ? `Notes: ${o.customer.notes}` : '', '',
+  [`Name: ${o.customer.name}`, `Phone: ${o.customer.phone}`, `Email: ${o.customer.email}`, `Delivery details: ${o.customer.address}`, o.date ? `Delivery day: ${dateText(o.date)}` : '', o.customer.notes ? `Notes: ${o.customer.notes}` : '', '',
    ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`), '', `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – cash on delivery`].filter(Boolean).join('\n'));
 async function submitOrder() {
   co.pending = co.pending || buildOrder();
@@ -559,7 +559,7 @@ document.addEventListener('input', e => {
     if (t.value.trim() && ui.cat !== 'All') { ui.cat = 'All'; renderChips(); }      // a search always looks across the whole shop
     renderGrid(); if (t.value.trim()) revealResults();
   }
-  else if (t.closest('#coForm') && t.name) { co.data[t.name] = t.value; if (t.name === 'phone') $('#fixedDay').innerHTML = fixedDayHTML(); }
+  else if (t.closest('#coForm') && t.name) { co.data[t.name] = t.value; if (t.name === 'phone') { const fd = $('#fixedDay'); if (fd) fd.innerHTML = fixedDayHTML(); } }
 });
 document.addEventListener('submit', e => {
   if (e.target.id === 'coForm') { e.preventDefault(); if (validate()) { co.pending = null; submitOrder(); } else renderCheckout(); }
