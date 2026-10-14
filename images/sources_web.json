@@ -323,5 +323,80 @@
   "host": "www.vecteezy.com",
   "image_url": "https://static.vecteezy.com/system/resources/previews/068/795/471/large_2x/farm-fresh-eggs-in-wicker-basket-on-rustic-kitchen-free-photo.jpeg",
   "title": "Farm fresh eggs in wicker basket on rustic kitchen 68795471 Stock Phot"
+ },
+ "lemons-imported": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-526.jpg",
+  "title": "Imported Yellow Lemons \u2013 500g"
+ },
+ "lemons-local": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-Local-Lemon-Kwik-Basket-2.jpg",
+  "title": "Fresh Local Rough Lemons \u2013 500g"
+ },
+ "oranges-imported": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2022/02/Greenspoon-535.jpg",
+  "title": "Imported Oranges \u2013 1 Piece"
+ },
+ "oranges-local": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2023/05/GREENSPOON-sylvia-basket-baby-organic-oragnges-1-of-1-2048x1365-1.jpg",
+  "title": "Organic Local Oranges \u2013 1Kg"
+ },
+ "tangerines-imported": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2022/02/Greenspoon-1081.jpg",
+  "title": "Imported Tangerines \u2013 1 Piece"
+ },
+ "cucumber-english": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-550.jpg",
+  "title": "Kajiado English Cucumber \u2013 Per Piece"
+ },
+ "cucumber-local": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-6-2.jpg",
+  "title": "Narok Local Cucumber \u2013 2 Pieces (Approx. 300g \u2013 500g)"
+ },
+ "garlic": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2022/03/Greenspoon-553-2.jpg",
+  "title": "Imported Garlic \u2013 125g"
+ },
+ "garlic-local": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Screenshot-2026-05-25-at-16.14.45-2.jpg",
+  "title": "Narok Local Garlic \u2013 125g"
+ },
+ "potatoes": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/GREENSPOON-nyandarua-potatoes-1-of-1-2.jpg",
+  "title": "Kinangop Irish Potatoes \u2013 1Kg"
+ },
+ "potatoes-new": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2022/08/Greenspoon-Baby-Potatoes-Kwik-Basket-3.jpg",
+  "title": "Organic Baby Potatoes \u2013 1Kg"
+ },
+ "carrots": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2023/05/Greenspoon-304-1.jpg",
+  "title": "Organic Carrots \u2013 500g"
+ },
+ "carrots-normal": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-519.jpg",
+  "title": "Nyandarua Carrots \u2013 500g"
+ },
+ "bananas-sweet": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-548.jpg",
+  "title": "Meru Sweet Banana \u2013 Bunch / Approx. 12 Pieces"
+ },
+ "bananas-normal": {
+  "host": "greenspoon.co.ke",
+  "image_url": "https://greenspoon.co.ke/wp-content/uploads/2021/11/Greenspoon-541.jpg",
+  "title": "Meru Banana Bunch \u2013 Approx. 0.8Kg \u2013 1.2Kg"
  }
 }

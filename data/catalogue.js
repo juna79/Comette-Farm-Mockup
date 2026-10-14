@@ -1501,7 +1501,7 @@ window.CATALOGUE = {
    "emoji": "🍌",
    "inStock": true,
    "slug": "bananas-sweet",
-   "img": "images/bananas.jpg"
+   "img": "images/bananas-sweet.jpg"
   },
   {
    "name": "Bananas Green (Matoke)",
@@ -1577,7 +1577,7 @@ window.CATALOGUE = {
    "emoji": "🍌",
    "inStock": true,
    "slug": "bananas-normal",
-   "img": "images/bananas.jpg"
+   "img": "images/bananas-normal.jpg"
   },
   {
    "name": "Blueberries",
@@ -1708,7 +1708,7 @@ window.CATALOGUE = {
    "emoji": "🍋",
    "inStock": true,
    "slug": "lemons-imported",
-   "img": "images/lemons.jpg"
+   "img": "images/lemons-imported.jpg"
   },
   {
    "name": "Lemons (Local)",
@@ -1739,7 +1739,7 @@ window.CATALOGUE = {
    "emoji": "🍋",
    "inStock": true,
    "slug": "lemons-local",
-   "img": "images/lemons.jpg"
+   "img": "images/lemons-local.jpg"
   },
   {
    "name": "Limes",
@@ -1915,7 +1915,7 @@ window.CATALOGUE = {
    "emoji": "🍊",
    "inStock": true,
    "slug": "oranges-imported",
-   "img": "images/oranges.jpg"
+   "img": "images/oranges-imported.jpg"
   },
   {
    "name": "Oranges (Local)",
@@ -1946,7 +1946,7 @@ window.CATALOGUE = {
    "emoji": "🍊",
    "inStock": true,
    "slug": "oranges-local",
-   "img": "images/oranges.jpg"
+   "img": "images/oranges-local.jpg"
   },
   {
    "name": "Oranges (Pixie)",
@@ -2277,7 +2277,7 @@ window.CATALOGUE = {
    "emoji": "🍊",
    "inStock": true,
    "slug": "tangerines-imported",
-   "img": "images/tangerines.jpg"
+   "img": "images/tangerines-imported.jpg"
   },
   {
    "name": "Tangerines (Local)",
@@ -2537,7 +2537,7 @@ window.CATALOGUE = {
    "emoji": "🧄",
    "inStock": true,
    "slug": "garlic-local",
-   "img": "images/garlic.jpg"
+   "img": "images/garlic-local.jpg"
   },
   {
    "name": "Ginger",
@@ -4616,7 +4616,7 @@ window.CATALOGUE = {
    "emoji": "🥕",
    "inStock": true,
    "slug": "carrots-normal",
-   "img": "images/carrots.jpg"
+   "img": "images/carrots-normal.jpg"
   },
   {
    "name": "Cauliflower (Green)",
@@ -4815,7 +4815,7 @@ window.CATALOGUE = {
    "emoji": "🥒",
    "inStock": true,
    "slug": "cucumber-english",
-   "img": "images/cucumber.jpg"
+   "img": "images/cucumber-english.jpg"
   },
   {
    "name": "Cucumber (Local)",
@@ -4838,7 +4838,7 @@ window.CATALOGUE = {
    "emoji": "🥒",
    "inStock": true,
    "slug": "cucumber-local",
-   "img": "images/cucumber.jpg"
+   "img": "images/cucumber-local.jpg"
   },
   {
    "name": "Green Beans",
@@ -5342,7 +5342,7 @@ window.CATALOGUE = {
    "emoji": "🥔",
    "inStock": true,
    "slug": "potatoes",
-   "img": "images/potato.jpg"
+   "img": "images/potatoes.jpg"
   },
   {
    "name": "Potatoes (New)",
@@ -5362,7 +5362,7 @@ window.CATALOGUE = {
    "emoji": "🥔",
    "inStock": true,
    "slug": "potatoes-new",
-   "img": "images/potato_new.jpg"
+   "img": "images/potatoes-new.jpg"
   },
   {
    "name": "Potatoes (Red)",
