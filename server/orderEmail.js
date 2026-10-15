@@ -30,7 +30,7 @@ function orderTable(o) {
   const td = 'padding:6px 8px;border-bottom:1px solid #eee;font-size:14px;vertical-align:top';
   return `<table style="border-collapse:collapse;width:100%"><tr><th style="${th}">Item</th><th style="${th}">Qty</th><th style="${th};text-align:right">KES</th></tr>` +
     o.lines.map(l => `<tr><td style="${td}">${esc(l.name)}<br><span style="color:#777;font-size:12px">${esc(l.option)}${l.note ? ' · Note: ' + esc(l.note) : ''}</span></td><td style="${td};white-space:nowrap">${esc(l.qtyText)}${l.est ? ' <span style="color:#b36b00;font-size:12px">(weigh)</span>' : ''}</td><td style="${td};text-align:right">${Math.round(l.total).toLocaleString('en-KE')}${l.est ? '*' : ''}</td></tr>`).join('') +
-    `<tr><td style="${td};font-weight:bold" colspan="2">${o.hasEstimate ? 'Estimated total' : 'Total'} – cash on delivery</td><td style="${td};text-align:right;font-weight:bold">${Math.round(o.total).toLocaleString('en-KE')}</td></tr></table>` +
+    `<tr><td style="${td};font-weight:bold" colspan="2">${o.hasEstimate ? 'Estimated total' : 'Total'} – pay on delivery</td><td style="${td};text-align:right;font-weight:bold">${Math.round(o.total).toLocaleString('en-KE')}</td></tr></table>` +
     (o.hasEstimate ? '<p style="font-size:12px;color:#777">* Sold by weight – estimate. Weigh at packing and confirm the final amount on delivery.</p>' : '');
 }
 
@@ -40,7 +40,7 @@ function buildOwnerEmail(o) {
   const text = [`NEW ORDER ${o.id}`, '', `Customer: ${c.name}`, `Phone: ${c.phone}`, `Email: ${c.email}`, `Delivery details: ${c.address}`, ...(o.date ? [`Delivery day: ${when}`] : []),
     c.notes ? `Notes: ${c.notes}` : '', '', 'ITEMS',
     ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`),
-    '', `${o.hasEstimate ? 'ESTIMATED TOTAL' : 'TOTAL'}: ${kes(o.total)}  – CASH ON DELIVERY`,
+    '', `${o.hasEstimate ? 'ESTIMATED TOTAL' : 'TOTAL'}: ${kes(o.total)}  – PAY ON DELIVERY (customer pays via Till No: 996086)`,
     o.hasEstimate ? 'Items marked [weigh] are sold by weight: confirm the final amount on delivery.' : ''].filter((x, i, a) => x !== '' || a[i - 1] !== '').join('\n');
   const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1d2a22">
     <h2 style="margin:0 0 4px">New order ${esc(o.id)}</h2>
@@ -59,10 +59,10 @@ function buildCustomerEmail(o, shop = 'Greens Greens') {
   const subject = `Your ${shop} order ${o.id}`;
   const text = [`Thank you ${o.customer.name.split(' ')[0]}, we have your order ${o.id}.`, '', ...(o.date ? [`Delivery day: ${day(o.date)}`] : []), `Delivery details: ${o.customer.address}`, '',
     ...o.lines.map(l => `- ${l.name} x ${l.qtyText}${l.est ? ' (weighed)' : ''}  KES ${Math.round(l.total)}`), '',
-    `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – cash on delivery.`, o.hasEstimate ? 'Some items are sold by weight, so the final amount is confirmed on delivery.' : '', '', 'Questions? Office mobile 0720 257 912, Rory 0705 283 877, Agnes 0720 315 116', 'ENJOY YOUR FARM FRESH PRODUCTS'].join('\n');
+    `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – pay on delivery.`, o.hasEstimate ? 'Some items are sold by weight, so the final amount is confirmed on delivery.' : '', 'You can make payment via our Till No: 996086 (Coomete Farm).', '', 'Questions? Office mobile 0720 257 912, Rory 0705 283 877, Agnes 0720 315 116', 'ENJOY YOUR FARM FRESH PRODUCTS'].join('\n');
   const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1d2a22"><h2 style="margin:0 0 8px">Thank you, ${esc(o.customer.name.split(' ')[0])}</h2>
     <p>We’ve received your order <b>${esc(o.id)}</b>.${o.date ? ` Delivery day: <b>${esc(day(o.date))}</b>.` : ''} Delivering to ${esc(o.customer.address)}.</p>${orderTable(o)}
-    <p style="color:#555;font-size:13px">Please pay cash on delivery. Reply to this email if you need to change anything.</p>
+    <p style="color:#555;font-size:13px">Please pay on delivery. You can make payment via our <b>Till No: 996086</b> (Coomete Farm). Reply to this email if you need to change anything.</p>
     <p style="color:#555;font-size:13px">Questions? Office mobile 0720 257 912 · Rory 0705 283 877 · Agnes 0720 315 116</p>
     <p style="color:#2f7d4f;font-size:12px;letter-spacing:.08em;text-transform:uppercase">Enjoy your farm fresh products</p></div>`;
   return {subject, text, html};

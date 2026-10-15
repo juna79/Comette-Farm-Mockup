@@ -161,7 +161,7 @@ function renderDrawer() {
     <div class="dbody">${body}</div>
     <div class="dfoot">
       <div class="row"><span>Subtotal${hasEst ? ' (estimated)' : ''}</span><strong>${kes(subtotal())}</strong></div>
-      <div class="hint">${hasEst ? 'Items sold by weight are estimates; we weigh your order and confirm the final amount on delivery. ' : ''}You pay cash on delivery.</div>
+      <div class="hint">${hasEst ? 'Items sold by weight are estimates; we weigh your order and confirm the final amount on delivery. ' : ''}You pay on delivery: you can make payment via our Till No: 996086 (Coomete Farm).</div>
       <button class="primary" id="toCheckout" ${L.length ? '' : 'disabled'}>Checkout</button>
     </div>`;
 }
@@ -228,7 +228,7 @@ function renderCheckout() {
         <div class="row big"><span>${hasEst ? 'Estimated total' : 'Total'}</span><span>${kes(t.total)}</span></div>
         ${hasEst ? `<div class="hint">Some items are sold by weight, so the final total is confirmed when we pack your order.</div>` : ''}
       </div>
-      <div class="mpesa"><span aria-hidden="true">💵</span><span><b>Cash on delivery.</b> Nothing to pay now.</span></div>
+      <div class="mpesa"><span aria-hidden="true">🧾</span><span><b>Pay on delivery.</b> You can make payment via our Till No: 996086 (Coomete Farm). Nothing to pay now.</span></div>
       <button class="primary" type="submit">Place order</button>
     </form>`;
   } else if (co.step === 'sending') {
@@ -245,7 +245,7 @@ function renderCheckout() {
     dlg.innerHTML = `<div class="dlg"><div class="center"><div class="tick" aria-hidden="true">✓</div><h2 id="coTitle">Order confirmed</h2>
       <p>Thank you, ${esc(o.customer.name.split(' ')[0])}. Your order <strong>${esc(o.id)}</strong> has been sent to us.</p></div>
       <div class="summary">${orderSummaryHTML(o)}</div>
-      <p class="hint">Please pay cash on delivery. ${o.date ? `Delivery on <strong>${dateText(o.date)}</strong> to ${esc(o.customer.address)}.` : `Delivering to ${esc(o.customer.address)}.`}</p>
+      <p class="hint">Please pay when your order arrives: you can make payment via our Till No: 996086 (Coomete Farm). ${o.date ? `Delivery on <strong>${dateText(o.date)}</strong> to ${esc(o.customer.address)}.` : `Delivering to ${esc(o.customer.address)}.`}</p>
       <p class="contact-line">Questions about your order? Call <a href="tel:+254720257912">0720 257 912</a>, Rory <a href="tel:+254705283877">0705 283 877</a> or Agnes <a href="tel:+254720315116">0720 315 116</a>.</p>
       <button class="primary" data-closeco>Done</button>
       <p class="center"><button class="linkbtn" data-print="${esc(o.id)}">Print receipt</button></p></div>`;
@@ -277,7 +277,7 @@ function buildOrder() {
 }
 const mailtoFor = o => 'mailto:' + (settings.orderEmail || '') + '?subject=' + encodeURIComponent(`Order ${o.id} – ${o.customer.name}`) + '&body=' + encodeURIComponent(
   [`Name: ${o.customer.name}`, `Phone: ${o.customer.phone}`, `Email: ${o.customer.email}`, `Delivery details: ${o.customer.address}`, o.date ? `Delivery day: ${dateText(o.date)}` : '', o.customer.notes ? `Notes: ${o.customer.notes}` : '', '',
-   ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`), '', `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – cash on delivery`].filter(Boolean).join('\n'));
+   ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`), '', `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – pay on delivery via Till No: 996086 (Coomete Farm)`].filter(Boolean).join('\n'));
 async function submitOrder() {
   co.pending = co.pending || buildOrder();
   co.step = 'sending'; renderCheckout();
@@ -304,7 +304,7 @@ function receiptHTML(o) {
   return `<h2>${esc(settings.shopName)} – Order ${esc(o.id)}</h2><p>${esc(o.customer.name)} · ${esc(o.customer.phone)}<br>${esc(o.customer.address)}<br>Delivery: ${esc(dateText(o.date))}${o.customer.notes ? '<br>Notes: ' + esc(o.customer.notes) : ''}</p>
   <table style="width:100%"><tr><th>Item</th><th>Qty</th><th style="text-align:right">KES</th></tr>${o.lines.map(l => `<tr><td>${esc(l.name)} <small>${esc(l.option)}</small>${l.note ? '<br><small>Note: ' + esc(l.note) + '</small>' : ''}</td><td>${esc(l.qtyText)}${l.est ? ' (weigh)' : ''}</td><td style="text-align:right">${Math.round(l.total)}</td></tr>`).join('')}
 <tr><td colspan="2"><strong>${o.payStatus === 'Paid' ? 'Total paid' : o.finalTotal != null ? 'Amount due (final)' : o.hasEstimate ? 'Estimated total due' : 'Total due'}</strong></td><td style="text-align:right"><strong>${Math.round(o.finalTotal ?? o.total)}</strong></td></tr></table>
-  <p>${o.payStatus === 'Paid' ? 'Paid – ' + esc(o.payMethod) + (o.mpesaRef ? ' ref ' + esc(o.mpesaRef) : '') : 'Cash on delivery. Weighed items: final amount ______'}</p>`;
+  <p>${o.payStatus === 'Paid' ? 'Paid – ' + esc(o.payMethod) + (o.mpesaRef ? ' ref ' + esc(o.mpesaRef) : '') : 'Pay on delivery via Till No: 996086 (Coomete Farm). Weighed items: final amount ______'}</p>`;
 }
 
 /* ---------- admin ---------- */

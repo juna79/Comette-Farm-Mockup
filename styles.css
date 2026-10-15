@@ -258,3 +258,5 @@ td.sub{color:var(--muted);font-size:12.5px}
 .hero .banner.plain::before{content:"";display:none}
 .hero .banner.plain{font-size:13px;padding:7px 14px;opacity:.9}
 .hero .banner[hidden]{display:none}
+.foot-pay{margin:0 0 8px;font-size:14px;color:var(--ink)}
+.foot-pay b{color:var(--green-d)}
