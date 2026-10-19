@@ -109,13 +109,9 @@ function visibleProducts() {
 }
 function renderBanner() {
   const el = $('#deliveryBanner'); if (!el) return;
-  const dl = resolveDelivery(me.phone);
-  const fmt = d => d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const upd = weeklyMeta ? `Prices and availability updated ${new Date(weeklyMeta.updated).toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'})}.` : '';
-  // Only promise a delivery day when we actually know it (the customer arrived through a group link). Otherwise show just the update date, or nothing.
-  el.classList.toggle('plain', !dl.group);
-  el.innerHTML = dl.group ? `Your delivery day: <strong>${fmt(dl.date)}</strong> (${esc(dl.group.name)}).${upd ? ` <small style="opacity:.8">${upd}</small>` : ''}` : upd;
-  el.hidden = !el.innerHTML;
+  el.classList.add('plain');
+  el.textContent = upd; el.hidden = !upd;
 }
 function renderGrid() {
   const list = visibleProducts();
@@ -167,7 +163,7 @@ function renderDrawer() {
 }
 
 /* ---------- checkout ---------- */
-let co = {step:'form', data:{name:'', email:'', phone:'', address:'', date:'', notes:'', website:''}, errors:{}, order:null, timer:null};
+let co = {step:'form', data:{name:'', email:'', phone:'', address:'', date:'', website:''}, errors:{}, order:null, timer:null};
 const groupById = id => settings.groups.find(g => g.id === id);
 function nextDate(weekday, from = new Date()) {
   const d = new Date(from); d.setHours(0, 0, 0, 0);
@@ -200,14 +196,16 @@ function totals() {
 function openCheckout() {
   closeDrawer();
   if (!co.data.name && me.name) Object.assign(co.data, {name:me.name, email:me.email || '', phone:me.phone || '', address:me.address || ''});
+  if (!deliveryOptions().some(o => o.key === co.data.date)) co.data.date = '';
+  if (!co.data.date) { const g = groupById(linkGroup()); if (g && WEEKDAYS.includes(g.deliver)) co.data.date = dateKey(nextDate(g.deliver)); }   // a group link pre-selects that group's day
   co.step = 'form'; co.errors = {}; co.pending = null;
   renderCheckout();
   $('#checkout').showModal();
 }
-function fixedDayHTML() {
-  const dl = resolveDelivery(co.data.phone);
-  if (dl.group) return `${esc(dateText(dateKey(dl.date)))}<small>${esc(dl.group.name)}</small>`;
-  return '';
+const WEEKDAYS = [1, 2, 3, 4, 5, 6];                       // Monday to Saturday
+function deliveryOptions() {
+  return WEEKDAYS.map(w => nextDate(w)).sort((x, y) => x - y)                  // soonest first, so the list always reads in date order
+    .map(d => ({key: dateKey(d), label: d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'})}));
 }
 function renderCheckout() {
   const dlg = $('#checkout'), t = totals(), dt = co.data, er = co.errors;
@@ -222,8 +220,7 @@ function renderCheckout() {
       <div class="field"><label for="f_email">Email address</label><input id="f_email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" value="${esc(dt.email)}" required>${er.email ? `<span class="err">${er.email}</span>` : ''}<span class="sub" style="color:var(--muted);font-size:12.5px">We’ll email you a copy of your order.</span></div>
       <div aria-hidden="true" style="position:absolute;left:-9999px"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" value=""></label></div>
       <div class="field"><label for="f_addr">Delivery details</label><textarea id="f_addr" name="address" rows="3" placeholder="Estate, road, house number, landmark, gate code…" required>${esc(dt.address)}</textarea>${er.address ? `<span class="err">${er.address}</span>` : ''}</div>
-      ${resolveDelivery(dt.phone).group ? `<div class="field"><span class="lbl">Delivery day</span><div class="fixed" id="fixedDay">${fixedDayHTML()}</div></div>` : ''}
-      <div class="field"><label for="f_notes">Anything else? (optional)</label><textarea id="f_notes" name="notes" rows="2" placeholder="Any notes for your order">${esc(dt.notes)}</textarea></div>
+      <div class="field"><label for="f_date">Delivery day</label><select id="f_date" name="date" required><option value="">Choose a day</option>${deliveryOptions().map(o => `<option value="${o.key}"${o.key === dt.date ? ' selected' : ''}>${esc(o.label)}</option>`).join('')}</select>${er.date ? `<span class="err">${er.date}</span>` : ''}</div>
       <div class="summary">
         <div class="row big"><span>${hasEst ? 'Estimated total' : 'Total'}</span><span>${kes(t.total)}</span></div>
         ${hasEst ? `<div class="hint">Some items are sold by weight, so the final total is confirmed when we pack your order.</div>` : ''}
@@ -263,16 +260,17 @@ function validate() {
   if (!co.phone254) e.phone = 'Enter a valid phone number, e.g. 0712 345 678.';
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())) e.email = 'Enter a valid email address.';
   if (d.address.trim().length < 5) e.address = 'Please add your delivery address.';
+  if (!deliveryOptions().some(o => o.key === d.date)) e.date = 'Please choose a delivery day.';
   co.errors = e; return !Object.keys(e).length;
 }
 function buildOrder() {
-  const t = totals(), dl = resolveDelivery(co.data.phone);
+  const t = totals();
   if (!co.seq) { co.seq = (store.get('gg_seq', 0)) + 1; }
   const now = new Date();
   const lines = cartLines().map(l => ({sku:l.sku, name:l.p.name, option:varLabel(l.v), qty:l.qty, qtyText:qtyText(l.v, l.qty), unitPrice:l.v.unitPrice, est:!!l.v.estimate, note:l.note, total:l.total}));
   return {id:`GG-${String(now.getFullYear()).slice(2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(co.seq).padStart(3, '0')}`,
-    createdAt:now.toISOString(), customer:{name:co.data.name.trim(), email:co.data.email.trim(), phone:'+' + co.phone254, address:co.data.address.trim(), notes:co.data.notes.trim()},
-    zone:'', fee:0, date:dl.date ? dateKey(dl.date) : '', group:dl.group ? dl.group.id : '', groupName:dl.group ? dl.group.name : '', lines, subtotal:t.sub, total:t.total, hasEstimate:lines.some(l => l.est),
+    createdAt:now.toISOString(), customer:{name:co.data.name.trim(), email:co.data.email.trim(), phone:'+' + co.phone254, address:co.data.address.trim(), notes:''},
+    zone:'', fee:0, date:co.data.date, group:'', groupName:'', lines, subtotal:t.sub, total:t.total, hasEstimate:lines.some(l => l.est),
     payMethod:'On delivery', payStatus:'Unpaid', finalTotal:null, mpesaRef:'', status:'New', website: co.data.website || ''};
 }
 const mailtoFor = o => 'mailto:' + (settings.orderEmail || '') + '?subject=' + encodeURIComponent(`Order ${o.id} – ${o.customer.name}`) + '&body=' + encodeURIComponent(
@@ -559,7 +557,7 @@ document.addEventListener('input', e => {
     if (t.value.trim() && ui.cat !== 'All') { ui.cat = 'All'; renderChips(); }      // a search always looks across the whole shop
     renderGrid(); if (t.value.trim()) revealResults();
   }
-  else if (t.closest('#coForm') && t.name) { co.data[t.name] = t.value; if (t.name === 'phone') { const fd = $('#fixedDay'); if (fd) fd.innerHTML = fixedDayHTML(); } }
+  else if (t.closest('#coForm') && t.name) { co.data[t.name] = t.value;  }
 });
 document.addEventListener('submit', e => {
   if (e.target.id === 'coForm') { e.preventDefault(); if (validate()) { co.pending = null; submitOrder(); } else renderCheckout(); }

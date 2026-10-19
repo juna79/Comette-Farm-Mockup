@@ -37,7 +37,7 @@ function orderTable(o) {
 function buildOwnerEmail(o) {
   const c = o.customer, when = o.date ? `${day(o.date)}${o.groupName ? ' (' + o.groupName + ')' : ''}` : '';
   const subject = `New order ${o.id} – ${c.name}${o.date ? ' – ' + day(o.date) : ''}`;
-  const text = [`NEW ORDER ${o.id}`, '', `Customer: ${c.name}`, `Phone: ${c.phone}`, `Email: ${c.email}`, `Delivery details: ${c.address}`, ...(o.date ? [`Delivery day: ${when}`] : []),
+  const text = [`NEW ORDER ${o.id}`, '', `Customer: ${c.name}`, ...(o.date ? [`DELIVERY DAY: ${when}`] : []), `Phone: ${c.phone}`, `Email: ${c.email}`, `Delivery details: ${c.address}`,
     c.notes ? `Notes: ${c.notes}` : '', '', 'ITEMS',
     ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`),
     '', `${o.hasEstimate ? 'ESTIMATED TOTAL' : 'TOTAL'}: ${kes(o.total)}  – PAY ON DELIVERY (customer pays via Till No: 996086)`,
@@ -46,10 +46,10 @@ function buildOwnerEmail(o) {
     <h2 style="margin:0 0 4px">New order ${esc(o.id)}</h2>
     <p style="margin:0 0 16px;color:#555">${esc(c.name)}${o.date ? ' · ' + esc(day(o.date)) + (o.groupName ? ' · ' + esc(o.groupName) : '') : ''}</p>
     <table style="border-collapse:collapse;margin-bottom:16px;font-size:14px">
+      ${o.date ? `<tr><td style="padding:2px 12px 2px 0;color:#777">Delivery day</td><td><b style="background:#fff3c4;padding:2px 8px;border-radius:6px">${esc(when)}</b></td></tr>` : ''}
       <tr><td style="padding:2px 12px 2px 0;color:#777">Phone</td><td>${esc(c.phone)}</td></tr>
       <tr><td style="padding:2px 12px 2px 0;color:#777">Email</td><td>${esc(c.email)}</td></tr>
       <tr><td style="padding:2px 12px 2px 0;color:#777">Delivery details</td><td>${esc(c.address)}</td></tr>
-      ${o.date ? `<tr><td style="padding:2px 12px 2px 0;color:#777">Delivery day</td><td>${esc(when)}</td></tr>` : ''}
       ${c.notes ? `<tr><td style="padding:2px 12px 2px 0;color:#777">Notes</td><td>${esc(c.notes)}</td></tr>` : ''}
     </table>${orderTable(o)}</div>`;
   return {subject, text, html};
@@ -61,7 +61,7 @@ function buildCustomerEmail(o, shop = 'Greens Greens') {
     ...o.lines.map(l => `- ${l.name} x ${l.qtyText}${l.est ? ' (weighed)' : ''}  KES ${Math.round(l.total)}`), '',
     `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – pay on delivery.`, o.hasEstimate ? 'Some items are sold by weight, so the final amount is confirmed on delivery.' : '', 'You can make payment via our Till No: 996086 (Coomete Farm).', '', 'Questions? Office mobile 0720 257 912, Rory 0705 283 877, Agnes 0720 315 116', 'ENJOY YOUR FARM FRESH PRODUCTS'].join('\n');
   const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1d2a22"><h2 style="margin:0 0 8px">Thank you, ${esc(o.customer.name.split(' ')[0])}</h2>
-    <p>We’ve received your order <b>${esc(o.id)}</b>.${o.date ? ` Delivery day: <b>${esc(day(o.date))}</b>.` : ''} Delivering to ${esc(o.customer.address)}.</p>${orderTable(o)}
+    <p>We’ve received your order <b>${esc(o.id)}</b>.${o.date ? ` Your delivery day: <b>${esc(day(o.date))}</b>.` : ''} Delivering to ${esc(o.customer.address)}.</p>${orderTable(o)}
     <p style="color:#555;font-size:13px">Please pay on delivery. You can make payment via our <b>Till No: 996086</b> (Coomete Farm). Reply to this email if you need to change anything.</p>
     <p style="color:#555;font-size:13px">Questions? Office mobile 0720 257 912 · Rory 0705 283 877 · Agnes 0720 315 116</p>
     <p style="color:#2f7d4f;font-size:12px;letter-spacing:.08em;text-transform:uppercase">Enjoy your farm fresh products</p></div>`;
