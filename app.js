@@ -77,9 +77,10 @@ function renderChips() {
 function artHTML(p) {
   const tint = TINT[p.category] || '#eee';
   const label = p.brand || p.category;
-  return p.img
-    ? `<div class="art photo"><img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy"></div>`
-    : `<div class="art tile" style="--tint:${tint}"><span>${esc(label)}</span></div>`;
+  if (p.img) return `<div class="art photo"><img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy"></div>`;
+  // items added from an uploaded sheet: use images/<name>.jpg if the farm has supplied one, else the tile
+  const guess = p.isNew ? `<img src="images/${esc(p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''))}.jpg" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">` : '';
+  return `<div class="art tile" style="--tint:${tint}"><span>${esc(label)}</span>${guess}</div>`;
 }
 function cardHTML(p) {
   const out = !inStock(p);
