@@ -951,7 +951,7 @@ window.CATALOGUE = {
    "emoji": "🍎",
    "inStock": true,
    "slug": "apple-juice",
-   "img": "images/apple_juice.jpg"
+   "img": "images/apple-juice.jpg"
   },
   {
    "name": "Beetroot Juice",
@@ -1131,7 +1131,7 @@ window.CATALOGUE = {
    "emoji": "🍊",
    "inStock": true,
    "slug": "orange-juice",
-   "img": "images/orange_juice.jpg"
+   "img": "images/orange-juice.jpg"
   },
   {
    "name": "Passion Juice",
