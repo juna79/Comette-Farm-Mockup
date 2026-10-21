@@ -31,6 +31,8 @@ function cleanProduct(p) {
   return {id: str(p.id, 40).replace(/[^a-z0-9]/gi, ''), name: str(p.name, 120), category: p.category, brand: '', emoji: '', inStock: true, slug: '', isNew: true,
     variants: p.variants.map(v => {
       const o = {sku: num(v.sku, 1, 999999999), src: str(v.src, 120), unit: str(v.unit, 20), price: num(v.price, 0, 10000000), chargeUnit: str(v.chargeUnit, 20), ripeness: ''};
+      if (v.ord != null) o.ord = num(v.ord, 0, 1e7);                    // position in the office sheet (order exports)
+      if (v.noId) o.noId = true;                                        // the sheet gave this item no ItemID of its own
       if (v.estimate) { o.estimate = true; o.estKg = num(v.estKg, 0.001, 1000); o.estPrice = Math.round(num(v.estPrice ?? v.price * v.estKg, 0, 1e9)); }
       return o;
     })};

@@ -18,6 +18,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 97,
+     "ord": 1,
      "src": "Biscuits (Charcoal Crackers) 200g",
      "unit": "pack",
      "price": 750.0,
@@ -38,6 +39,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 564,
+     "ord": 2,
      "src": "Biscuits (Cheddar Crackers) 200g",
      "unit": "pack",
      "price": 800.0,
@@ -58,6 +60,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 814,
+     "ord": 3,
      "src": "Biscuits (Rosemary) 200g",
      "unit": "pack",
      "price": 750.0,
@@ -78,6 +81,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 75,
+     "ord": 4,
      "src": "Bleu-De-Brun (Half Cheese)",
      "unit": "unit",
      "price": 4800.0,
@@ -98,6 +102,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 74,
+     "ord": 5,
      "src": "Bleu-De-Brun Portion 150g",
      "unit": "unit",
      "price": 850.0,
@@ -118,6 +123,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 504,
+     "ord": 6,
      "src": "Bocconcini 250g",
      "unit": "pack",
      "price": 770.0,
@@ -138,6 +144,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 100,
+     "ord": 7,
      "src": "Brie (Whole) (Ripened)",
      "unit": "piece",
      "price": 6000.0,
@@ -161,6 +168,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 76,
+     "ord": 8,
      "src": "Brie Portion 150g",
      "unit": "unit",
      "price": 800.0,
@@ -181,6 +189,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 77,
+     "ord": 9,
      "src": "Camembert 200g",
      "unit": "unit",
      "price": 880.0,
@@ -201,6 +210,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1155,
+     "ord": 32,
      "src": "Caramel Ice- Cream  500 ml (Tub)",
      "unit": "pack",
      "price": 1250.0,
@@ -221,6 +231,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1559,
+     "ord": 10,
      "src": "Cheddar (Cheese Love) White 250g",
      "unit": "piece",
      "price": 750.0,
@@ -241,6 +252,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1329,
+     "ord": 11,
      "src": "Cheddar (Limuru) 250g",
      "unit": "pack",
      "price": 770.0,
@@ -261,6 +273,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1176,
+     "ord": 33,
      "src": "Chocolate Chip Fudge Ice Cream 500ml (Tub)",
      "unit": "pack",
      "price": 1250.0,
@@ -281,6 +294,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1374,
+     "ord": 34,
      "src": "Chocolate Ice Cream 2L",
      "unit": "pack",
      "price": 3700.0,
@@ -301,6 +315,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1432,
+     "ord": 35,
      "src": "Cookies And Cream 500ml",
      "unit": "pack",
      "price": 1250.0,
@@ -321,6 +336,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 808,
+     "ord": 12,
      "src": "Cottage Cheese 200g",
      "unit": "unit",
      "price": 730.0,
@@ -341,6 +357,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 151,
+     "ord": 39,
      "src": "Cream",
      "unit": "litre",
      "price": 1000.0,
@@ -361,6 +378,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 720,
+     "ord": 40,
      "src": "Cream (0.5 lts)",
      "unit": "pack",
      "price": 520.0,
@@ -381,6 +399,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 502,
+     "ord": 13,
      "src": "Cream Cheese (Soft) 250g",
      "unit": "unit",
      "price": 800.0,
@@ -401,6 +420,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1403,
+     "ord": 15,
      "src": "Dip (Smoked Egg Plant) 250g",
      "unit": "pack",
      "price": 450.0,
@@ -421,6 +441,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 90,
+     "ord": 14,
      "src": "Dip  (whipped Feta) 300g",
      "unit": "unit",
      "price": 450.0,
@@ -441,6 +462,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 628,
+     "ord": 215,
      "src": "Eggs (15 Pc Pack)",
      "unit": "pack",
      "price": 375.0,
@@ -461,6 +483,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 548,
+     "ord": 216,
      "src": "Eggs (By The Tray)",
      "unit": "tray",
      "price": 750.0,
@@ -481,6 +504,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 142,
+     "ord": 217,
      "src": "Eggs (Free Range)",
      "unit": "dozen",
      "price": 300.0,
@@ -501,6 +525,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 505,
+     "ord": 16,
      "src": "Feta (Lemon Pepper) 200g",
      "unit": "unit",
      "price": 800.0,
@@ -521,6 +546,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 82,
+     "ord": 17,
      "src": "Feta 200g",
      "unit": "unit",
      "price": 700.0,
@@ -541,6 +567,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1114,
+     "ord": 18,
      "src": "Gouda (Half Cheese) Approx. 1kg",
      "unit": "kg",
      "price": 2800.0,
@@ -561,6 +588,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 84,
+     "ord": 19,
      "src": "Gouda (Portion) 200g",
      "unit": "unit",
      "price": 700.0,
@@ -581,6 +609,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 83,
+     "ord": 20,
      "src": "Gouda Approx 2Kg",
      "unit": "unit",
      "price": 5600.0,
@@ -601,6 +630,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 758,
+     "ord": 21,
      "src": "Greek Yogurt (250g)",
      "unit": "unit",
      "price": 480.0,
@@ -621,6 +651,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 204,
+     "ord": 22,
      "src": "Halloumi  200g",
      "unit": "unit",
      "price": 700.0,
@@ -641,6 +672,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1407,
+     "ord": 23,
      "src": "Hummus (Chick Peas) 250g",
      "unit": "pack",
      "price": 650.0,
@@ -661,6 +693,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 101,
+     "ord": 24,
      "src": "Mascarpone 200g",
      "unit": "unit",
      "price": 800.0,
@@ -681,6 +714,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1519,
+     "ord": 41,
      "src": "Milk (Friesian)",
      "unit": "litre",
      "price": 150.0,
@@ -701,6 +735,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 149,
+     "ord": 42,
      "src": "Milk (Half Cream)",
      "unit": "litre",
      "price": 150.0,
@@ -721,6 +756,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 150,
+     "ord": 43,
      "src": "Milk (Jersey)",
      "unit": "litre",
      "price": 170.0,
@@ -741,6 +777,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 275,
+     "ord": 44,
      "src": "Milk (Skim)",
      "unit": "litre",
      "price": 70.0,
@@ -761,6 +798,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 94,
+     "ord": 25,
      "src": "Mozarella 200g",
      "unit": "unit",
      "price": 620.0,
@@ -781,6 +819,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 92,
+     "ord": 26,
      "src": "Paneer 250g",
      "unit": "unit",
      "price": 650.0,
@@ -801,6 +840,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 95,
+     "ord": 27,
      "src": "Pizella 200g",
      "unit": "unit",
      "price": 620.0,
@@ -821,6 +861,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 96,
+     "ord": 28,
      "src": "Ricotta 420g",
      "unit": "unit",
      "price": 510.0,
@@ -841,6 +882,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1507,
+     "ord": 29,
      "src": "Sour Cream (250g)",
      "unit": "pack",
      "price": 800.0,
@@ -861,6 +903,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 98,
+     "ord": 30,
      "src": "Stone Portion 150g",
      "unit": "unit",
      "price": 585.0,
@@ -880,6 +923,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 759,
+     "ord": 31,
      "src": "String (Stick) Cheese 180g",
      "unit": "unit",
      "price": 750.0,
@@ -900,6 +944,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1375,
+     "ord": 37,
      "src": "Vanilla Bean Ice Cream 2L",
      "unit": "pack",
      "price": 3700.0,
@@ -920,6 +965,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1177,
+     "ord": 38,
      "src": "Vanilla Bean Ice Cream 500 ml (Tub)",
      "unit": "pack",
      "price": 1250.0,
@@ -940,6 +986,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 353,
+     "ord": 164,
      "src": "Apple Juice",
      "unit": "litre",
      "price": 290.0,
@@ -960,6 +1007,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1675,
+     "ord": 173,
      "src": "Beetroot Juice",
      "unit": "litre",
      "price": 500.0,
@@ -980,6 +1028,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 483,
+     "ord": 165,
      "src": "Cocktail Juice",
      "unit": "litre",
      "price": 290.0,
@@ -1000,6 +1049,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1390,
+     "ord": 160,
      "src": "Kombucha (Hibiscus Ginger)",
      "unit": "litre",
      "price": 460.0,
@@ -1020,6 +1070,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1391,
+     "ord": 161,
      "src": "Kombucha (Lavender)",
      "unit": "litre",
      "price": 460.0,
@@ -1040,6 +1091,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1392,
+     "ord": 162,
      "src": "Kombucha (Moringa)",
      "unit": "litre",
      "price": 460.0,
@@ -1060,6 +1112,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1393,
+     "ord": 163,
      "src": "Kombucha (Rosemary &  Mint)",
      "unit": "litre",
      "price": 460.0,
@@ -1080,6 +1133,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1419,
+     "ord": 166,
      "src": "Madafu In a Bottle (Lt)",
      "unit": "litre",
      "price": 400.0,
@@ -1100,6 +1154,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 103,
+     "ord": 167,
      "src": "Mango Juice",
      "unit": "litre",
      "price": 290.0,
@@ -1120,6 +1175,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 104,
+     "ord": 168,
      "src": "Orange Juice",
      "unit": "litre",
      "price": 290.0,
@@ -1140,6 +1196,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 105,
+     "ord": 169,
      "src": "Passion Juice",
      "unit": "litre",
      "price": 290.0,
@@ -1160,6 +1217,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 106,
+     "ord": 170,
      "src": "Pineapple Juice",
      "unit": "litre",
      "price": 290.0,
@@ -1180,6 +1238,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1669,
+     "ord": 171,
      "src": "Pineapple Mint Juice",
      "unit": "litre",
      "price": 290.0,
@@ -1200,6 +1259,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 108,
+     "ord": 172,
      "src": "Tree Tomato Juice",
      "unit": "litre",
      "price": 320.0,
@@ -1220,6 +1280,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 579,
+     "ord": 189,
      "src": "Water (1 litre) Still",
      "unit": "bottle",
      "price": 115.0,
@@ -1240,6 +1301,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1233,
+     "ord": 190,
      "src": "Water (20 Lts Bottle)",
      "unit": "bottle",
      "price": 700.0,
@@ -1260,6 +1322,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 578,
+     "ord": 191,
      "src": "Water (500 mls)",
      "unit": "bottle",
      "price": 60.0,
@@ -1280,6 +1343,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1229,
+     "ord": 192,
      "src": "Water (500mls) Carton",
      "unit": "carton",
      "price": 1090.0,
@@ -1300,6 +1364,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1593,
+     "ord": 193,
      "src": "Water (Sparkling) 1 Litre (Carton)",
      "unit": "carton",
      "price": 1360.0,
@@ -1320,6 +1385,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1297,
+     "ord": 194,
      "src": "Water (Sparkling) 12 x 750ml (Glass) Crate",
      "unit": "crate",
      "price": 1400.0,
@@ -1340,6 +1406,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 347,
+     "ord": 195,
      "src": "Water (Still) 1 Litre (Carton)",
      "unit": "carton",
      "price": 1100.0,
@@ -1360,6 +1427,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 187,
+     "ord": 54,
      "src": "Bouquet (Large)",
      "unit": "bunch",
      "price": 400.0,
@@ -1380,6 +1448,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 186,
+     "ord": 53,
      "src": "Bouquet (Small)",
      "unit": "bunch",
      "price": 230.0,
@@ -1400,6 +1469,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 324,
+     "ord": 55,
      "src": "Apples (Green By The Piece)",
      "unit": "piece",
      "price": 500.0,
@@ -1411,6 +1481,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 122,
+     "ord": 56,
      "src": "Apples (Green)",
      "unit": "kg",
      "price": 500.0,
@@ -1431,6 +1502,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 323,
+     "ord": 57,
      "src": "Apples (Red By The Piece)",
      "unit": "piece",
      "price": 500.0,
@@ -1442,6 +1514,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 121,
+     "ord": 58,
      "src": "Apples (Red)",
      "unit": "kg",
      "price": 500.0,
@@ -1462,6 +1535,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1523,
+     "ord": 59,
      "src": "Bananas  (Plantain)",
      "unit": "bunch",
      "price": 700.0,
@@ -1482,6 +1556,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 123,
+     "ord": 60,
      "src": "Bananas (Sweet)",
      "unit": "bunch",
      "price": 200.0,
@@ -1490,6 +1565,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 1099,
+     "ord": 61,
      "src": "Bananas (Sweet) Half Ripe.",
      "unit": "bunch",
      "price": 200.0,
@@ -1510,6 +1586,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 616,
+     "ord": 62,
      "src": "Bananas Green (Matoke)",
      "unit": "piece",
      "price": 40.0,
@@ -1530,6 +1607,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 124,
+     "ord": 63,
      "src": "Bananas Normal (Bunch)",
      "unit": "bunch",
      "price": 150.0,
@@ -1541,6 +1619,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 327,
+     "ord": 64,
      "src": "Bananas Normal (By The Pc)",
      "unit": "piece",
      "price": 150.0,
@@ -1552,6 +1631,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 126,
+     "ord": 65,
      "src": "Bananas Normal (Half Ripe)",
      "unit": "piece",
      "price": 150.0,
@@ -1563,6 +1643,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 1298,
+     "ord": 66,
      "src": "Bananas Normal (Half Ripe) Bunch",
      "unit": "bunch",
      "price": 150.0,
@@ -1586,6 +1667,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1331,
+     "ord": 107,
      "src": "Blue Berries",
      "unit": "punnet",
      "price": 500.0,
@@ -1606,6 +1688,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 471,
+     "ord": 67,
      "src": "Coconuts",
      "unit": "piece",
      "price": 200.0,
@@ -1626,6 +1709,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 385,
+     "ord": 68,
      "src": "Grape Fruit (Imported) (Pc)",
      "unit": "piece",
      "price": 200.0,
@@ -1646,6 +1730,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 384,
+     "ord": 69,
      "src": "Grapes",
      "unit": "punnet",
      "price": 500.0,
@@ -1666,6 +1751,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1323,
+     "ord": 70,
      "src": "Kiwi",
      "unit": "piece",
      "price": 200.0,
@@ -1686,6 +1772,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 386,
+     "ord": 71,
      "src": "Lemons  (Imported)",
      "unit": "kg",
      "price": 580.0,
@@ -1694,6 +1781,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 481,
+     "ord": 72,
      "src": "Lemons (Imported) (By The Pc)",
      "unit": "piece",
      "price": 580.0,
@@ -1717,6 +1805,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 127,
+     "ord": 73,
      "src": "Lemons (Local)",
      "unit": "kg",
      "price": 290.0,
@@ -1725,6 +1814,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 542,
+     "ord": 74,
      "src": "Lemons (Local) (By The Pc)",
      "unit": "piece",
      "price": 290.0,
@@ -1748,6 +1838,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 128,
+     "ord": 75,
      "src": "Limes",
      "unit": "kg",
      "price": 250.0,
@@ -1756,6 +1847,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 463,
+     "ord": 76,
      "src": "Limes (By The Pc)",
      "unit": "piece",
      "price": 250.0,
@@ -1779,6 +1871,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1185,
+     "ord": 77,
      "src": "Madafu",
      "unit": "piece",
      "price": 130.0,
@@ -1799,6 +1892,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 129,
+     "ord": 78,
      "src": "Mangoes (Apple)",
      "unit": "piece",
      "price": 105.0,
@@ -1807,6 +1901,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 476,
+     "ord": 79,
      "src": "Mangoes (Half Ripe)",
      "unit": "piece",
      "price": 105.0,
@@ -1827,6 +1922,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 130,
+     "ord": 80,
      "src": "Melon (Sweet)",
      "unit": "piece",
      "price": 290.0,
@@ -1850,6 +1946,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1586,
+     "ord": 81,
      "src": "Melon (Thorn) Pc",
      "unit": "piece",
      "price": 70.0,
@@ -1870,6 +1967,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 131,
+     "ord": 82,
      "src": "Melon (Water)",
      "unit": "piece",
      "price": 140.0,
@@ -1893,6 +1991,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 325,
+     "ord": 83,
      "src": "Oranges (Imported By The Piece)",
      "unit": "piece",
      "price": 460.0,
@@ -1904,6 +2003,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 132,
+     "ord": 84,
      "src": "Oranges (Imported)",
      "unit": "kg",
      "price": 460.0,
@@ -1924,6 +2024,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 190,
+     "ord": 85,
      "src": "Oranges (Local By The Piece)",
      "unit": "piece",
      "price": 200.0,
@@ -1935,6 +2036,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 133,
+     "ord": 86,
      "src": "Oranges (Local)",
      "unit": "kg",
      "price": 200.0,
@@ -1955,6 +2057,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 470,
+     "ord": 87,
      "src": "Oranges (Pixie)",
      "unit": "kg",
      "price": 400.0,
@@ -1963,6 +2066,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 1527,
+     "ord": 88,
      "src": "Oranges (Pixie) By The Piece",
      "unit": "piece",
      "price": 400.0,
@@ -1986,6 +2090,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 134,
+     "ord": 89,
      "src": "Passion (Black)",
      "unit": "kg",
      "price": 340.0,
@@ -1994,6 +2099,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 339,
+     "ord": 90,
      "src": "Passion (Black) (By The pc)",
      "unit": "piece",
      "price": 340.0,
@@ -2017,6 +2123,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 377,
+     "ord": 91,
      "src": "Passion (Yellow)",
      "unit": "kg",
      "price": 400.0,
@@ -2025,6 +2132,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 1436,
+     "ord": 92,
      "src": "Passion (Yellow) By The Pc",
      "unit": "piece",
      "price": 400.0,
@@ -2048,6 +2156,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 135,
+     "ord": 93,
      "src": "Paw Paw",
      "unit": "piece",
      "price": 250.0,
@@ -2059,6 +2168,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 478,
+     "ord": 94,
      "src": "Paw Paw (By The Kg)",
      "unit": "kg",
      "price": 250.0,
@@ -2079,6 +2189,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 518,
+     "ord": 95,
      "src": "Paw Paw (Mountain)",
      "unit": "piece",
      "price": 250.0,
@@ -2090,6 +2201,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 626,
+     "ord": 96,
      "src": "Paw Paw (Mountain) By The Kg",
      "unit": "kg",
      "price": 250.0,
@@ -2110,6 +2222,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 362,
+     "ord": 97,
      "src": "Pears (Imported)(By The Piece)",
      "unit": "piece",
      "price": 800.0,
@@ -2133,6 +2246,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 137,
+     "ord": 98,
      "src": "Pineapple",
      "unit": "piece",
      "price": 170.0,
@@ -2144,6 +2258,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 1302,
+     "ord": 99,
      "src": "Pineapple (Half Ripe)",
      "unit": "piece",
      "price": 170.0,
@@ -2167,6 +2282,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1346,
+     "ord": 100,
      "src": "Pomegranates (Imported)",
      "unit": "piece",
      "price": 500.0,
@@ -2187,6 +2303,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 203,
+     "ord": 111,
      "src": "Raspberries (Fresh)",
      "unit": "punnet",
      "price": 350.0,
@@ -2207,6 +2324,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 119,
+     "ord": 108,
      "src": "Strawberries (Fresh)",
      "unit": "punnet",
      "price": 200.0,
@@ -2227,6 +2345,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1357,
+     "ord": 109,
      "src": "Strawberries (Frozen) By The Punnet",
      "unit": "punnet",
      "price": 350.0,
@@ -2235,6 +2354,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 120,
+     "ord": 110,
      "src": "Strawberries (Frozen) By The Kg",
      "unit": "kg",
      "price": 700.0,
@@ -2255,6 +2375,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 500,
+     "ord": 101,
      "src": "Tangerines (Imported)",
      "unit": "kg",
      "price": 750.0,
@@ -2263,6 +2384,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 926,
+     "ord": 102,
      "src": "Tangerines (Imported) By The Pc",
      "unit": "piece",
      "price": 750.0,
@@ -2286,6 +2408,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 138,
+     "ord": 103,
      "src": "Tangerines (Local)",
      "unit": "kg",
      "price": 400.0,
@@ -2294,6 +2417,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 358,
+     "ord": 104,
      "src": "Tangerines (Local) (By The Pc)",
      "unit": "piece",
      "price": 400.0,
@@ -2317,6 +2441,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 139,
+     "ord": 105,
      "src": "Tree Tomatoes",
      "unit": "kg",
      "price": 350.0,
@@ -2325,6 +2450,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 357,
+     "ord": 106,
      "src": "Tree Tomatoes (By The Piece)",
      "unit": "piece",
      "price": 350.0,
@@ -2348,6 +2474,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 155,
+     "ord": 112,
      "src": "Basil (Green)",
      "unit": "bunch",
      "price": 50.0,
@@ -2368,6 +2495,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 157,
+     "ord": 113,
      "src": "Chives (Flat)",
      "unit": "bunch",
      "price": 50.0,
@@ -2376,6 +2504,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 494,
+     "ord": 114,
      "src": "Chives (Flat) (By The kg)",
      "unit": "kg",
      "price": 350.0,
@@ -2396,6 +2525,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 340,
+     "ord": 115,
      "src": "Chives (Round)",
      "unit": "bunch",
      "price": 50.0,
@@ -2404,6 +2534,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 561,
+     "ord": 116,
      "src": "Chives (Round) By The Kg",
      "unit": "kg",
      "price": 350.0,
@@ -2424,6 +2555,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 158,
+     "ord": 117,
      "src": "Corriander",
      "unit": "bunch",
      "price": 40.0,
@@ -2444,6 +2576,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 721,
+     "ord": 138,
      "src": "Edible Flowers",
      "unit": "pack",
      "price": 115.0,
@@ -2464,6 +2597,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 160,
+     "ord": 118,
      "src": "Fennel (By The Kg)",
      "unit": "kg",
      "price": 140.0,
@@ -2472,6 +2606,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 234,
+     "ord": 119,
      "src": "Fennel (By The Pc)",
      "unit": "piece",
      "price": 140.0,
@@ -2495,6 +2630,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 161,
+     "ord": 120,
      "src": "Garlic",
      "unit": "kg",
      "price": 750.0,
@@ -2503,6 +2639,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 409,
+     "ord": 121,
      "src": "Garlic (By The Piece)",
      "unit": "piece",
      "price": 750.0,
@@ -2526,6 +2663,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 511,
+     "ord": 122,
      "src": "Garlic (Local)",
      "unit": "kg",
      "price": 750.0,
@@ -2546,6 +2684,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 162,
+     "ord": 123,
      "src": "Ginger",
      "unit": "kg",
      "price": 350.0,
@@ -2554,6 +2693,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 410,
+     "ord": 124,
      "src": "Ginger (By The Piece)",
      "unit": "piece",
      "price": 350.0,
@@ -2577,6 +2717,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 213,
+     "ord": 125,
      "src": "Lemon Grass",
      "unit": "bunch",
      "price": 50.0,
@@ -2597,6 +2738,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 153,
+     "ord": 126,
      "src": "Marjoram (Sweet)",
      "unit": "bunch",
      "price": 50.0,
@@ -2617,6 +2759,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 163,
+     "ord": 127,
      "src": "Mint",
      "unit": "bunch",
      "price": 50.0,
@@ -2637,6 +2780,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 600,
+     "ord": 128,
      "src": "Mint (Apple)",
      "unit": "bunch",
      "price": 50.0,
@@ -2657,6 +2801,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 152,
+     "ord": 129,
      "src": "Oregano",
      "unit": "bunch",
      "price": 40.0,
@@ -2677,6 +2822,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 164,
+     "ord": 130,
      "src": "Parsley Curly",
      "unit": "bunch",
      "price": 50.0,
@@ -2697,6 +2843,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 231,
+     "ord": 131,
      "src": "Parsley Flat (Bunch)",
      "unit": "bunch",
      "price": 50.0,
@@ -2717,6 +2864,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 236,
+     "ord": 139,
      "src": "Rocket (By The Kg)",
      "unit": "kg",
      "price": 380.0,
@@ -2725,6 +2873,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 286,
+     "ord": 140,
      "src": "Rocket (By The Packet)",
      "unit": "pack",
      "price": 70.0,
@@ -2745,6 +2894,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 166,
+     "ord": 132,
      "src": "Rosemary",
      "unit": "bunch",
      "price": 50.0,
@@ -2765,6 +2915,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 167,
+     "ord": 133,
      "src": "Sage",
      "unit": "bunch",
      "price": 40.0,
@@ -2785,6 +2936,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 369,
+     "ord": 134,
      "src": "Tarragon",
      "unit": "bunch",
      "price": 50.0,
@@ -2805,6 +2957,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 154,
+     "ord": 135,
      "src": "Thyme",
      "unit": "bunch",
      "price": 50.0,
@@ -2825,6 +2978,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1608,
+     "ord": 136,
      "src": "Turmeric Roots (By the Piece)",
      "unit": "piece",
      "price": 750.0,
@@ -2848,6 +3002,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 168,
+     "ord": 137,
      "src": "Water Cress",
      "unit": "bunch",
      "price": 50.0,
@@ -2868,6 +3023,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 51,
+     "ord": 221,
      "src": "Artichokes (Live)",
      "unit": "bag",
      "price": 460.0,
@@ -2888,6 +3044,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 352,
+     "ord": 141,
      "src": "Chives (Flat) (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -2908,6 +3065,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 313,
+     "ord": 142,
      "src": "Chives Round (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -2928,6 +3086,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 312,
+     "ord": 143,
      "src": "Corriander (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -2948,6 +3107,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1236,
+     "ord": 222,
      "src": "Gooseberry (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -2968,6 +3128,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 609,
+     "ord": 144,
      "src": "Herbs (Mixed) (Growing Box) (Small)",
      "unit": "unit",
      "price": 1150.0,
@@ -2988,6 +3149,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 397,
+     "ord": 145,
      "src": "Lemon Grass (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3008,6 +3170,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 485,
+     "ord": 146,
      "src": "Lemon Verbena [Live]",
      "unit": "bag",
      "price": 350.0,
@@ -3028,6 +3191,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 315,
+     "ord": 147,
      "src": "Marjoram (Sweet) (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3048,6 +3212,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 803,
+     "ord": 148,
      "src": "Mint (Apple) Live",
      "unit": "bag",
      "price": 350.0,
@@ -3068,6 +3233,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 351,
+     "ord": 149,
      "src": "Mint (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3088,6 +3254,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 165,
+     "ord": 150,
      "src": "Oregano (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3108,6 +3275,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 310,
+     "ord": 151,
      "src": "Parsley (Curly) (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3128,6 +3296,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 288,
+     "ord": 152,
      "src": "Parsley Flat (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3148,6 +3317,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 444,
+     "ord": 223,
      "src": "Rhubarb (Live) (Bag)",
      "unit": "bag",
      "price": 350.0,
@@ -3168,6 +3338,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 435,
+     "ord": 153,
      "src": "Rocket (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3188,6 +3359,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 191,
+     "ord": 154,
      "src": "Rosemary (Live)",
      "unit": "bag",
      "price": 400.0,
@@ -3208,6 +3380,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 437,
+     "ord": 155,
      "src": "Sage (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3228,6 +3401,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 399,
+     "ord": 156,
      "src": "Sorrel (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3248,6 +3422,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 389,
+     "ord": 224,
      "src": "Strawberry Plants (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3268,6 +3443,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 295,
+     "ord": 225,
      "src": "Strawberry splits",
      "unit": "piece",
      "price": 35.0,
@@ -3288,6 +3464,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 434,
+     "ord": 157,
      "src": "Tarragon (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3308,6 +3485,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 214,
+     "ord": 158,
      "src": "Thyme (Live)",
      "unit": "bag",
      "price": 350.0,
@@ -3328,6 +3506,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1178,
+     "ord": 159,
      "src": "Water Cress (With roots)",
      "unit": "bunch",
      "price": 90.0,
@@ -3348,6 +3527,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 940,
+     "ord": 45,
      "src": "Beef Boerwors (500g)",
      "unit": "pack",
      "price": 780.0,
@@ -3368,6 +3548,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1025,
+     "ord": 46,
      "src": "Beef Striploin (350g Portion)",
      "unit": "pack",
      "price": 780.0,
@@ -3388,6 +3569,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 62,
+     "ord": 196,
      "src": "Chicken (Whole) Approx. 2 - 3kg",
      "unit": "piece",
      "price": 800.0,
@@ -3411,6 +3593,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 537,
+     "ord": 206,
      "src": "Chicken Breast (Double)",
      "unit": "pack",
      "price": 1150.0,
@@ -3434,6 +3617,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1163,
+     "ord": 207,
      "src": "Chicken Liver (Kg)",
      "unit": "kg",
      "price": 800.0,
@@ -3454,6 +3638,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 535,
+     "ord": 208,
      "src": "Chicken Thigh (2pc in a pack)",
      "unit": "pack",
      "price": 800.0,
@@ -3477,6 +3662,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1673,
+     "ord": 211,
      "src": "Droewors (Beef & Mutton) 55g",
      "unit": "pack",
      "price": 400.0,
@@ -3497,6 +3683,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1674,
+     "ord": 212,
      "src": "Droewors (Beef) 55g",
      "unit": "pack",
      "price": 400.0,
@@ -3517,6 +3704,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 61,
+     "ord": 197,
      "src": "Duck (Whole) 2.3 - 2.8kg",
      "unit": "piece",
      "price": 1000.0,
@@ -3540,6 +3728,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1094,
+     "ord": 209,
      "src": "Duck Breast. Approx. 500g/pack",
      "unit": "pack",
      "price": 2760.0,
@@ -3563,6 +3752,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1095,
+     "ord": 210,
      "src": "Duck Legs (2pc/pack) Approx. 500g)",
      "unit": "pack",
      "price": 1840.0,
@@ -3586,6 +3776,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1097,
+     "ord": 198,
      "src": "Fish Fillet - Snapper (By The Kg)",
      "unit": "kg",
      "price": 2070.0,
@@ -3606,6 +3797,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 766,
+     "ord": 199,
      "src": "Fish Fillet -Snapper (Approx. 300g/Pack)",
      "unit": "pack",
      "price": 2070.0,
@@ -3629,6 +3821,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1486,
+     "ord": 47,
      "src": "Ham (Honey Glazed) 1kg",
      "unit": "pack",
      "price": 2235.0,
@@ -3652,6 +3845,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 990,
+     "ord": 48,
      "src": "Minced Beef (High Grade) 500g",
      "unit": "pack",
      "price": 630.0,
@@ -3672,6 +3866,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 983,
+     "ord": 50,
      "src": "Pork Belly Spare Ribs (750g)",
      "unit": "pack",
      "price": 1050.0,
@@ -3692,6 +3887,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1100,
+     "ord": 51,
      "src": "Pork Loin Chops",
      "unit": "kg",
      "price": 1400.0,
@@ -3712,6 +3908,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 837,
+     "ord": 200,
      "src": "Prawns (Peeled) kg",
      "unit": "kg",
      "price": 3900.0,
@@ -3732,6 +3929,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 207,
+     "ord": 49,
      "src": "Premium Pork Sausages 400gms",
      "unit": "pack",
      "price": 550.0,
@@ -3752,6 +3950,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1680,
+     "ord": 201,
      "src": "Salmon Burgers (200g)",
      "unit": "pack",
      "price": 500.0,
@@ -3772,6 +3971,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 891,
+     "ord": 205,
      "src": "Salmon Portion (Approx. 200g/Pc)",
      "unit": "pack",
      "price": 9800.0,
@@ -3795,6 +3995,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 66,
+     "ord": 203,
      "src": "Smoked Salmon 100g",
      "unit": "pack",
      "price": 1660.0,
@@ -3815,6 +4016,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 67,
+     "ord": 204,
      "src": "Smoked Salmon 200g",
      "unit": "pack",
      "price": 3200.0,
@@ -3835,6 +4037,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1242,
+     "ord": 202,
      "src": "Squid (Clean) By The Kg",
      "unit": "kg",
      "price": 1600.0,
@@ -3855,6 +4058,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 956,
+     "ord": 52,
      "src": "Streaky Bacon 400g",
      "unit": "pack",
      "price": 1030.0,
@@ -3875,6 +4079,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1423,
+     "ord": 174,
      "src": "Chutney - Chilli  And Ginger  (500Ml)",
      "unit": "jar",
      "price": 800.0,
@@ -3895,6 +4100,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 660,
+     "ord": 175,
      "src": "Chutney - Mango (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -3915,6 +4121,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 659,
+     "ord": 176,
      "src": "Chutney - Tomato (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -3935,6 +4142,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 657,
+     "ord": 183,
      "src": "Harissa",
      "unit": "jar",
      "price": 800.0,
@@ -3955,6 +4163,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1618,
+     "ord": 220,
      "src": "Honey (Pure) (Bundu) Kg",
      "unit": "kg",
      "price": 1400.0,
@@ -3975,6 +4184,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1617,
+     "ord": 219,
      "src": "Honey (Pure) (Bundu) 500g",
      "unit": "jar",
      "price": 700.0,
@@ -3995,6 +4205,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 658,
+     "ord": 177,
      "src": "Jam - Blackberry (500 Ml)",
      "unit": "jar",
      "price": 800.0,
@@ -4015,6 +4226,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 652,
+     "ord": 178,
      "src": "Jam - Blueberry (500 Ml)",
      "unit": "jar",
      "price": 800.0,
@@ -4035,6 +4247,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1424,
+     "ord": 179,
      "src": "Jam - Chilli",
      "unit": "jar",
      "price": 800.0,
@@ -4055,6 +4268,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 655,
+     "ord": 180,
      "src": "Jam- Plum (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -4075,6 +4289,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 928,
+     "ord": 181,
      "src": "Jam - Raspberry (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -4095,6 +4310,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 646,
+     "ord": 182,
      "src": "Jam - Strawberry (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -4115,6 +4331,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 643,
+     "ord": 184,
      "src": "Marmalade - Orange (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -4135,6 +4352,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 644,
+     "ord": 185,
      "src": "Marmalade - Orange and Lemon (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -4155,6 +4373,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1151,
+     "ord": 186,
      "src": "Marmalade - Orange And Lime 500g",
      "unit": "jar",
      "price": 800.0,
@@ -4175,6 +4394,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 645,
+     "ord": 187,
      "src": "Marmalade - Orange, Grapefruit & Lemon (500g)",
      "unit": "jar",
      "price": 800.0,
@@ -4195,6 +4415,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1129,
+     "ord": 188,
      "src": "Marmalade - Orange, Tangerine & Lemon",
      "unit": "jar",
      "price": 800.0,
@@ -4215,6 +4436,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1413,
+     "ord": 213,
      "src": "Mountain Oil (1 Litre) Herbal",
      "unit": "litre",
      "price": 550.0,
@@ -4235,6 +4457,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1412,
+     "ord": 214,
      "src": "Mountain Oil (1 Litre) Pure",
      "unit": "litre",
      "price": 550.0,
@@ -4255,6 +4478,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1207,
+     "ord": 36,
      "src": "Onion Jam  200g",
      "unit": "jar",
      "price": 450.0,
@@ -4275,6 +4499,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 673,
+     "ord": 218,
      "src": "Tea Leaves (0.5 kg pack)",
      "unit": "pack",
      "price": 280.0,
@@ -4295,6 +4520,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 474,
+     "ord": 226,
      "src": "Arrow Root",
      "unit": "kg",
      "price": 290.0,
@@ -4315,6 +4541,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 270,
+     "ord": 227,
      "src": "Aubergine",
      "unit": "piece",
      "price": 195.0,
@@ -4326,6 +4553,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 2,
+     "ord": 228,
      "src": "Aubergine (By The Kg)",
      "unit": "kg",
      "price": 195.0,
@@ -4346,6 +4574,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 3,
+     "ord": 229,
      "src": "Avocado",
      "unit": "piece",
      "price": 70.0,
@@ -4366,6 +4595,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 6,
+     "ord": 230,
      "src": "Beetroot (Kg)",
      "unit": "kg",
      "price": 170.0,
@@ -4386,6 +4616,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1125,
+     "ord": 231,
      "src": "Borecole (Curly Kale)",
      "unit": "bunch",
      "price": 50.0,
@@ -4406,6 +4637,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1128,
+     "ord": 232,
      "src": "Borecole (Tuscan Kale)",
      "unit": "bunch",
      "price": 50.0,
@@ -4426,6 +4658,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 7,
+     "ord": 233,
      "src": "Broccoli",
      "unit": "kg",
      "price": 350.0,
@@ -4434,6 +4667,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 391,
+     "ord": 234,
      "src": "Broccoli (By The Pc)",
      "unit": "piece",
      "price": 350.0,
@@ -4457,6 +4691,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 260,
+     "ord": 235,
      "src": "Brussel Sprouts (By The Punnet)",
      "unit": "punnet",
      "price": 290.0,
@@ -4477,6 +4712,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 9,
+     "ord": 236,
      "src": "Butter Nut",
      "unit": "piece",
      "price": 150.0,
@@ -4500,6 +4736,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 10,
+     "ord": 237,
      "src": "Cabbage (Green)",
      "unit": "piece",
      "price": 80.0,
@@ -4520,6 +4757,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 11,
+     "ord": 238,
      "src": "Cabbage (Red)",
      "unit": "piece",
      "price": 230.0,
@@ -4531,6 +4769,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 294,
+     "ord": 239,
      "src": "Cabbage (Red) (By The Kg)",
      "unit": "kg",
      "price": 230.0,
@@ -4551,6 +4790,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 12,
+     "ord": 240,
      "src": "Cabbage (Savoy)",
      "unit": "piece",
      "price": 75.0,
@@ -4562,6 +4802,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 336,
+     "ord": 241,
      "src": "Cabbage (Savoy) (By The Kg)",
      "unit": "kg",
      "price": 75.0,
@@ -4582,6 +4823,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 14,
+     "ord": 242,
      "src": "Carrots (By The Piece)",
      "unit": "piece",
      "price": 150.0,
@@ -4605,6 +4847,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 13,
+     "ord": 243,
      "src": "Carrots (Normal) (Kg)",
      "unit": "kg",
      "price": 150.0,
@@ -4625,6 +4868,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 568,
+     "ord": 244,
      "src": "Cauliflower (Green) (By the Kg)",
      "unit": "kg",
      "price": 300.0,
@@ -4645,6 +4889,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 15,
+     "ord": 245,
      "src": "Cauliflower (White)",
      "unit": "piece",
      "price": 300.0,
@@ -4656,6 +4901,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 242,
+     "ord": 246,
      "src": "Cauliflower (White) (By The Kg)",
      "unit": "kg",
      "price": 300.0,
@@ -4676,6 +4922,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 26,
+     "ord": 247,
      "src": "Celery",
      "unit": "bunch",
      "price": 255.0,
@@ -4699,6 +4946,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1596,
+     "ord": 248,
      "src": "Chayote (By The Pc)",
      "unit": "piece",
      "price": 70.0,
@@ -4722,6 +4970,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 291,
+     "ord": 251,
      "src": "Chillis (Mixed)",
      "unit": "punnet",
      "price": 140.0,
@@ -4742,6 +4991,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 403,
+     "ord": 249,
      "src": "Chillis (Scotch Bonnet) By The Punnet",
      "unit": "punnet",
      "price": 140.0,
@@ -4750,6 +5000,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 387,
+     "ord": 250,
      "src": "Chillis (Scotch Bonnet) By The Kg",
      "unit": "kg",
      "price": 690.0,
@@ -4770,6 +5021,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 18,
+     "ord": 252,
      "src": "Courgette (Green)",
      "unit": "kg",
      "price": 175.0,
@@ -4778,6 +5030,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 412,
+     "ord": 253,
      "src": "Courgette (Green) (By The Pc)",
      "unit": "piece",
      "price": 175.0,
@@ -4801,6 +5054,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 19,
+     "ord": 254,
      "src": "Cucumber (English)",
      "unit": "piece",
      "price": 290.0,
@@ -4824,6 +5078,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1468,
+     "ord": 255,
      "src": "Cucumber (Local) pc",
      "unit": "piece",
      "price": 290.0,
@@ -4847,6 +5102,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 248,
+     "ord": 256,
      "src": "Green Beans (By The Kg)",
      "unit": "kg",
      "price": 230.0,
@@ -4855,6 +5111,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 22,
+     "ord": 257,
      "src": "Green Beans (Punnet)",
      "unit": "punnet",
      "price": 95.0,
@@ -4875,6 +5132,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1224,
+     "ord": 258,
      "src": "Kohl Rabi (Green) Pc",
      "unit": "piece",
      "price": 105.0,
@@ -4898,6 +5156,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 378,
+     "ord": 259,
      "src": "Leeks (By The Pc)",
      "unit": "piece",
      "price": 230.0,
@@ -4909,6 +5168,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 24,
+     "ord": 260,
      "src": "Leeks (Kg)",
      "unit": "kg",
      "price": 230.0,
@@ -4929,6 +5189,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 28,
+     "ord": 262,
      "src": "Lettuce (Cos)",
      "unit": "piece",
      "price": 60.0,
@@ -4949,6 +5210,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 554,
+     "ord": 261,
      "src": "Lettuce (Endive)",
      "unit": "piece",
      "price": 60.0,
@@ -4969,6 +5231,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 30,
+     "ord": 263,
      "src": "Lettuce (Iceberg)",
      "unit": "piece",
      "price": 80.0,
@@ -4989,6 +5252,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 264,
+     "ord": 264,
      "src": "Lettuce (Lollo Bioda) (Green)",
      "unit": "piece",
      "price": 60.0,
@@ -5009,6 +5273,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 220,
+     "ord": 265,
      "src": "Lettuce (Ronali) Green",
      "unit": "piece",
      "price": 60.0,
@@ -5029,6 +5294,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 221,
+     "ord": 266,
      "src": "Lettuce (Rubili) Red",
      "unit": "piece",
      "price": 60.0,
@@ -5049,6 +5315,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 48,
+     "ord": 267,
      "src": "Lettuce (Salad Pack) H",
      "unit": "pack",
      "price": 115.0,
@@ -5069,6 +5336,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 417,
+     "ord": 268,
      "src": "Maize (Green) (Soft)",
      "unit": "piece",
      "price": 70.0,
@@ -5089,6 +5357,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 31,
+     "ord": 269,
      "src": "Mangetout (Punnet)",
      "unit": "punnet",
      "price": 95.0,
@@ -5109,6 +5378,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 33,
+     "ord": 270,
      "src": "Mushroom (Button)",
      "unit": "punnet",
      "price": 520.0,
@@ -5129,6 +5399,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 1260,
+     "ord": 271,
      "src": "Mushroom (Portobello) 250g",
      "unit": "punnet",
      "price": 580.0,
@@ -5149,6 +5420,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 305,
+     "ord": 272,
      "src": "Okra (By The Kg)",
      "unit": "kg",
      "price": 280.0,
@@ -5169,6 +5441,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 34,
+     "ord": 273,
      "src": "Onions (Red)",
      "unit": "kg",
      "price": 150.0,
@@ -5177,6 +5450,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 700,
+     "ord": 274,
      "src": "Onions (Red) By The Pc",
      "unit": "piece",
      "price": 150.0,
@@ -5200,6 +5474,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 35,
+     "ord": 275,
      "src": "Onions (White)",
      "unit": "kg",
      "price": 200.0,
@@ -5208,6 +5483,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 855,
+     "ord": 276,
      "src": "Onions (White) By The Piece",
      "unit": "piece",
      "price": 200.0,
@@ -5231,6 +5507,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 37,
+     "ord": 277,
      "src": "Peas (Frozen)",
      "unit": "kg",
      "price": 1200.0,
@@ -5251,6 +5528,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 38,
+     "ord": 278,
      "src": "Pepper (Green)",
      "unit": "piece",
      "price": 250.0,
@@ -5274,6 +5552,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 41,
+     "ord": 279,
      "src": "Pepper (Red)",
      "unit": "piece",
      "price": 460.0,
@@ -5297,6 +5576,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 40,
+     "ord": 280,
      "src": "Pepper (Yellow)",
      "unit": "piece",
      "price": 460.0,
@@ -5320,6 +5600,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 43,
+     "ord": 281,
      "src": "Potatoes",
      "unit": "kg",
      "price": 140.0,
@@ -5328,6 +5609,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 408,
+     "ord": 282,
      "src": "Potatoes (By the Piece)",
      "unit": "piece",
      "price": 140.0,
@@ -5351,6 +5633,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 215,
+     "ord": 283,
      "src": "Potatoes (New)",
      "unit": "kg",
      "price": 200.0,
@@ -5371,6 +5654,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 543,
+     "ord": 284,
      "src": "Potatoes (Red)",
      "unit": "kg",
      "price": 200.0,
@@ -5391,6 +5675,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 44,
+     "ord": 285,
      "src": "Potatoes Sweet",
      "unit": "kg",
      "price": 140.0,
@@ -5399,6 +5684,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 341,
+     "ord": 286,
      "src": "Potatoes Sweet (By The Piece)",
      "unit": "piece",
      "price": 140.0,
@@ -5422,6 +5708,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 45,
+     "ord": 287,
      "src": "Pumpkin (Whole)",
      "unit": "piece",
      "price": 140.0,
@@ -5445,6 +5732,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 46,
+     "ord": 288,
      "src": "Radish (Red)",
      "unit": "bunch",
      "price": 40.0,
@@ -5465,6 +5753,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 252,
+     "ord": 289,
      "src": "Rhubarb (By The Kg)",
      "unit": "kg",
      "price": 120.0,
@@ -5473,6 +5762,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 498,
+     "ord": 290,
      "src": "Rhubarb (By The Pc)",
      "unit": "piece",
      "price": 120.0,
@@ -5496,6 +5786,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 326,
+     "ord": 292,
      "src": "Spinach (Normal By The Kg)",
      "unit": "kg",
      "price": 120.0,
@@ -5504,6 +5795,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 50,
+     "ord": 293,
      "src": "Spinach (Normal)",
      "unit": "bunch",
      "price": 50.0,
@@ -5524,6 +5816,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 244,
+     "ord": 294,
      "src": "Spinach (Pak Choy) By The Kg",
      "unit": "kg",
      "price": 90.0,
@@ -5532,6 +5825,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 257,
+     "ord": 295,
      "src": "Spinach (Pak Choy) By the Packet",
      "unit": "pack",
      "price": 60.0,
@@ -5552,6 +5846,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 333,
+     "ord": 291,
      "src": "Spinach Italian (By The Packet)",
      "unit": "pack",
      "price": 70.0,
@@ -5572,6 +5867,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 52,
+     "ord": 296,
      "src": "Spring Onion",
      "unit": "bunch",
      "price": 30.0,
@@ -5592,6 +5888,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 53,
+     "ord": 297,
      "src": "Sugar-Snap Peas",
      "unit": "punnet",
      "price": 95.0,
@@ -5612,6 +5909,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 54,
+     "ord": 298,
      "src": "Sukuma Wiki",
      "unit": "bunch",
      "price": 50.0,
@@ -5632,6 +5930,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 55,
+     "ord": 299,
      "src": "Sweet Corn (Yellow)",
      "unit": "piece",
      "price": 115.0,
@@ -5652,6 +5951,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 56,
+     "ord": 300,
      "src": "Tomato (Cherry) Red Punnet",
      "unit": "punnet",
      "price": 210.0,
@@ -5672,6 +5972,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 57,
+     "ord": 301,
      "src": "Tomato (English)",
      "unit": "kg",
      "price": 210.0,
@@ -5680,6 +5981,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 490,
+     "ord": 302,
      "src": "Tomato (English) By The Pc",
      "unit": "piece",
      "price": 210.0,
@@ -5691,6 +5993,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 337,
+     "ord": 303,
      "src": "Tomato (English) Half Ripe",
      "unit": "kg",
      "price": 210.0,
@@ -5699,6 +6002,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 786,
+     "ord": 304,
      "src": "Tomato (English) Half Ripe Pc",
      "unit": "piece",
      "price": 210.0,
@@ -5722,6 +6026,7 @@ window.CATALOGUE = {
    "variants": [
     {
      "sku": 58,
+     "ord": 305,
      "src": "Tomato (Italian)",
      "unit": "kg",
      "price": 175.0,
@@ -5730,6 +6035,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 856,
+     "ord": 306,
      "src": "Tomato (Italian) (By The Piece)",
      "unit": "piece",
      "price": 175.0,
@@ -5741,6 +6047,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 624,
+     "ord": 307,
      "src": "Tomato (Italian) (Half Ripe)",
      "unit": "kg",
      "price": 175.0,
@@ -5749,6 +6056,7 @@ window.CATALOGUE = {
     },
     {
      "sku": 1156,
+     "ord": 308,
      "src": "Tomato (Italian) (Half Ripe) Pc",
      "unit": "piece",
      "price": 175.0,

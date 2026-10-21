@@ -9,14 +9,14 @@ const STATE_FILE = path.join(root, '.local-state.json');          // local stand
 const fileStore = { get: () => { try { return JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch { return null; } }, set: o => fs.writeFileSync(STATE_FILE, JSON.stringify(o)) };
 http.createServer((req, res) => {
   if (req.url.split('?')[0] === '/api/state' || req.url.split('?')[0] === '/api/login') {
-    let b = ''; req.on('data', d => { b += d; if (b.length > 1000000) req.destroy(); });
+    let b = ''; req.on('data', d => { b += d; if (b.length > 4000000) req.destroy(); });
     return req.on('end', async () => {
       const out = await stateApi.handle({method: req.method, path: req.url.split('?')[0], password: req.headers['x-staff-password'] || '', bodyText: b}, {store: fileStore, env: process.env});
       res.writeHead(out.status, {'Content-Type': 'application/json', 'Cache-Control': 'no-store'}); res.end(JSON.stringify(out.body));
     });
   }
   if (req.method === 'POST' && req.url === '/api/order') {          // local stand-in for the hosted function
-    let b = ''; req.on('data', d => { b += d; if (b.length > 100000) req.destroy(); });
+    let b = ''; req.on('data', d => { b += d; if (b.length > 400000) req.destroy(); });
     return req.on('end', async () => {
       try { const out = await handleOrder(JSON.parse(b || '{}')); res.writeHead(200, {'Content-Type': 'application/json'}); res.end(JSON.stringify(out)); }
       catch (e) { res.writeHead(e.status || 500, {'Content-Type': 'application/json'}); res.end(JSON.stringify({ok: false, error: e.status ? e.message : 'Could not send the order'})); }

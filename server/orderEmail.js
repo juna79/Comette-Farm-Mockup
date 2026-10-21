@@ -6,6 +6,7 @@
          RESEND_API_KEY + ORDER_FROM       alternative provider (https://resend.com)
          SEND_CUSTOMER_COPY  set to 0 to skip the confirmation copy to the customer              */
 const fs = require('fs'), path = require('path');
+const office = require('./orderExport');
 
 const DEFAULT_ORDER_TO = 'coometefarm.greens@gmail.com';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -22,7 +23,9 @@ function validate(o) {
   if (!String(c.address || '').trim()) bad('Delivery address is required');
   if (!Array.isArray(o.lines) || !o.lines.length || o.lines.length > 200) bad('The cart is empty');
   for (const l of o.lines) if (!l || !String(l.name || '').trim() || !(+l.qty > 0) || !(+l.total >= 0)) bad('Invalid item in cart');
-  if (JSON.stringify(o).length > 60000) bad('Order too large');
+  const {catalogue, ...rest} = o;                                         // catalogue = product list the office sheet is built from (see orderExport.js)
+  if (JSON.stringify(rest).length > 60000) bad('Order too large');
+  if (catalogue !== undefined && (!Array.isArray(catalogue) || catalogue.length > 2000)) bad('Invalid product list');
 }
 
 function orderTable(o) {
@@ -34,15 +37,19 @@ function orderTable(o) {
     (o.hasEstimate ? '<p style="font-size:12px;color:#777">* Sold by weight – estimate. Weigh at packing and confirm the final amount on delivery.</p>' : '');
 }
 
-function buildOwnerEmail(o) {
+function buildOwnerEmail(o, exp) {                                        // exp = office export from orderExport.js (omit for the plain summary)
   const c = o.customer, when = o.date ? `${day(o.date)}${o.groupName ? ' (' + o.groupName + ')' : ''}` : '';
-  const subject = `New order ${o.id} – ${c.name}${o.date ? ' – ' + day(o.date) : ''}`;
-  const text = [`NEW ORDER ${o.id}`, '', `Customer: ${c.name}`, ...(o.date ? [`DELIVERY DAY: ${when}`] : []), `Phone: ${c.phone}`, `Email: ${c.email}`, `Delivery details: ${c.address}`,
-    c.notes ? `Notes: ${c.notes}` : '', '', 'ITEMS',
+  const xlsxMissing = !!(exp && !exp.failed && !exp.xlsx), flagged = !!(exp && (exp.imp.items.length || exp.imp.notes.length || xlsxMissing));
+  const subject = `${flagged ? 'CHECK ITEMIDS – ' : ''}New order ${o.id} – ${c.name}${o.date ? ' – ' + day(o.date) : ''}`;
+  const attach = exp && exp.xlsx ? `Excel attached: ${exp.file} (sheet “Order Import”: ItemID, Quantity)` : '';
+  const text = [exp ? office.attentionText(exp.imp, xlsxMissing) : '', `NEW ORDER ${o.id}`, '', `Customer: ${c.name}`, ...(o.date ? [`DELIVERY DAY: ${when}`] : []), `Phone: ${c.phone}`, `Email: ${c.email}`, `Delivery details: ${c.address}`,
+    c.notes ? `Notes: ${c.notes}` : '', attach, '', 'ITEMS',
     ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`),
     '', `${o.hasEstimate ? 'ESTIMATED TOTAL' : 'TOTAL'}: ${kes(o.total)}  – PAY ON DELIVERY (customer pays via Till No: 996086)`,
-    o.hasEstimate ? 'Items marked [weigh] are sold by weight: confirm the final amount on delivery.' : ''].filter((x, i, a) => x !== '' || a[i - 1] !== '').join('\n');
+    o.hasEstimate ? 'Items marked [weigh] are sold by weight: confirm the final amount on delivery.' : '',
+    exp && !exp.failed ? office.copyPasteText(exp.imp) : ''].filter((x, i, a) => x !== '' || a[i - 1] !== '').join('\n');
   const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1d2a22">
+    ${exp ? office.attentionHtml(exp.imp, xlsxMissing) : ''}
     <h2 style="margin:0 0 4px">New order ${esc(o.id)}</h2>
     <p style="margin:0 0 16px;color:#555">${esc(c.name)}${o.date ? ' · ' + esc(day(o.date)) + (o.groupName ? ' · ' + esc(o.groupName) : '') : ''}</p>
     <table style="border-collapse:collapse;margin-bottom:16px;font-size:14px">
@@ -51,7 +58,8 @@ function buildOwnerEmail(o) {
       <tr><td style="padding:2px 12px 2px 0;color:#777">Email</td><td>${esc(c.email)}</td></tr>
       <tr><td style="padding:2px 12px 2px 0;color:#777">Delivery details</td><td>${esc(c.address)}</td></tr>
       ${c.notes ? `<tr><td style="padding:2px 12px 2px 0;color:#777">Notes</td><td>${esc(c.notes)}</td></tr>` : ''}
-    </table>${orderTable(o)}</div>`;
+      ${attach ? `<tr><td style="padding:2px 12px 2px 0;color:#777">Office sheet</td><td>${esc(exp.file)} (attached)</td></tr>` : ''}
+    </table>${orderTable(o)}${exp && !exp.failed ? office.copyPasteHtml(exp.imp, exp.file) : ''}</div>`;
   return {subject, text, html};
 }
 
@@ -68,24 +76,27 @@ function buildCustomerEmail(o, shop = 'Greens Greens') {
   return {subject, text, html};
 }
 
-async function sendOne(msg, {to, replyTo, env}) {
+async function sendOne(msg, {to, replyTo, env, attachments = []}) {
   const live = env.EMAIL_LIVE === '1';
   const gmail = env.GMAIL_USER && env.GMAIL_APP_PASSWORD;
   if (!live || !(gmail || env.RESEND_API_KEY)) {                         // safe default: write to ./outbox instead of sending
     const dir = env.LOCAL_DEV === '1' ? path.join(__dirname, '..', 'outbox') : path.join(require('os').tmpdir(), 'outbox'); fs.mkdirSync(dir, {recursive: true});
     const f = path.join(dir, `${Date.now()}-${to.replace(/[^a-z0-9@.]/gi, '_')}.html`);
-    fs.writeFileSync(f, `<!-- To: ${to}\n     Reply-To: ${replyTo || ''}\n     Subject: ${msg.subject} -->\n<meta charset="utf-8">\n${msg.html}`);
+    attachments.forEach(a => fs.writeFileSync(f.replace(/\.html$/, '') + ' - ' + a.filename, a.content));
+    fs.writeFileSync(f, `<!-- To: ${to}\n     Reply-To: ${replyTo || ''}\n     Subject: ${msg.subject}
+     Attachments: ${attachments.map(a => a.filename).join(', ') || 'none'} -->\n<meta charset="utf-8">\n${msg.html}`);
     return {mode: 'outbox', file: path.basename(f)};
   }
   if (gmail) {
     const nodemailer = require('nodemailer');
     const tx = nodemailer.createTransport({service: 'gmail', auth: {user: env.GMAIL_USER, pass: env.GMAIL_APP_PASSWORD}});
-    await tx.sendMail({from: `Greens Greens Orders <${env.GMAIL_USER}>`, to, replyTo, subject: msg.subject, text: msg.text, html: msg.html});
+    await tx.sendMail({from: `Greens Greens Orders <${env.GMAIL_USER}>`, to, replyTo, subject: msg.subject, text: msg.text, html: msg.html, attachments});
     return {mode: 'sent', via: 'gmail'};
   }
   const from = env.ORDER_FROM || 'Greens Greens Orders <onboarding@resend.dev>';
   const r = await fetch('https://api.resend.com/emails', {method: 'POST', headers: {Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json'},
-    body: JSON.stringify({from, to: [to], reply_to: replyTo, subject: msg.subject, html: msg.html, text: msg.text})});
+    body: JSON.stringify({from, to: [to], reply_to: replyTo, subject: msg.subject, html: msg.html, text: msg.text,
+      attachments: attachments.map(a => ({filename: a.filename, content: a.content.toString('base64')}))})});
   if (!r.ok) { const er = new Error('Email provider error ' + r.status + ': ' + (await r.text()).slice(0, 200)); er.status = 502; throw er; }
   return {mode: 'sent', via: 'resend'};
 }
@@ -96,12 +107,14 @@ async function handleOrder(o, env = process.env) {
     const er = new Error('Online ordering is not open yet. Please call the office to place your order.'); er.status = 503; throw er;
   }
   const owner = env.ORDER_TO || DEFAULT_ORDER_TO;
-  const res = {owner: await sendOne(buildOwnerEmail(o), {to: owner, replyTo: o.customer.email, env})};
+  const exp = office.buildOfficeExport(o);                                // built once; goes to the office email only
+  const attachments = exp.xlsx ? [{filename: exp.file, content: exp.xlsx, contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}] : [];
+  const res = {owner: await sendOne(buildOwnerEmail(o, exp), {to: owner, replyTo: o.customer.email, env, attachments})};
   if (env.SEND_CUSTOMER_COPY !== '0') {
     try { res.customer = await sendOne(buildCustomerEmail(o), {to: o.customer.email, env}); }
     catch (e) { res.customer = {error: e.message}; }                      // owner already has the order; a failed copy must not fail the order
   }
-  return {ok: true, id: o.id, ...res};
+  return {ok: true, id: o.id, ...res, sheet: exp.xlsx ? 'attached' : 'not attached'};
 }
 
 module.exports = {handleOrder, buildOwnerEmail, buildCustomerEmail, validate};

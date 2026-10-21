@@ -106,7 +106,7 @@ for r in range(1, sh.nrows):
     g = str(g).strip(); name = str(name).strip()
     if g and not name: group = g; continue
     if not name: continue
-    rows.append(dict(group=group, name=name, ou=str(ou).strip(), cu=str(cu).strip(), id=int(iid), price=float(price)))
+    rows.append(dict(group=group, name=name, ou=str(ou).strip(), cu=str(cu).strip(), id=int(iid), price=float(price), ord=len(rows) + 1))   # ord = position in the office sheet (order exports use it)
 
 prods = {}
 for it in rows:
@@ -120,7 +120,7 @@ for it in rows:
     key = (cat, base)
     p = prods.setdefault(key, dict(name=base, category=cat, brand=BRAND.get(it["group"], ""), variants=[]))
     ou = UNIT.get(it["ou"], it["ou"].lower()); cu = UNIT.get(it["cu"], it["cu"].lower())
-    v = dict(sku=it["id"], src=it["name"], unit=ou, price=it["price"], chargeUnit=cu, ripeness="half-ripe" if ripe else "")
+    v = dict(sku=it["id"], ord=it["ord"], src=it["name"], unit=ou, price=it["price"], chargeUnit=cu, ripeness="half-ripe" if ripe else "")
     if ou != cu:                      # sold by piece/bunch/pack but priced per kg -> estimate
         v["estKg"] = est_kg(base, ou); v["estimate"] = True
         v["estPrice"] = round(it["price"] * v["estKg"])

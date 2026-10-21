@@ -40,3 +40,12 @@ The owner's inbox is the master list of orders.
 2. Safaricom Daraja STK Push (Lipa na M-Pesa Online) with the owner's Paybill/Till: server sends the push, M-Pesa calls back, order is marked paid. Keys stay server-side.
 3. Real staff login; order notification to the owner (email/WhatsApp); hosting + domain.
 4. Settlement of weighed items (charge/refund the difference).
+
+## Office order export (order emails)
+
+Each order email to the office (`ORDER_TO`) carries an Excel attachment, `Order <id> - <customer>.xlsx`, with one sheet, **Order Import**, columns `ItemID | Quantity`: every product row of the office list in its original order, quantities filled in, everything else `0` (the office removes zero rows as before). The same two columns are repeated at the bottom of the email as "Office copy/paste view". The customer email never includes either.
+
+- `server/orderExport.js` builds the sheet. Quantities are matched on the ItemID only (the website `sku`), using the product list the shop page froze with the order, so a later weekly upload cannot change an earlier order.
+- Anything that cannot be matched with certainty (an item added from a weekly sheet that had no ItemID, an unknown or ambiguous ID) is never dropped or guessed: the email subject starts `CHECK ITEMIDS`, a red box lists the items, and a second sheet "Needs attention" is added.
+- `data/catalogue.js` carries `ord` (position in the office sheet). `tools/build_catalogue.py` writes it. New items from a weekly upload keep their sheet ItemID and slot in just after the item above them.
+- Test: `npm install && node tools/test_order_export.js` (nothing is sent).

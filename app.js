@@ -199,7 +199,7 @@ function openCheckout() {
   if (!co.data.name && me.name) Object.assign(co.data, {name:me.name, email:me.email || '', phone:me.phone || '', address:me.address || ''});
   if (!deliveryOptions().some(o => o.key === co.data.date)) co.data.date = '';
   if (!co.data.date) { const g = groupById(linkGroup()); if (g && WEEKDAYS.includes(g.deliver)) co.data.date = dateKey(nextDate(g.deliver)); }   // a group link pre-selects that group's day
-  co.step = 'form'; co.errors = {}; co.pending = null;
+  co.step = 'form'; co.errors = {}; co.pending = null; co.catalogue = null;
   renderCheckout();
   $('#checkout').showModal();
 }
@@ -264,6 +264,13 @@ function validate() {
   if (!deliveryOptions().some(o => o.key === d.date)) e.date = 'Please choose a delivery day.';
   co.errors = e; return !Object.keys(e).length;
 }
+/* Every product row of the list this order was placed against, in the office sheet's order: [officeItemID | null, source name, website sku].
+   The server builds the office spreadsheet from this, matching quantities on the sku. */
+function catalogueSnapshot() {
+  const rows = []; PRODUCTS.forEach(p => p.variants.forEach(v => rows.push(v)));
+  return rows.map((v, i) => ({v, k: v.ord ?? 1e6 + i})).sort((a, b) => a.k - b.k || 0)
+    .map(({v}) => [v.noId || v.sku >= 900001 ? null : v.sku, v.src, v.sku]);
+}
 function buildOrder() {
   const t = totals();
   if (!co.seq) { co.seq = (store.get('gg_seq', 0)) + 1; }
@@ -279,10 +286,11 @@ const mailtoFor = o => 'mailto:' + (settings.orderEmail || '') + '?subject=' + e
    ...o.lines.map(l => `- ${l.name} (${l.option}) x ${l.qtyText}${l.est ? ' [weigh]' : ''}${l.note ? ' – ' + l.note : ''}  KES ${Math.round(l.total)}`), '', `${o.hasEstimate ? 'Estimated total' : 'Total'}: ${kes(o.total)} – pay on delivery via Till No: 996086 (Coomete Farm)`].filter(Boolean).join('\n'));
 async function submitOrder() {
   co.pending = co.pending || buildOrder();
+  co.catalogue = co.catalogue || catalogueSnapshot();                    // frozen with the order, so a later upload cannot change what the office receives
   co.step = 'sending'; renderCheckout();
   const o = co.pending;
   try {
-    const r = await fetch('/api/order', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(o)});
+    const r = await fetch('/api/order', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...o, catalogue: co.catalogue})});
     const j = await r.json().catch(() => ({}));
     if (!r.ok || !j.ok) throw new Error(j.error || 'The order service did not answer.');
     o.emailed = true;
@@ -294,7 +302,7 @@ async function submitOrder() {
   store.set('gg_seq', co.seq); co.seq = 0;
   orders.unshift(o); store.set('gg_orders', orders);
   me = {name:o.customer.name, email:o.customer.email, phone:co.data.phone, address:o.customer.address}; store.set('gg_me', me);
-  cart = {}; saveCart(); co.order = o; co.pending = null; co.step = 'done'; renderBanner(); renderGrid(); updateBars();
+  cart = {}; saveCart(); co.order = o; co.pending = null; co.catalogue = null; co.step = 'done'; renderBanner(); renderGrid(); updateBars();
   if ($('#checkout').open) renderCheckout();
 }
 /* ---------- printing ---------- */
@@ -354,7 +362,7 @@ function parseStockSheet(buf, fileName) {
   const idC = col(ID), nameC = col(NAME), groupC = col(/^(group|category)$/i), ouC = col(/^order\s*unit$/i), cuC = col(/^charge\s*unit$/i), priceC = col(/price/i), availC = col(/^(available|availability|in stock|stock)$/i);
   const bySku = {}, byName = {};
   PRODUCTS.forEach(p => p.variants.forEach(v => { bySku[v.sku] = v; (byName[normName(v.src)] ??= []).push(v); }));
-  const matched = new Map(), unknown = [], newItems = []; let curGroup = '';
+  const matched = new Map(), unknown = [], newItems = []; let curGroup = '', lastSku = null;   // lastSku = the last known item above, so new items keep the sheet's position
   for (const r of rows.slice(hr + 1)) {
     const name = nameC >= 0 ? String(r[nameC]).trim() : '', idv = idC >= 0 && String(r[idC]).trim() !== '' ? Number(String(r[idC]).trim()) : NaN;
     if (groupC >= 0 && String(r[groupC]).trim()) curGroup = String(r[groupC]).trim();
@@ -366,13 +374,14 @@ function parseStockSheet(buf, fileName) {
       if (titleRow) continue;
       const pr = priceC >= 0 ? Number(String(r[priceC]).replace(/[^\d.]/g, '')) : NaN;
       const dupe = newItems.some(n => normName(n.name) === normName(name));
-      if (name && pr >= 0 && String(r[priceC]).trim() !== '' && !dupe) newItems.push({name, id: Number.isFinite(idv) && idv > 0 ? idv : null, price: pr, group: curGroup, ou: ouC >= 0 ? String(r[ouC]).trim() : '', cu: cuC >= 0 ? String(r[cuC]).trim() : ''});
+      if (name && pr >= 0 && String(r[priceC]).trim() !== '' && !dupe) newItems.push({name, id: Number.isFinite(idv) && idv > 0 ? idv : null, price: pr, group: curGroup, after: lastSku, ou: ouC >= 0 ? String(r[ouC]).trim() : '', cu: cuC >= 0 ? String(r[cuC]).trim() : ''});
       else unknown.push({name: name || '(no name)', id: Number.isFinite(idv) ? idv : ''});
       continue;
     }
     let price = priceC >= 0 && String(r[priceC]).trim() !== '' ? Number(String(r[priceC]).replace(/[^\d.]/g, '')) : null;
     if (!(price >= 0)) price = null;
     const av = availC >= 0 ? String(r[availC]).trim() : '';
+    lastSku = v.sku;
     matched.set(v.sku, {price, avail: !/^(no|n|0|out|false|sold\s*out|unavailable|x)$/i.test(av)});
   }
   const total = PRODUCTS.reduce((n, p) => n + p.variants.length, 0);
@@ -438,10 +447,14 @@ function makeNewItems(list) {
   const made = [], used = new Set();
   list.forEach(n => {
     let sku = n.id && !BY_SKU[n.id] && !used.has(n.id) ? n.id : 0;
+    const noId = !sku;                                                // no usable ItemID in the sheet: the office has no ID for this item
     if (!sku) { sku = 900001 + extraItems.length + made.length; while (BY_SKU[sku] || used.has(sku)) sku++; }
     used.add(sku);
     const ou = unitOf(n.ou), cu = n.cu ? unitOf(n.cu) : ou, est = ou !== cu;
     const v = {sku, src: tidyName(n.name), unit: ou, price: n.price, chargeUnit: cu, ripeness: ''};
+    const base = BY_SKU[n.after]?.v.ord ?? Math.max(0, ...PRODUCTS.flatMap(p => p.variants.map(x => x.ord || 0)));
+    v.ord = base + 0.0001 * (extraItems.length + made.length + 1);       // sits just after the item above it in the sheet
+    if (noId) v.noId = true;
     if (est) { v.estimate = true; v.estKg = ou === 'bunch' ? 0.3 : 0.25; v.estPrice = Math.round(n.price * v.estKg); }
     made.push({id: 'x' + Date.now().toString(36) + made.length, name: tidyName(n.name), category: guessCategory(n.group || '', n.name), brand: '', emoji: '', inStock: true, slug: '', isNew: true, variants: [v]});
   });

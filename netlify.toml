@@ -5,3 +5,5 @@
   from = "/api/order"
   to = "/.netlify/functions/order"
   status = 200
+[functions.order]
+  included_files = ["data/catalogue.js"]
