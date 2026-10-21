@@ -1011,7 +1011,7 @@ window.CATALOGUE = {
    "emoji": "🫚",
    "inStock": true,
    "slug": "kombucha-hibiscus-ginger",
-   "img": "images/kombucha.jpg"
+   "img": "images/kombucha-hibiscus-ginger.jpg"
   },
   {
    "name": "Kombucha (Lavender)",
@@ -1071,7 +1071,7 @@ window.CATALOGUE = {
    "emoji": "🍵",
    "inStock": true,
    "slug": "kombucha-rosemary-mint",
-   "img": "images/kombucha.jpg"
+   "img": "images/kombucha-rosemary-mint.jpg"
   },
   {
    "name": "Madafu In a Bottle (Lt)",
@@ -1171,7 +1171,7 @@ window.CATALOGUE = {
    "emoji": "🍎",
    "inStock": true,
    "slug": "pineapple-juice",
-   "img": "images/pineapple_juice.jpg"
+   "img": "images/pineapple-juice.jpg"
   },
   {
    "name": "Pineapple Mint Juice",
@@ -1191,7 +1191,7 @@ window.CATALOGUE = {
    "emoji": "🍎",
    "inStock": true,
    "slug": "pineapple-mint-juice",
-   "img": "images/pineapple_juice.jpg"
+   "img": "images/pineapple-mint-juice.jpg"
   },
   {
    "name": "Tree Tomato Juice",
@@ -1371,7 +1371,7 @@ window.CATALOGUE = {
    "emoji": "💐",
    "inStock": true,
    "slug": "bouquet-large",
-   "img": "images/bouquet.jpg"
+   "img": "images/bouquet-large.jpg"
   },
   {
    "name": "Bouquet (Small)",
@@ -1391,7 +1391,7 @@ window.CATALOGUE = {
    "emoji": "💐",
    "inStock": true,
    "slug": "bouquet-small",
-   "img": "images/bouquet.jpg"
+   "img": "images/bouquet-small.jpg"
   },
   {
    "name": "Apples (Green)",
@@ -2218,7 +2218,7 @@ window.CATALOGUE = {
    "emoji": "🫐",
    "inStock": true,
    "slug": "strawberries-fresh",
-   "img": "images/strawberries.jpg"
+   "img": "images/strawberries-fresh.jpg"
   },
   {
    "name": "Strawberries (Frozen)",
