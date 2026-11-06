@@ -30,6 +30,7 @@ TILES = [
  ('coriander',                     39, (0,0,1,1),       'trim'),
  ('onions-white',                  40, (0,0,1,1),       'fill@0.4'),
  ('maize-green-soft',              41, (0,0,1,1),       'fill'),
+ ('beetroot-juice',                42, (0,0,1,1),       'trim'),
 ]
 for slug, n, (l,t,r,b), mode in TILES:
     if ONLY and slug not in ONLY: continue

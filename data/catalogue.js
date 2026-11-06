@@ -1019,7 +1019,7 @@ window.CATALOGUE = {
    "emoji": "🫜",
    "inStock": true,
    "slug": "beetroot-juice",
-   "img": "images/beetroot_juice.jpg"
+   "img": "images/beetroot-juice.jpg"
   },
   {
    "name": "Cocktail Juice",
