@@ -3098,7 +3098,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "coriander-live",
-   "img": "images/coriander.jpg"
+   "img": "images/coriander-live.jpg"
   },
   {
    "name": "Gooseberry (Live)",
@@ -4532,7 +4532,7 @@ window.CATALOGUE = {
    "emoji": "🥔",
    "inStock": true,
    "slug": "arrow-root",
-   "img": "images/arrowroot.jpg"
+   "img": "images/arrow-root.jpg"
   },
   {
    "name": "Aubergine",
@@ -5348,7 +5348,7 @@ window.CATALOGUE = {
    "emoji": "🌽",
    "inStock": true,
    "slug": "maize-green-soft",
-   "img": "images/maize_green.jpg"
+   "img": "images/maize-green-soft.jpg"
   },
   {
    "name": "Mangetout",
@@ -5498,7 +5498,7 @@ window.CATALOGUE = {
    "emoji": "🧅",
    "inStock": true,
    "slug": "onions-white",
-   "img": "images/onion_white.jpg"
+   "img": "images/onions-white.jpg"
   },
   {
    "name": "Peas (Frozen)",
@@ -5699,7 +5699,7 @@ window.CATALOGUE = {
    "emoji": "🥔",
    "inStock": true,
    "slug": "potatoes-sweet",
-   "img": "images/sweet_potato.jpg"
+   "img": "images/potatoes-sweet.jpg"
   },
   {
    "name": "Pumpkin (Whole)",
@@ -5807,7 +5807,7 @@ window.CATALOGUE = {
    "emoji": "🥬",
    "inStock": true,
    "slug": "spinach-normal",
-   "img": "images/spinach.jpg"
+   "img": "images/spinach-normal.jpg"
   },
   {
    "name": "Spinach (Pak Choy)",
