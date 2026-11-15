@@ -1082,7 +1082,7 @@ window.CATALOGUE = {
    "emoji": "🍵",
    "inStock": true,
    "slug": "kombucha-lavender",
-   "img": "images/kombucha.jpg"
+   "img": "images/kombucha-lavender.jpg"
   },
   {
    "name": "Kombucha (Moringa)",
@@ -1103,7 +1103,7 @@ window.CATALOGUE = {
    "emoji": "🍵",
    "inStock": true,
    "slug": "kombucha-moringa",
-   "img": "images/kombucha.jpg"
+   "img": "images/kombucha-moringa.jpg"
   },
   {
    "name": "Kombucha (Rosemary & Mint)",
@@ -2516,7 +2516,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "chives-flat",
-   "img": "images/chives_flat.jpg"
+   "img": "images/chives-flat.jpg"
   },
   {
    "name": "Chives (Round)",
@@ -2546,7 +2546,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "chives-round",
-   "img": "images/chives.jpg"
+   "img": "images/chives-round.jpg"
   },
   {
    "name": "Coriander",
@@ -3035,7 +3035,7 @@ window.CATALOGUE = {
    "emoji": "🌱",
    "inStock": true,
    "slug": "artichokes-live",
-   "img": "images/artichoke.jpg"
+   "img": "images/artichokes-live.jpg"
   },
   {
    "name": "Chives (Flat) (Live)",
@@ -3056,7 +3056,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "chives-flat-live",
-   "img": "images/chives_flat.jpg"
+   "img": "images/chives-flat-live.jpg"
   },
   {
    "name": "Chives Round (Live)",
@@ -3077,7 +3077,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "chives-round-live",
-   "img": "images/chives.jpg"
+   "img": "images/chives-round-live.jpg"
   },
   {
    "name": "Coriander (Live)",
@@ -3245,7 +3245,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "mint-live",
-   "img": "images/mint.jpg"
+   "img": "images/mint-live.jpg"
   },
   {
    "name": "Oregano (Live)",
@@ -3371,7 +3371,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "rosemary-live",
-   "img": "images/rosemary.jpg"
+   "img": "images/rosemary-live.jpg"
   },
   {
    "name": "Sage (Live)",
@@ -3743,7 +3743,7 @@ window.CATALOGUE = {
    "emoji": "🦆",
    "inStock": true,
    "slug": "duck-breast-approx-500g-pack",
-   "img": "images/duck_breast.jpg"
+   "img": "images/duck-breast-approx-500g-pack.jpg"
   },
   {
    "name": "Duck Legs (2pc/pack) Approx. 500g)",
@@ -3767,7 +3767,7 @@ window.CATALOGUE = {
    "emoji": "🦆",
    "inStock": true,
    "slug": "duck-legs-2pc-pack-approx-500g",
-   "img": "images/duck_legs.jpg"
+   "img": "images/duck-legs-2pc-pack-approx-500g.jpg"
   },
   {
    "name": "Fish Fillet - Snapper",
@@ -3836,7 +3836,7 @@ window.CATALOGUE = {
    "emoji": "🍯",
    "inStock": true,
    "slug": "ham-honey-glazed-1kg",
-   "img": "images/ham.jpg"
+   "img": "images/ham-honey-glazed-1kg.jpg"
   },
   {
    "name": "Minced Beef (High Grade) 500g",
@@ -4511,7 +4511,7 @@ window.CATALOGUE = {
    "emoji": "🍵",
    "inStock": true,
    "slug": "tea-leaves-0-5-kg-pack",
-   "img": "images/tea.jpg"
+   "img": "images/tea-leaves-0-5-kg-pack.jpg"
   },
   {
    "name": "Arrow Root",
@@ -5837,7 +5837,7 @@ window.CATALOGUE = {
    "emoji": "🥬",
    "inStock": true,
    "slug": "spinach-pak-choy",
-   "img": "images/pak_choi.jpg"
+   "img": "images/spinach-pak-choy.jpg"
   },
   {
    "name": "Spinach Italian",

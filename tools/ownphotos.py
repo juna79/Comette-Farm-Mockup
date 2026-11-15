@@ -4,7 +4,8 @@ Each entry: slug, source file, crop (fractions l,t,r,b) to drop baked-in caption
 import os, sys, json
 from PIL import Image, ImageOps, ImageFilter, ImageChops
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = sys.argv[1]; ONLY = set(sys.argv[2:])        # optional: only rebuild these slugs
+SRC = sys.argv[1]; LENS = {51: (68, 630, 42)}
+ONLY = set(sys.argv[2:])        # optional: only rebuild these slugs
 TILES = [
  ('strawberries-fresh',            8,  (0,0,1,1),       'fill'),
  ('kombucha-rosemary-mint',        9,  (0,0,1,1),       'fill@0.12'),
@@ -31,10 +32,30 @@ TILES = [
  ('onions-white',                  40, (0,0,1,1),       'fill@0.4'),
  ('maize-green-soft',              41, (0,0,1,1),       'fill'),
  ('beetroot-juice',                42, (0.2,0.01,0.76,0.99), 'fit-exact'),
+ ('duck-breast-approx-500g-pack',  43, (16/720,630/1600,704/720,1190/1600), 'fill'),
+ ('duck-legs-2pc-pack-approx-500g',44, (16/720,540/1600,704/720,1100/1600), 'fill'),
+ ('onion-jam-200g',                45, (0,0,1,1),       'trim'),
+ ('mint',                          46, (130/1600,40/944,1440/1600,885/944), 'trim'),
+ ('kombucha-lavender',             47, (0,258/1600,1,1290/1600), 'blur'),
+ ('kombucha-moringa',              48, (0,215/1600,1,1405/1600), 'blur'),
+ ('rosemary',                      49, (0,0,1,330/371), 'trim'),
+ ('tea-leaves-0-5-kg-pack',        50, (0,0,1,1),       'trim'),
+ ('chives-flat',                   51, (0,0,1,1),       'fill'),
+ ('artichokes-live',               52, (0,0,1,1),       'trim'),
+ ('ham-honey-glazed-1kg',          53, (20/720,672/1600,700/720,1060/1600), 'trim'),
+ ('cheddar-cheese-love-white-250g',54, (0,0,1,1),       'blur'),
+ ('chives-round',                  55, (0,0,1,1),       'trim'),
+ ('chicken-wings-8pcs',            56, (0,0,1,1),       'blur'),
+ ('spinach-pak-choy',              57, (0,0,1,1),       'fill'),
 ]
 for slug, n, (l,t,r,b), mode in TILES:
     if ONLY and slug not in ONLY: continue
     im = Image.open(f'{SRC}/{n}.jpg').convert('RGB'); w, h = im.size
+    if n == 48: im.paste(im.crop((340, 262, 720, 302)), (340, 215))          # caption text from the site next to the bottle: cover with wall texture
+    if n in LENS:                                                       # Google Lens button baked into the corner: paint it out
+        import cv2, numpy as np
+        a = np.array(im); m = np.zeros(a.shape[:2], np.uint8); cv2.circle(m, LENS[n][:2], LENS[n][2], 255, -1)
+        im = Image.fromarray(cv2.inpaint(a, m, 5, cv2.INPAINT_TELEA))
     im = im.crop((int(l*w), int(t*h), int(r*w), int(b*h)))
     if mode == 'trim':                                                 # white-background shot: cut to the product, centre on white
         bg0 = im.getpixel((3, 3)); diff = ImageChops.difference(im, Image.new('RGB', im.size, bg0)).convert('L').point(lambda v: 255 if v > 28 else 0)
