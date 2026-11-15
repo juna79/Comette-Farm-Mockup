@@ -47,6 +47,7 @@ TILES = [
  ('chives-round',                  55, (0,0,1,1),       'trim'),
  ('chicken-wings-8pcs',            56, (0,0,1,1),       'blur'),
  ('spinach-pak-choy',              57, (0,0,1,1),       'fill'),
+ ('beetroot',                      58, (0,0,1,1),       'trim'),
 ]
 for slug, n, (l,t,r,b), mode in TILES:
     if ONLY and slug not in ONLY: continue
