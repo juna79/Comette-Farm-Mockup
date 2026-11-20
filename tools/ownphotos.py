@@ -49,6 +49,15 @@ TILES = [
  ('chicken-wings-8pcs',            56, (0,0,1,1),       'blur'),
  ('spinach-pak-choy',              57, (0,0,1,1),       'fill'),
  ('beetroot',                      58, (0,0,1,1),       'trim'),
+ ('coriander-live',                61, (0,0,1,1),       'trim'),
+ ('herbs-mixed-growing-box-small', 62, (0,0,1,1),       'fill@0.4'),
+ ('mint-apple-live',               63, (0,0,1,1),       'fill@0.45'),
+ ('marjoram-sweet-live',           64, (0,0,1,1),       'fill@0.45'),
+ ('parsley-flat-live',             65, (0,0,1,1),       'fill'),
+ ('parsley-curly-live',            66, (0,0,1,1),       'fill'),
+ ('rhubarb-live-bag',              67, (0,0,1,1),       'fill'),
+ ('thyme-live',                    68, (0,0,1,1),       'fill@0.55'),
+ ('gooseberry-live',               69, (0,0,1,1),       'fill@0.5'),
 ]
 for slug, n, (l,t,r,b), mode in TILES:
     if ONLY and slug not in ONLY: continue

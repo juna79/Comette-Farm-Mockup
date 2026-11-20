@@ -3119,7 +3119,7 @@ window.CATALOGUE = {
    "emoji": "🌱",
    "inStock": true,
    "slug": "gooseberry-live",
-   "img": "images/gooseberry.jpg"
+   "img": "images/gooseberry-live.jpg"
   },
   {
    "name": "Herbs (Mixed) (Growing Box) (Small)",
@@ -3140,7 +3140,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "herbs-mixed-growing-box-small",
-   "img": "images/herb_box.jpg"
+   "img": "images/herbs-mixed-growing-box-small.jpg"
   },
   {
    "name": "Lemon Grass (Live)",
@@ -3203,7 +3203,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "marjoram-sweet-live",
-   "img": "images/marjoram.jpg"
+   "img": "images/marjoram-sweet-live.jpg"
   },
   {
    "name": "Mint (Apple) Live",
@@ -3224,7 +3224,7 @@ window.CATALOGUE = {
    "emoji": "🍎",
    "inStock": true,
    "slug": "mint-apple-live",
-   "img": "images/apple_mint.jpg"
+   "img": "images/mint-apple-live.jpg"
   },
   {
    "name": "Mint (Live)",
@@ -3287,7 +3287,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "parsley-curly-live",
-   "img": "images/parsley_curly.jpg"
+   "img": "images/parsley-curly-live.jpg"
   },
   {
    "name": "Parsley Flat (Live)",
@@ -3308,7 +3308,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "parsley-flat-live",
-   "img": "images/parsley_flat.jpg"
+   "img": "images/parsley-flat-live.jpg"
   },
   {
    "name": "Rhubarb (Live) (Bag)",
@@ -3329,7 +3329,7 @@ window.CATALOGUE = {
    "emoji": "🌱",
    "inStock": true,
    "slug": "rhubarb-live-bag",
-   "img": "images/rhubarb.jpg"
+   "img": "images/rhubarb-live-bag.jpg"
   },
   {
    "name": "Rocket (Live)",
@@ -3497,7 +3497,7 @@ window.CATALOGUE = {
    "emoji": "🌿",
    "inStock": true,
    "slug": "thyme-live",
-   "img": "images/thyme.jpg"
+   "img": "images/thyme-live.jpg"
   },
   {
    "name": "Watercress (With roots)",
